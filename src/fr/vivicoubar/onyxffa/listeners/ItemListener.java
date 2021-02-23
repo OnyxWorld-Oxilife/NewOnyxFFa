@@ -32,35 +32,6 @@ public class ItemListener implements Listener {
     public ItemListener(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
     }
-    @EventHandler
-    private void onOpenMenu(PlayerInteractEvent menuOpenEvent){
-        if (menuOpenEvent.getAction() == Action.RIGHT_CLICK_AIR || menuOpenEvent.getAction() == Action.RIGHT_CLICK_BLOCK ) {
-            if (menuOpenEvent.hasItem()) {
-                if (menuOpenEvent.getItem().getType() == Material.COMPASS) {
-                    if (menuOpenEvent.getItem().getItemMeta().hasItemFlag(ItemFlag.HIDE_UNBREAKABLE)) {
-                        FileConfiguration fileConfiguration = main.getConfigConfiguration();
-                        FFaPlayer fFaPlayer = new FFaPlayer(main, menuOpenEvent.getPlayer());
-                        Inventory menu = Bukkit.createInventory(null, 27, fileConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Menu.Name"));
-                        menu.clear();
-                        for (String item : fileConfiguration.getConfigurationSection("NewOnyxFFa.Config.Menu.Item.Inventory.Items").getKeys(false)) {
-                            String itemPath = "NewOnyxFFa.Config.Menu.Item.Inventory.Items." + item + ".";
-                            ItemStack ffaaxe = new ItemStack(Material.getMaterial(fileConfiguration.getString(itemPath + "Material")));
-                            ItemMeta ffameta = ffaaxe.getItemMeta();
-                            ffameta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
-                            if ((boolean) fileConfiguration.get(itemPath + "Enchanted")) {
-                                ffameta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-                            }
-                            ffameta.setDisplayName(fileConfiguration.getString(itemPath + "Name"));
-                            ffameta.setLore(fileConfiguration.getStringList(itemPath + "Lore"));
-                            ffaaxe.setItemMeta(ffameta);
-                            menu.setItem(fileConfiguration.getInt(itemPath + "Slot"), ffaaxe);
-                        }
-                        fFaPlayer.getPlayer().openInventory(menu);
-                    }
-                }
-            }
-        }
-    }
 
     @EventHandler
     private void onClickFFaItem(PlayerInteractEvent interactEvent) {

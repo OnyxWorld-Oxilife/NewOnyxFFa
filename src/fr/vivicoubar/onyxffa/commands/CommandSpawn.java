@@ -66,7 +66,7 @@ public class CommandSpawn implements CommandExecutor {
                             menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
                             menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
                             menuSelector.setItemMeta(menuMeta);
-                            player.getInventory().setItem(0, menuSelector);
+                            player.getInventory().setItem(4, menuSelector);
                             for (PotionEffect effect : player.getActivePotionEffects()) {
                                 player.removePotionEffect(effect.getType());
                             }
