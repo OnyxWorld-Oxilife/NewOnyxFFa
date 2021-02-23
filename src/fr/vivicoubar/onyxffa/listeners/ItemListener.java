@@ -42,6 +42,7 @@ public class ItemListener implements Listener {
                 fFaPlayer.getPlayer().closeInventory();
                 fFaPlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 5));
                 int spawn = (int) (Math.random() * (main.getSpawnsList().size() - 1));
+                main.getSpawnsList().get(spawn).setWorld(interactEvent.getPlayer().getWorld());
                 fFaPlayer.getPlayer().teleport(main.getSpawnsList().get(spawn), PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
                 fFaPlayer.getPlayer().setGameMode(GameMode.SURVIVAL);
                 fFaPlayer.getInventory().clear();

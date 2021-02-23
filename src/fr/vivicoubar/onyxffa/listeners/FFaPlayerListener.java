@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 
 public class FFaPlayerListener implements Listener {
@@ -79,9 +80,11 @@ public class FFaPlayerListener implements Listener {
     }
     @EventHandler
     public void onMoveAfterSpawn(PlayerMoveEvent playerMoveAfterSpawnEvent){
-        if(main.getSpawnsInWait().contains(playerMoveAfterSpawnEvent.getPlayer().getUniqueId().toString())){
-            main.getSpawnsInWait().remove(playerMoveAfterSpawnEvent.getPlayer().getUniqueId().toString());
-            playerMoveAfterSpawnEvent.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.SpawnCommand.Error"));
+        if(playerMoveAfterSpawnEvent.getFrom().getBlockX() != playerMoveAfterSpawnEvent.getTo().getBlockX() || playerMoveAfterSpawnEvent.getFrom().getBlockZ() != playerMoveAfterSpawnEvent.getTo().getBlockZ()){
+            if(main.getSpawnsInWait().contains(playerMoveAfterSpawnEvent.getPlayer().getUniqueId().toString())){
+                main.getSpawnsInWait().remove(playerMoveAfterSpawnEvent.getPlayer().getUniqueId().toString());
+                playerMoveAfterSpawnEvent.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.SpawnCommand.Error"));
+            }
         }
     }
     @EventHandler
