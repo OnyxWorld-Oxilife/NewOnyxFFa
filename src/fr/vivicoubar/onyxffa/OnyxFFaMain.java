@@ -356,7 +356,9 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
     public List<String> getBlockEffectList() {
         return blockEffectList;
     }
-
+    public List<Location> getSpawnsList() {
+        return spawnsList;
+    }
     public File getRanksFile() { return ranksFile; }
     public RanksManager getRanksManager(){return ranksManager;}
 

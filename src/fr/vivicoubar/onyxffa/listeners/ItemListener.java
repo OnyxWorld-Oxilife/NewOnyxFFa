@@ -25,6 +25,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ItemListener implements Listener {
     private OnyxFFaMain main;
@@ -40,7 +41,8 @@ public class ItemListener implements Listener {
                 FFaPlayer fFaPlayer = new FFaPlayer(this.main, interactEvent.getPlayer());
                 fFaPlayer.getPlayer().closeInventory();
                 fFaPlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 5));
-                fFaPlayer.getPlayer().teleport(new Location(fFaPlayer.getPlayer().getWorld(), 0, 100.5, 0), PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
+                int spawn = (int) (Math.random() * (main.getSpawnsList().size() - 1));
+                fFaPlayer.getPlayer().teleport(main.getSpawnsList().get(spawn), PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
                 fFaPlayer.getPlayer().setGameMode(GameMode.SURVIVAL);
                 fFaPlayer.getInventory().clear();
                 String rankname = fFaPlayer.getStats().getRank().getName();
