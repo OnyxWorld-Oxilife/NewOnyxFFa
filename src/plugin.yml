@@ -1,12 +1,12 @@
 name: NewOnyxFFa
 author: ViViCouBar
 main: fr.vivicoubar.onyxffa.OnyxFFaMain
-version: 1.0.1
+version: 1.0.2
 prefix: "NewOnyxFFa"
 database: false
 api-version: 1.12.2
 load: STARTUP
-description: This plugin is a minigame designed originally for OnyxWorld. For any problem, contact the main developper, ViViCoubar
+description: This plugin is a minigame designed originally for OnyxWorld. If any problem occurs, contact the main developper, ViViCoubar
 commands:
   offa:
     description: Main Command of the Plugin.

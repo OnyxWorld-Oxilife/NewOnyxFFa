@@ -86,7 +86,7 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 lore.add("§aCliquer Pour");
                 lore.add("§aRejoindre le FFa");
                 configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Material", "GOLD_AXE");
-                configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Name", "RushFFa"); //TODO Rajouter l'option de changer de nom dans le code
+                configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Name", "RushFFa");
                 configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Enchanted", true);
                 configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Lore", lore.toArray());
                 configConfiguration.set("NewOnyxFFa.Config.SpawnCommand.TimerUntilTeleportation", 10);
