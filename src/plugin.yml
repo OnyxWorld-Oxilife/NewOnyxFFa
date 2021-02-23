@@ -1,0 +1,24 @@
+name: NewOnyxFFa
+author: ViViCouBar
+main: fr.vivicoubar.onyxffa.OnyxFFaMain
+version: 1.0.1
+prefix: "NewOnyxFFa"
+database: false
+api-version: 1.12.2
+load: STARTUP
+description: This plugin is a minigame designed originally for OnyxWorld. For any problem, contact the main developper, ViViCoubar
+commands:
+  offa:
+    description: Main Command of the Plugin.
+    aliases: [onyxffa, NewOnyxFFa]
+    permission: NewOnyxFFa.offa.use
+    usage: Missing an argument (setspawn , breakblock)
+  spawn:
+    description: Teleport to spawn location
+    permission: NewOnyxFFa.spawn.use
+  stats:
+    description: Print player's stats
+    permission: NewOnyxFFa.stats.use
+  resetstats:
+    description: Reset player's stats
+    permission: NewOnyxFFa.stats.reset
