@@ -18,13 +18,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 public class CommandSpawn implements CommandExecutor {
-    private OnyxFFaMain main;
+    private final OnyxFFaMain main;
 
     public CommandSpawn(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
