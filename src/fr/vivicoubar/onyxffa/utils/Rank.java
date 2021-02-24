@@ -25,6 +25,9 @@ public class Rank {
         this.commandOnLeaveRank = commandOnLeaveRank;
     }
 
+    public String getColor() {
+        return this.color;
+    }
     public String getName() {
         return this.name;
     }
