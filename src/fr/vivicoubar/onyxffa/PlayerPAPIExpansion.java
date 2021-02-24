@@ -68,7 +68,12 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         if(identifier.equals("rank")){
             return fFaPlayer.getStats().getRank().getName();
         }
-
+        if(identifier.equals("color")){
+            return fFaPlayer.getStats().getRank().getColor();
+        }
+        if(identifier.equals("highscore")){
+            return String.valueOf(fFaPlayer.getStats().getHighscore());
+        }
         // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)
         // was provided
         return null;

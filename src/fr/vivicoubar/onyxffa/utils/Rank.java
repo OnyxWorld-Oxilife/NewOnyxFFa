@@ -47,5 +47,9 @@ public class Rank {
     public List<String> getCommandOnLeaveRank() {
         return commandOnLeaveRank;
     }
+
+    public String getColor() {
+         return this.color;
+    }
 }
 
