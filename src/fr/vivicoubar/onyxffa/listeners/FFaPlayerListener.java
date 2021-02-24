@@ -89,9 +89,9 @@ public class FFaPlayerListener implements Listener {
         }
     }
     @EventHandler
-    public void onTryToMoveArmor(InventoryClickEvent onTryToMoveArmorEvent){
-        if(onTryToMoveArmorEvent.getSlotType() == InventoryType.SlotType.ARMOR){
-            onTryToMoveArmorEvent.setCancelled(true);
+    public void onTryToMoveItem(InventoryClickEvent onTryToMoveItemEvent){
+        if(!onTryToMoveItemEvent.getWhoClicked().hasPermission("NewOnyxFFa.inventory.bypass") ){
+            onTryToMoveItemEvent.setCancelled(true);
         }
     }
     @EventHandler
