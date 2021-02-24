@@ -45,6 +45,7 @@ public class ItemListener implements Listener {
                 main.getSpawnsList().get(spawn).setWorld(interactEvent.getPlayer().getWorld());
                 fFaPlayer.getPlayer().teleport(main.getSpawnsList().get(spawn), PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
                 fFaPlayer.getPlayer().setGameMode(GameMode.SURVIVAL);
+                fFaPlayer.getPlayer().getInventory().setHeldItemSlot(0);
                 fFaPlayer.getInventory().clear();
                 String rankname = fFaPlayer.getStats().getRank().getName();
                 for (String rankpath : main.getKitsConfiguration().getConfigurationSection("NewOnyxFFa.Ffa").getKeys(false)) {

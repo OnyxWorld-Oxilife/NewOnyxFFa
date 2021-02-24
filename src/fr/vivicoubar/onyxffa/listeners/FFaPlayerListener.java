@@ -90,7 +90,7 @@ public class FFaPlayerListener implements Listener {
     }
     @EventHandler
     public void onTryToMoveItem(InventoryClickEvent onTryToMoveItemEvent){
-        if(!onTryToMoveItemEvent.getWhoClicked().hasPermission("NewOnyxFFa.inventory.bypass") ){
+        if(!onTryToMoveItemEvent.getWhoClicked().hasPermission("NewOnyxFFa.inventory.bypass") && onTryToMoveItemEvent.getWhoClicked().getGameMode() != GameMode.SURVIVAL){
             onTryToMoveItemEvent.setCancelled(true);
         }
     }

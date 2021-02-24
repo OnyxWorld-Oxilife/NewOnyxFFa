@@ -114,6 +114,7 @@ public class DamageListener implements Listener {
                     menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
                     menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
                     menuSelector.setItemMeta(menuMeta);
+                    player.getInventory().setHeldItemSlot(4);
                     player.getInventory().setItem(4, menuSelector);
 
                     Rank oldVictimRank = victim.getStats().getRank();
@@ -182,6 +183,7 @@ public class DamageListener implements Listener {
                     player.setGameMode(GameMode.ADVENTURE);
                     player.setFoodLevel(20);
                     player.getActivePotionEffects().clear();
+                    player.getInventory().setHeldItemSlot(4);
                     //Téléportation au spawn
                     player.teleport(
                             new Location(Bukkit.getWorld(spawnConfiguration.getString("NewOnyxFFa.Spawns.Lobby.WorldName")),
@@ -275,6 +277,7 @@ public class DamageListener implements Listener {
                                         FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
                                         FileConfiguration configConfiguration = main.getConfigConfiguration();
                                         Player player = victim.getPlayer();
+                                        player.getInventory().setHeldItemSlot(4);
                                         player.setGameMode(GameMode.ADVENTURE);
                                         player.setFoodLevel(20);
                                         player.getActivePotionEffects().clear();
@@ -348,6 +351,7 @@ public class DamageListener implements Listener {
                                 Player player = victim.getPlayer();
                                 player.setGameMode(GameMode.ADVENTURE);
                                 player.setFoodLevel(20);
+                                player.getInventory().setHeldItemSlot(4);
                                 player.getActivePotionEffects().clear();
                                 //Téléportation au spawn
                                 player.teleport(
@@ -423,6 +427,7 @@ public class DamageListener implements Listener {
                         FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
                         FileConfiguration configConfiguration = main.getConfigConfiguration();
                         Player player = victim.getPlayer();
+                        player.getInventory().setHeldItemSlot(4);
                         player.setGameMode(GameMode.ADVENTURE);
                         player.setFoodLevel(20);
                         player.getActivePotionEffects().clear();
@@ -498,6 +503,7 @@ public class DamageListener implements Listener {
                 Player player = victim.getPlayer();
                 player.setGameMode(GameMode.ADVENTURE);
                 player.setFoodLevel(20);
+                player.getInventory().setHeldItemSlot(4);
                 player.getActivePotionEffects().clear();
                 //Téléportation au spawn
                 player.teleport(

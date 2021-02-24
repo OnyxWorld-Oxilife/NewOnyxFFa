@@ -35,9 +35,9 @@ public class CommandOffa implements CommandExecutor {
                         for(String number : spawnConfiguration.getConfigurationSection("NewOnyxFFa.Spawns").getKeys(false))
                             spawns.add(number);
                         int num = spawns.size();
-                        spawnConfiguration.set("NewOnyxFFa.Spawns." + num + ".x", senderLocation.getBlockX());
-                        spawnConfiguration.set("NewOnyxFFa.Spawns." + num + ".y", senderLocation.getBlockY());
-                        spawnConfiguration.set("NewOnyxFFa.Spawns." + num + ".z", senderLocation.getBlockZ());
+                        spawnConfiguration.set("NewOnyxFFa.Spawns." + num + ".x", senderLocation.getX());
+                        spawnConfiguration.set("NewOnyxFFa.Spawns." + num + ".y", senderLocation.getY());
+                        spawnConfiguration.set("NewOnyxFFa.Spawns." + num + ".z", senderLocation.getZ());
                         spawnConfiguration.set("NewOnyxFFa.Spawns." + num + ".yaw", senderLocation.getYaw());
                         spawnConfiguration.set("NewOnyxFFa.Spawns." + num + ".pitch", senderLocation.getPitch());
                         try {
