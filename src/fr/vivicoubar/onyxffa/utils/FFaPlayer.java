@@ -24,6 +24,7 @@ public class FFaPlayer {
             statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Kills", 0);
             statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Deaths", 0);
             statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Points", 0);
+            statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".HighestScore", 0);
             statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Pseudo", player.getName());
                 statsConfiguration.save(main.getStatsFile());
             } catch (IOException e) {

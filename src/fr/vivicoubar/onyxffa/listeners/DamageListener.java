@@ -224,18 +224,18 @@ public class DamageListener implements Listener {
 
                     if (oldDamagerRank != newDamagerank) {
                         for (String command : newDamagerank.getCommandOnGoToRank()) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
                         }
                         for (String command : oldDamagerRank.getCommandOnLeaveRank()) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
                         }
                     }
                     if (oldVictimRank != newVictimrank) {
                         for (String command : newVictimrank.getCommandOnGoToRank()) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                         }
                         for (String command : oldVictimRank.getCommandOnLeaveRank()) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                         }
                     }
                     break;
@@ -320,18 +320,18 @@ public class DamageListener implements Listener {
 
                                         if (oldDamagerRank != newDamagerank) {
                                             for (String command : newDamagerank.getCommandOnGoToRank()) {
-                                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
                                             }
                                             for (String command : oldDamagerRank.getCommandOnLeaveRank()) {
-                                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
                                             }
                                         }
                                         if (oldVictimRank != newVictimrank) {
                                             for (String command : newVictimrank.getCommandOnGoToRank()) {
-                                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                                             }
                                             for (String command : oldVictimRank.getCommandOnLeaveRank()) {
-                                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                                             }
                                         }
                                         break;
@@ -384,10 +384,10 @@ public class DamageListener implements Listener {
 
                                 if (oldVictimRank != newVictimrank) {
                                     for (String command : newVictimrank.getCommandOnGoToRank()) {
-                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                                     }
                                     for (String command : oldVictimRank.getCommandOnLeaveRank()) {
-                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                                     }
                                 }
 
@@ -468,18 +468,18 @@ public class DamageListener implements Listener {
 
                         if(oldDamagerRank != newDamagerank){
                             for(String command : newDamagerank.getCommandOnGoToRank()){
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
                             }
                             for(String command : oldDamagerRank.getCommandOnLeaveRank()){
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
                             }
                         }
                         if(oldVictimRank != newVictimrank){
                             for(String command : newVictimrank.getCommandOnGoToRank()){
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                             }
                             for(String command : oldVictimRank.getCommandOnLeaveRank()){
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                             }
                         }
                         break;
@@ -534,10 +534,10 @@ public class DamageListener implements Listener {
 
                 if (oldVictimRank != newVictimrank) {
                     for (String command : newVictimrank.getCommandOnGoToRank()) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                     }
                     for (String command : oldVictimRank.getCommandOnLeaveRank()) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                     }
                 }
 

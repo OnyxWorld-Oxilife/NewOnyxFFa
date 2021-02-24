@@ -23,8 +23,8 @@ public class RanksManager {
                     rankconfig.getDouble("NewOnyxFFa.Ranks." + rank + ".UpperBound"),
                     rankconfig.getDouble("NewOnyxFFa.Ranks." + rank + ".LowerBound"),
                     rankconfig.getDouble("NewOnyxFFa.Ranks." + rank + ".RankNumber"),
-                    rankconfig.getStringList("NewOnyxFFa.Ranks." + rank + ".CommandOnGoToRank"),
-                    rankconfig.getStringList("NewOnyxFFa.Ranks." + rank + ".CommandOnLeaveRank")
+                    rankconfig.getStringList("NewOnyxFFa.Ranks." + rank + ".CommandsOnGoToRank"),
+                    rankconfig.getStringList("NewOnyxFFa.Ranks." + rank + ".CommandsOnLeaveRank")
             ));
         }
     }

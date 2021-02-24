@@ -10,6 +10,7 @@ import java.util.List;
 public class Stats {
     private double kills;
     private double points;
+    private double highscore;
     private double deaths;
     private Rank rank;
     private final FFaPlayer player;
@@ -22,6 +23,7 @@ public class Stats {
         this.kills = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Kills");
         this.deaths = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Deaths");
         this.points = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points");
+        this.highscore = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore");
         for(Rank setRank : main.getRanksManager().getRanks()){
             if(points >= setRank.lowerBound && points < setRank.upperBound){
                 this.rank = setRank;
@@ -37,6 +39,7 @@ public class Stats {
         score.add(kills);
         score.add(deaths);
         score.add(points);
+        score.add(highscore);
         return score;
     }
     public void iterateKills(){
@@ -51,16 +54,28 @@ public class Stats {
         this.points = points;
         main.getStatsConfiguration().set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points", this.points);
         main.getStatsConfiguration().save(main.getStatsFile());
+        if(this.points > this.highscore){
+            main.getStatsConfiguration().set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore", this.points);
+            this.highscore = this.points;
+            main.getStatsConfiguration().save(main.getStatsFile());
+        }
     }
+
+    public double getHighscore() {
+        return highscore;
+    }
+
     public void reset(){
         FileConfiguration statsConfiguration = main.getStatsConfiguration();
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Kills", 0);
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Deaths", 0);
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points", 0);
+        statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore", 0);
 
         this.kills = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Kills");
         this.deaths = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Deaths");
         this.points = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points");
+        this.highscore = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore");
         for(Rank setRank : main.getRanksManager().getRanks()) {
             if (points >= setRank.lowerBound && points < setRank.upperBound) {
                 this.rank = setRank;

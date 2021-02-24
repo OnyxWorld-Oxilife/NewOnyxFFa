@@ -1,9 +1,6 @@
 package fr.vivicoubar.onyxffa;
 
-import fr.vivicoubar.onyxffa.commands.CommandOffa;
-import fr.vivicoubar.onyxffa.commands.CommandResetStats;
-import fr.vivicoubar.onyxffa.commands.CommandSpawn;
-import fr.vivicoubar.onyxffa.commands.CommandStats;
+import fr.vivicoubar.onyxffa.commands.*;
 import fr.vivicoubar.onyxffa.listeners.BlockListener;
 import fr.vivicoubar.onyxffa.listeners.DamageListener;
 import fr.vivicoubar.onyxffa.listeners.FFaPlayerListener;
@@ -61,6 +58,7 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
         getCommand("stats").setExecutor(new CommandStats(this));
         getCommand("spawn").setExecutor(new CommandSpawn(this));
         getCommand("resetStats").setExecutor(new CommandResetStats(this));
+        getCommand("points").setExecutor(new CommandPoints(this));
         pluginManager.registerEvents(new FFaPlayerListener(this), this);
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);
@@ -158,6 +156,13 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 ranksConfiguration.set("NewOnyxFFa.Ranks.Cuivre.RankNumber", 1);
                 ranksConfiguration.set("NewOnyxFFa.Ranks.Cuivre.CommandsOnGoToRank", commandsList.toArray());
                 ranksConfiguration.set("NewOnyxFFa.Ranks.Cuivre.CommandsOnLeaveRank", commandsList.toArray());
+                ranksConfiguration.set("NewOnyxFFa.Ranks.Argent.Name", "Argent");
+                ranksConfiguration.set("NewOnyxFFa.Ranks.Argent.Color", "&b");
+                ranksConfiguration.set("NewOnyxFFa.Ranks.Argent.UpperBound", 2000);
+                ranksConfiguration.set("NewOnyxFFa.Ranks.Argent.LowerBound", 1000);
+                ranksConfiguration.set("NewOnyxFFa.Ranks.Argent.RankNumber", 2);
+                ranksConfiguration.set("NewOnyxFFa.Ranks.Argent.CommandsOnGoToRank", commandsList.toArray());
+                ranksConfiguration.set("NewOnyxFFa.Ranks.Argent.CommandsOnLeaveRank", commandsList.toArray());
                 ranksConfiguration.save(ranksFile);
             }
 
@@ -255,6 +260,9 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 messagesConfiguration.set("NewOnyxFFa.Messages.Offa.Spawn.Success", "Point de Spawn ajouté en: %x%, %y%, %z%, %yaw% , %pitch%");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Offa.Break.Success", "Le Bloc a été cassé avec succès");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Offa.Break.Error", "Erreur, aucun bloc ciblé!");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Points.Error", "Erreur. La commande est '/points <arg> <player> <number>");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Points.PlayerOffline", "Erreur. Le joueur %player% n'est pas connecté.");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Points.Success", "Le score de %player% est maintenant %score%. Son meilleur score est %highScore%");
                 messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommand.Success", "Vos statistiques ont été remises à zéro!");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Kill.toKiller", "Vous avez éliminé: %player%");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Kill.toVictim", "Vous avez été vaincu par: %player%");

@@ -31,10 +31,11 @@ public class CommandStats implements CommandExecutor {
                     double kills = score.get(0);
                     double deaths = score.get(1);
                     double points = score.get(2);
+                    double highscore = score.get(3);
                     Rank rank = fFaPlayer.getStats().getRank();
                     String rankname = rank.getName();
                     sender.sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.StatsCommand.Stats").replaceAll("%rank%", rankname)
-                            .replaceAll("%kills%", String.valueOf(kills)).replaceAll("%deaths%", String.valueOf(deaths)).replaceAll("%points%", String.valueOf(points)));
+                            .replaceAll("%kills%", String.valueOf(kills)).replaceAll("%deaths%", String.valueOf(deaths)).replaceAll("%points%", String.valueOf(points)).replaceAll("%highScore%", String.valueOf(highscore)));
                     return true;
                 } else {
                     String playerName = strings[0];
@@ -51,6 +52,7 @@ public class CommandStats implements CommandExecutor {
                                         double kills = main.getStatsConfiguration().getDouble("NewOnyxFFa." + playerPath + ".Kills");
                                         double deaths = main.getStatsConfiguration().getDouble("NewOnyxFFa." + playerPath + ".Deaths");
                                         double points = main.getStatsConfiguration().getDouble("NewOnyxFFa." + playerPath + ".Points");
+                                        double highscore = main.getStatsConfiguration().getDouble("NewOnyxFFa." + playerPath + ".HighestScore");
                                         String rankname = "";
                                         for (Rank setRank : main.getRanksManager().getRanks()) {
                                             if (points >= setRank.getLowerBound() && points < setRank.getUpperBound()) {
@@ -58,7 +60,7 @@ public class CommandStats implements CommandExecutor {
                                             }
                                         }
                                         sender.sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.StatsCommand.OtherStats").replaceAll("%rank%", rankname)
-                                                .replaceAll("%kills%", String.valueOf(kills)).replaceAll("%deaths%", String.valueOf(deaths)).replaceAll("%points%", String.valueOf(points)).replaceAll("%player%", playerName));
+                                                .replaceAll("%kills%", String.valueOf(kills)).replaceAll("%deaths%", String.valueOf(deaths)).replaceAll("%points%", String.valueOf(points)).replaceAll("%player%", playerName).replaceAll("%highScore%", String.valueOf(highscore)));
                                         return true;
                                     }
 

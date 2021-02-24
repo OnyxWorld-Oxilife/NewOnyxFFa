@@ -22,3 +22,8 @@ commands:
   resetstats:
     description: Reset player's stats
     permission: NewOnyxFFa.stats.reset
+  points:
+    description: View the player's score. You can change the score using add or set arg, but NewOnyxFFa.points.modify permission is necessary.
+    aliases: [score]
+    permission: NewOnyxFFa.points.use
+    usage: §cMissing argument (add/set)

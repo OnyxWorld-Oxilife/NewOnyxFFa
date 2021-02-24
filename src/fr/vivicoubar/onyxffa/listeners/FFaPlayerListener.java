@@ -101,5 +101,4 @@ public class FFaPlayerListener implements Listener {
     public void onWeatherChange(WeatherChangeEvent onWeatherChangeEvent){
         onWeatherChangeEvent.setCancelled(true);
     }
-//TODO Faire les tremplins
 }
