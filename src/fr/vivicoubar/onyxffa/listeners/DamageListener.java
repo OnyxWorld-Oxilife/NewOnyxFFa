@@ -114,7 +114,7 @@ public class DamageListener implements Listener {
                     menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
                     menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
                     menuSelector.setItemMeta(menuMeta);
-                    player.getInventory().setItem(0, menuSelector);
+                    player.getInventory().setItem(4, menuSelector);
 
                     Rank oldVictimRank = victim.getStats().getRank();
                     Rank oldDamagerRank = damager.getStats().getRank();
@@ -199,7 +199,7 @@ public class DamageListener implements Listener {
                     menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
                     menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
                     menuSelector.setItemMeta(menuMeta);
-                    player.getInventory().setItem(0, menuSelector);
+                    player.getInventory().setItem(4, menuSelector);
 
                     Rank oldVictimRank = victim.getStats().getRank();
                     Rank oldDamagerRank = damager.getStats().getRank();
@@ -295,7 +295,7 @@ public class DamageListener implements Listener {
                                         menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
                                         menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
                                         menuSelector.setItemMeta(menuMeta);
-                                        player.getInventory().setItem(0, menuSelector);
+                                        player.getInventory().setItem(4, menuSelector);
 
                                         Rank oldVictimRank = victim.getStats().getRank();
                                         Rank oldDamagerRank = damager.getStats().getRank();
@@ -366,7 +366,7 @@ public class DamageListener implements Listener {
                                 menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
                                 menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
                                 menuSelector.setItemMeta(menuMeta);
-                                player.getInventory().setItem(0, menuSelector);
+                                player.getInventory().setItem(4, menuSelector);
 
                                 Rank oldVictimRank = victim.getStats().getRank();
 
@@ -443,7 +443,7 @@ public class DamageListener implements Listener {
                         menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
                         menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
                         menuSelector.setItemMeta(menuMeta);
-                        player.getInventory().setItem(0, menuSelector);
+                        player.getInventory().setItem(4, menuSelector);
 
                         Rank oldVictimRank = victim.getStats().getRank();
                         Rank oldDamagerRank = damager.getStats().getRank();
@@ -516,7 +516,7 @@ public class DamageListener implements Listener {
                 menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
                 menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
                 menuSelector.setItemMeta(menuMeta);
-                player.getInventory().setItem(0, menuSelector);
+                player.getInventory().setItem(4, menuSelector);
 
                 Rank oldVictimRank = victim.getStats().getRank();
 

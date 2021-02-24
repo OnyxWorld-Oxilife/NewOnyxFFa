@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -91,6 +92,12 @@ public class FFaPlayerListener implements Listener {
     public void onTryToMoveArmor(InventoryClickEvent onTryToMoveArmorEvent){
         if(onTryToMoveArmorEvent.getSlotType() == InventoryType.SlotType.ARMOR){
             onTryToMoveArmorEvent.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent dropItemEvent){
+        if(!dropItemEvent.getPlayer().hasPermission("NewOnyxFFa.drop.bypass")){
+            dropItemEvent.setCancelled(true);
         }
     }
     @EventHandler
