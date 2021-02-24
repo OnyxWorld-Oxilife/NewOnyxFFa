@@ -250,6 +250,8 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 messagesConfiguration.set("NewOnyxFFa.Messages.SpawnCommand.Wait", "Téléportation dans %timer% secondes ... Ne bougez pas!");
                 messagesConfiguration.set("NewOnyxFFa.Messages.SpawnCommand.Error", "Vous avez bougé! Téléportation annulée");
                 messagesConfiguration.set("NewOnyxFFa.Messages.StatsCommand.Stats", "Voici vos stats: \n Rang : %rank% \n Kills: %kills% \n Morts : %deaths% \n Score: %points%");
+                messagesConfiguration.set("NewOnyxFFa.Messages.StatsCommand.OtherStats", "Voici les stats de %player%: \n Rang : %rank% \n Kills: %kills% \n Morts : %deaths% \n Score: %points%");
+                messagesConfiguration.set("NewOnyxFFa.Messages.StatsCommand.OtherNotFound", "Le joueur %player% n'a pas été trouvé...");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Offa.Spawn.Success", "Point de Spawn ajouté en: %x%, %y%, %z%, %yaw% , %pitch%");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Offa.Break.Success", "Le Bloc a été cassé avec succès");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Offa.Break.Error", "Erreur, aucun bloc ciblé!");
