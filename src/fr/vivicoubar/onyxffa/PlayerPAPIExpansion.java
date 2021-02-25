@@ -76,6 +76,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         }
         // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)
         // was provided
+
         return null;
     }
 

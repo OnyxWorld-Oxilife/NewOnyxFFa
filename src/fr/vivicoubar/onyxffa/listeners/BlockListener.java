@@ -85,7 +85,6 @@ public class BlockListener implements Listener {
                         }
                     }
                 }
-
             }
         } else if (!main.getBlockFileConfiguration().getList("NewOnyxFFa.Config.Block.AllowedBlocktoBreak").contains(onBreakBlock.getBlock().getType().toString())) {
             if (onBreakBlock.getPlayer().getGameMode() != GameMode.CREATIVE) {

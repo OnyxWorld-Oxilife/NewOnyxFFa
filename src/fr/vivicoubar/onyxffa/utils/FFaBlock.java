@@ -28,6 +28,7 @@ public class FFaBlock{
             public void run() {
                 if(Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).getType() == Material.AIR){
                     cancel();
+
                 }
                 if(timer == 0) {
                     Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).setType(Material.AIR);
