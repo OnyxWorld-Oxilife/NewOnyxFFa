@@ -154,6 +154,10 @@ public class DamageListener implements Listener {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
                         }
                     }
+                    //Commandes pour le Kill (Money)
+                    for(String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFight")){
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()).replaceAll("%killer%", damager.getPlayer().getName()));
+                    }
 
                 }
             }
@@ -239,6 +243,10 @@ public class DamageListener implements Listener {
                         for (String command : oldVictimRank.getCommandOnLeaveRank()) {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                         }
+                    }
+                    //Commandes pour le Kill (Money)
+                    for(String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFight")){
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()).replaceAll("%killer%", damager.getPlayer().getName()));
                     }
                     break;
                 }
@@ -337,6 +345,10 @@ public class DamageListener implements Listener {
                                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                                             }
                                         }
+                                        //Commandes pour le Kill (Money)
+                                        for(String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFight")){
+                                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()).replaceAll("%killer%", damager.getPlayer().getName()));
+                                        }
                                         break;
                                     }
                                 }
@@ -393,6 +405,10 @@ public class DamageListener implements Listener {
                                     for (String command : oldVictimRank.getCommandOnLeaveRank()) {
                                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                                     }
+                                }
+                                //Commandes pour le Kill (Money)
+                                for(String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFallIntoVoid")){
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()));
                                 }
 
                         }
@@ -487,6 +503,10 @@ public class DamageListener implements Listener {
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                             }
                         }
+                        //Commandes pour le Kill (Money)
+                        for(String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFight")){
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()).replaceAll("%killer%", damager.getPlayer().getName()));
+                        }
                         break;
                     }
                 }
@@ -546,7 +566,10 @@ public class DamageListener implements Listener {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
                     }
                 }
-
+                //Commandes pour le Kill (Money)
+                for(String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFallIntoVoid")){
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()));
+                }
 
             }
         }

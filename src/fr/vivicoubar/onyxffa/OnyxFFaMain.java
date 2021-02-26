@@ -90,6 +90,14 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Lore", lore.toArray());
                 configConfiguration.set("NewOnyxFFa.Config.SpawnCommand.TimerUntilTeleportation", 10);
                 lore.clear();
+                lore.add("msg %killer% test");
+                lore.add("msg %victim% test");
+                configConfiguration.set("NewOnyxFFa.Config.onKillCommands.onFight", lore.toArray());
+                lore.clear();
+                lore.add("msg %victim% test");
+                lore.add("msg %victim% test");
+                configConfiguration.set("NewOnyxFFa.Config.onKillCommands.onFallIntoVoid", lore.toArray());
+                lore.clear();
                 configConfiguration.save(configFile);
             }
 
