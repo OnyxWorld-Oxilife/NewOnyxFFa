@@ -35,7 +35,7 @@ public class ItemListener implements Listener {
     }
     @EventHandler
     private void onClickFFaItem(PlayerInteractEvent interactEvent) {
-        if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE) {
+        if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE && interactEvent.getAction() == Action.RIGHT_CLICK_AIR) {
             if(interactEvent.getItem() == null){
                 return;
             }
