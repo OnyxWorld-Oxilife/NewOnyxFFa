@@ -33,7 +33,6 @@ public class ItemListener implements Listener {
     public ItemListener(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
     }
-
     @EventHandler
     private void onClickFFaItem(PlayerInteractEvent interactEvent) {
         if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE) {
@@ -64,6 +63,7 @@ public class ItemListener implements Listener {
                                     helmetMeta.addEnchant(Enchantment.getByName(kitConfiguration.getString(enchantPath + ".Type")), kitConfiguration.getInt(enchantPath + ".Amplifier"), true);
                                 }
                             }
+                            helmetMeta.setUnbreakable(true);
                             helmet.setItemMeta(helmetMeta);
                             fFaPlayer.getPlayer().getInventory().setHelmet(helmet);
                             ItemStack chestPlate = new ItemStack(Material.LEATHER_CHESTPLATE);
@@ -75,6 +75,7 @@ public class ItemListener implements Listener {
                                     chestPlateMeta.addEnchant(Enchantment.getByName(kitConfiguration.getString(enchantPath + ".Type")), kitConfiguration.getInt(enchantPath + ".Amplifier"), true);
                                 }
                             }
+                            chestPlateMeta.setUnbreakable(true);
                             chestPlate.setItemMeta(chestPlateMeta);
                             fFaPlayer.getPlayer().getInventory().setChestplate(chestPlate);
                             ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
@@ -86,6 +87,7 @@ public class ItemListener implements Listener {
                                     leggingsMeta.addEnchant(Enchantment.getByName(kitConfiguration.getString(enchantPath + ".Type")), kitConfiguration.getInt(enchantPath + ".Amplifier"), true);
                                 }
                             }
+                            leggingsMeta.setUnbreakable(true);
                             leggings.setItemMeta(leggingsMeta);
                             fFaPlayer.getPlayer().getInventory().setLeggings(leggings);
                             ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
@@ -97,6 +99,7 @@ public class ItemListener implements Listener {
                                     bootsMeta.addEnchant(Enchantment.getByName(kitConfiguration.getString(enchantPath + ".Type")), kitConfiguration.getInt(enchantPath + ".Amplifier"), true);
                                 }
                             }
+                            bootsMeta.setUnbreakable(true);
                             boots.setItemMeta(bootsMeta);
                             fFaPlayer.getPlayer().getInventory().setBoots(boots);
                         } else {
