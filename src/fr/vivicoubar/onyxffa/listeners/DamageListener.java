@@ -83,7 +83,7 @@ public class DamageListener implements Listener {
                     FFaPlayer damager = new FFaPlayer(main, (Player) beKilledEvent.getDamager());
                     FFaPlayer victim = new FFaPlayer(main, (Player) beKilledEvent.getEntity());
                     victim.getPlayer().setHealth(20);
-                    double health = damager.getPlayer().getHealth() + 5;
+                    double health = damager.getPlayer().getHealth() + main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.HealthBonusAfterKill");
                     if(health > 20){
                         health = 20;
                     }
@@ -173,7 +173,7 @@ public class DamageListener implements Listener {
                     lastHitters.remove("" + quitWhileFightingEvent.getPlayer().getUniqueId());
                     FFaPlayer damager = new FFaPlayer(main, onlinePlayer);
                     damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.QuitWhileFighting.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
-                    double health = damager.getPlayer().getHealth() + 5;
+                    double health = damager.getPlayer().getHealth() + main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.HealthBonusAfterKill");
                     if (health > 20) {
                         health = 20;
                     }
@@ -273,7 +273,7 @@ public class DamageListener implements Listener {
                                         victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
                                         damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
 
-                                        double health = damager.getPlayer().getHealth() + 5;
+                                        double health = damager.getPlayer().getHealth() + main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.HealthBonusAfterKill");
                                         if (health > 20) {
                                             health = 20;
                                         }
@@ -431,7 +431,7 @@ public class DamageListener implements Listener {
                         FFaPlayer damager = new FFaPlayer(main, onlinePlayer);
                         fallIntoVoidEvent.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.FallenIntoTheVoid.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
                         damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.FallenIntoTheVoid.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
-                        double health = damager.getPlayer().getHealth() + 5;
+                        double health = damager.getPlayer().getHealth() + main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.HealthBonusAfterKill");
                         if(health > 20){
                             health = 20;
                         }

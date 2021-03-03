@@ -97,6 +97,7 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 lore.add("msg %victim% test");
                 lore.add("msg %victim% test");
                 configConfiguration.set("NewOnyxFFa.Config.onKillCommands.onFallIntoVoid", lore.toArray());
+                configConfiguration.set("NewOnyxFFa.Config.HealthBonusAfterKill", 5);
                 lore.clear();
                 configConfiguration.save(configFile);
             }

@@ -36,6 +36,9 @@ public class ItemListener implements Listener {
     @EventHandler
     private void onClickFFaItem(PlayerInteractEvent interactEvent) {
         if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE) {
+            if(interactEvent.getItem() == null){
+                return;
+            }
             if (interactEvent.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(main.getConfigConfiguration().getString("NewOnyxFFa.Config.Menu.Item.Name"))) {
                 FFaPlayer fFaPlayer = new FFaPlayer(this.main, interactEvent.getPlayer());
                 fFaPlayer.getPlayer().closeInventory();
