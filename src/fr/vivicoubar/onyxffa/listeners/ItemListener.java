@@ -53,8 +53,8 @@ public class ItemListener implements Listener {
                         FileConfiguration kitConfiguration = main.getKitsConfiguration();
                         if (kitConfiguration.getString("NewOnyxFFa.Ffa." + rankpath + ".Armor.Material").equalsIgnoreCase("ColoredLeather")) {
                             int red = kitConfiguration.getInt("NewOnyxFFa.Ffa." + rankpath + ".Armor.Color.R");
-                            int blue = kitConfiguration.getInt("NewOnyxFFa.Ffa." + rankpath + ".Armor.Color.G");
-                            int green = kitConfiguration.getInt("NewOnyxFFa.Ffa." + rankpath + ".Armor.Color.B");
+                            int green = kitConfiguration.getInt("NewOnyxFFa.Ffa." + rankpath + ".Armor.Color.G");
+                            int blue = kitConfiguration.getInt("NewOnyxFFa.Ffa." + rankpath + ".Armor.Color.B");
                             ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
                             LeatherArmorMeta helmetMeta = (LeatherArmorMeta) helmet.getItemMeta();
                             helmetMeta.setColor(Color.fromRGB(red,green,blue));
