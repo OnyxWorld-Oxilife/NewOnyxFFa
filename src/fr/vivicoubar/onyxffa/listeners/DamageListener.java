@@ -49,6 +49,9 @@ public class DamageListener implements Listener {
                         takeDamageEvent.setCancelled(true);
                     }
                 }
+                if(((Player) takeDamageEvent.getEntity()).getGameMode() != GameMode.SURVIVAL || ((Player) takeDamageEvent.getDamager()).getGameMode() != GameMode.SURVIVAL ){
+                    takeDamageEvent.setCancelled(true);
+                }
                 String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
                 String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                 lastHitters.put(victimUUid, damagerUuid);
