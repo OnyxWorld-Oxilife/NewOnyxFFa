@@ -100,7 +100,7 @@ public class BlockListener implements Listener {
         for (String path : main.getBlockFileConfiguration().getConfigurationSection("NewOnyxFFa.Config.Block.JumpadBlock").getKeys(false))
             if (Material.getMaterial(main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.JumpadBlock." + path + ".Material")) == blockLocation.getBlock().getType()){
                 FFaPlayer player = new FFaPlayer(main, walkOnJumpadEvent.getPlayer());
-                player.getPlayer().setVelocity(player.getPlayer().getLocation().getDirection().multiply(main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.JumpadBlock.1.VectorCoords.EyeLocationDirectionMovementMultiplier")).setY(main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.JumpadBlock.1.VectorCoords.High")));
+                player.getPlayer().setVelocity(player.getPlayer().getLocation().getDirection().multiply(main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.JumpadBlock."+ path +".VectorCoords.EyeLocationDirectionMovementMultiplier")).setY(main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.JumpadBlock."+ path +".VectorCoords.High")));
                 player.getPlayer().playSound(playerLocation, Sound.ENTITY_FIREWORK_SHOOT, 10, 10);
             }
     }
