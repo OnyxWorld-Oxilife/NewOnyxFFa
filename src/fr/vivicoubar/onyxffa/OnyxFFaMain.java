@@ -272,7 +272,6 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 messagesConfiguration.set("NewOnyxFFa.Messages.Points.Error", "Erreur. La commande est '/points <arg> <player> <number>");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Points.PlayerOffline", "Erreur. Le joueur %player% n'est pas connecté.");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Points.Success", "Le score de %player% est maintenant %score%. Son meilleur score est %highScore%");
-                messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommand.Success", "Vos statistiques ont été remises à zéro!");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Kill.toKiller", "Vous avez éliminé: %player%");
                 messagesConfiguration.set("NewOnyxFFa.Messages.Kill.toVictim", "Vous avez été vaincu par: %player%");
                 messagesConfiguration.set("NewOnyxFFa.Messages.FallenIntoTheVoid.Suicide", "Vous avez essayé le saut à l'élastique... Sans élastique.");
@@ -282,6 +281,9 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 messagesConfiguration.set("NewOnyxFFa.Messages.KilledByFalling.toKiller", "%player% s'est écrasé quelques mètres plus bas.");
                 messagesConfiguration.set("NewOnyxFFa.Messages.KilledByFalling.toVictim", "%player% vous a fait mordre la poussière... littéralement.");
                 messagesConfiguration.set("NewOnyxFFa.Messages.KilledByFalling.Suicide", "Vous êtes tombés trop bas!");
+                messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommand.Success", "Vos statistiques ont été remises à zéro!");
+                messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommandOther.Error", "Erreur, le joueur %player% n'est pas connecté");
+                messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommandOther.Success", "Les statistiques de %player% ont été remises à zéro!");
                 messagesConfiguration.save(messagesFile);
             }
         } catch (Exception exception) {
