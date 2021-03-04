@@ -65,13 +65,13 @@ public class Stats {
         return highscore;
     }
 
-    public void reset(){
+    public void reset() throws IOException {
         FileConfiguration statsConfiguration = main.getStatsConfiguration();
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Kills", 0);
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Deaths", 0);
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points", 0);
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore", 0);
-
+        statsConfiguration.save(main.getStatsFile());
         this.kills = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Kills");
         this.deaths = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Deaths");
         this.points = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points");
