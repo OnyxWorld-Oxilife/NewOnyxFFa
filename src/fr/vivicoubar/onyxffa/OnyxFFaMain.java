@@ -63,7 +63,6 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);
         pluginManager.registerEvents(new DamageListener(this), this);
-        pluginManager.registerEvents(new DamageListener(this), this);
 
         try {
             if (!getDataFolder().exists()) {

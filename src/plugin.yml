@@ -1,7 +1,7 @@
 name: NewOnyxFFa
 author: ViViCouBar
 main: fr.vivicoubar.onyxffa.OnyxFFaMain
-version: 1.0.9
+version: 1.0.10
 prefix: "NewOnyxFFa"
 database: false
 api-version: 1.12.2
