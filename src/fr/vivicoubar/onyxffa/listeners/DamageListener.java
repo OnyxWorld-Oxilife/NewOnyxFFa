@@ -86,6 +86,8 @@ public class DamageListener implements Listener {
                     beKilledEvent.setCancelled(true);
                     FFaPlayer damager = new FFaPlayer(main, (Player) beKilledEvent.getDamager());
                     FFaPlayer victim = new FFaPlayer(main, (Player) beKilledEvent.getEntity());
+                    victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.Kill.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
+                    damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.Kill.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                     initKill(damager, victim);
                 }
             }
