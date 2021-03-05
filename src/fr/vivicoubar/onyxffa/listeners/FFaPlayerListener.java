@@ -77,6 +77,7 @@ public class FFaPlayerListener implements Listener {
         menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
         menuSelector.setItemMeta(menuMeta);
         player.getInventory().setItem(4,menuSelector);
+        player.getInventory().setHeldItemSlot(4);
     }
     @EventHandler
     public void onMoveAfterSpawn(PlayerMoveEvent playerMoveAfterSpawnEvent){
