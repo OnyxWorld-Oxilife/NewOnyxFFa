@@ -183,7 +183,9 @@ public class DamageListener implements Listener {
             victim.getPlayer().setHealth(20);
             victim.getPlayer().getInventory().clear();
             victim.getPlayer().setFallDistance(-5);
-            victim.getPlayer().getActivePotionEffects().clear();
+            for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
+                victim.getPlayer().removePotionEffect(potionEffect.getType());
+            }
             victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
             FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
             FileConfiguration configConfiguration = main.getConfigConfiguration();
@@ -250,7 +252,9 @@ public class DamageListener implements Listener {
             victim.getPlayer().setHealth(20);
             victim.getPlayer().getInventory().clear();
             victim.getPlayer().setFallDistance(-500);
-            victim.getPlayer().getActivePotionEffects().clear();
+            for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
+                victim.getPlayer().removePotionEffect(potionEffect.getType());
+            }
             victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
             FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
             FileConfiguration configConfiguration = main.getConfigConfiguration();
