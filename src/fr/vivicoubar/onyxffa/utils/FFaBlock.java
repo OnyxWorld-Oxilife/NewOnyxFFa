@@ -34,7 +34,7 @@ public class FFaBlock{
                     Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).setType(Material.AIR);
                     cancel();
                 }
-                if(timer == 5) {
+                if(timer == main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.ReplaceTime")) {
                     Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).setType(Material.getMaterial(main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.BlockBeforeBreakState")));
                 }
                 timer--;

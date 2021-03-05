@@ -106,6 +106,7 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 blockFileConfiguration = YamlConfiguration.loadConfiguration(blockFile);
                 blockFileConfiguration.set("NewOnyxFFa.Config.Block.TimerUntilBreak", 5);
                 blockFileConfiguration.set("NewOnyxFFa.Config.Block.BlockBeforeBreakState", "BRICK");
+                blockFileConfiguration.set("NewOnyxFFa.Config.Block.ReplaceTime", 5);
                 lore.clear();
                 lore.add("BRICK");
                 lore.add("SANDSTONE");
