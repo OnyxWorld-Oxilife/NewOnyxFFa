@@ -20,6 +20,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +41,7 @@ public class FFaPlayerListener implements Listener {
         FileConfiguration messagesConfiguration = main.getMessagesConfiguration();
         FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
         FileConfiguration configConfiguration = main.getConfigConfiguration();
-        FFaPlayer ffaPlayer = new FFaPlayer(main, joinEvent.getPlayer());
+        FFaPlayer ffaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, joinEvent.getPlayer());
         joinEvent.setJoinMessage(null);
         if(!ffaPlayer.getPlayer().hasPermission("OnyxFfa.mod.hideJoinMessage"))
         {
@@ -107,5 +108,9 @@ public class FFaPlayerListener implements Listener {
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent onWeatherChangeEvent){
         onWeatherChangeEvent.setCancelled(true);
+    }
+    @EventHandler
+    public void onQuit(PlayerQuitEvent playerQuitEvent){
+        playerQuitEvent.setQuitMessage(null);
     }
 }

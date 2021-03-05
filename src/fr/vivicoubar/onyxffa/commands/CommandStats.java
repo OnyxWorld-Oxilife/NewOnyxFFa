@@ -26,7 +26,7 @@ public class CommandStats implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("stats")) {
             if (sender instanceof Player) {
                 if (strings.length == 0 || !sender.hasPermission("NewOnyxFFa.stats.others")) {
-                    FFaPlayer fFaPlayer = new FFaPlayer(main, (Player) sender);
+                    FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, (Player) sender);
                     List<Double> score = fFaPlayer.getStats().getScore();
                     double kills = score.get(0);
                     double deaths = score.get(1);

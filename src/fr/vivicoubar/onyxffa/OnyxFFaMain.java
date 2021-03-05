@@ -5,8 +5,7 @@ import fr.vivicoubar.onyxffa.listeners.BlockListener;
 import fr.vivicoubar.onyxffa.listeners.DamageListener;
 import fr.vivicoubar.onyxffa.listeners.FFaPlayerListener;
 import fr.vivicoubar.onyxffa.listeners.ItemListener;
-import fr.vivicoubar.onyxffa.utils.RanksManager;
-import fr.vivicoubar.onyxffa.utils.SpawnManager;
+import fr.vivicoubar.onyxffa.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,6 +35,7 @@ private File blockFile;
 private FileConfiguration blockFileConfiguration;
 private RanksManager ranksManager;
 private SpawnManager spawnManager;
+private FFaPlayerManager fFaPlayerManager;
 private final List<String> commandsList = new ArrayList<>();
 private final List<String> lore = new ArrayList<>();
 private final List<String> SpawnInWait = new ArrayList<>();
@@ -66,6 +66,7 @@ private ProtocolManager protocolManager;
         getCommand("spawn").setExecutor(new CommandSpawn(this));
         getCommand("resetStats").setExecutor(new CommandResetStats(this));
         getCommand("points").setExecutor(new CommandPoints(this));
+        getCommand("autorespawn").setExecutor(new CommandAutoRespawn(this));
         pluginManager.registerEvents(new FFaPlayerListener(this), this);
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);
@@ -324,6 +325,7 @@ private ProtocolManager protocolManager;
         */
         ranksManager = new RanksManager(this);
         spawnManager = new SpawnManager(this, spawnsList);
+        fFaPlayerManager = new FFaPlayerManager(this);
 
         for (String blockEffect : blockFileConfiguration.getConfigurationSection("NewOnyxFFa.Config.Block.BlockWithEffects").getKeys(false)) {
             blockEffectList.add(blockFileConfiguration.getString("NewOnyxFFa.Config.Block.BlockWithEffects." + blockEffect + ".Material"));
@@ -397,6 +399,7 @@ private ProtocolManager protocolManager;
     }
     public File getRanksFile() { return ranksFile; }
     public RanksManager getRanksManager(){return ranksManager;}
+    public FFaPlayerManager getfFaPlayerManager(){return fFaPlayerManager;}
     public SpawnManager getSpawnManager(){return spawnManager;}
     /*
     public FFaBlockManager getfFaBlockManager() {

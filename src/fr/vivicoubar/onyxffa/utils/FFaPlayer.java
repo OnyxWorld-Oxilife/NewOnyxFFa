@@ -9,13 +9,18 @@ import org.bukkit.inventory.Inventory;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class FFaPlayer {
     private final Player player;
     private final Inventory inventory;
     private Stats stats;
+    private boolean autorespawnBoolean = true;
     private final OnyxFFaMain main;
+    private AutoRespawnManager autoRespawnManager;
+    private UUID uniqueID;
+
     public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player){
         this.main = onyxFFaMain;
         FileConfiguration statsConfiguration = main.getStatsConfiguration();
@@ -31,15 +36,20 @@ public class FFaPlayer {
                 e.printStackTrace();
             }
         }
+        this.uniqueID = player.getUniqueId();
+        this.autoRespawnManager = new AutoRespawnManager(this.main);
         this.player = player;
         this.inventory = player.getInventory();
         this.stats = new Stats(this, main);
+        this.main.getfFaPlayerManager().getfFaPlayerList().add(this);
     }
 
     public Player getPlayer(){
         return this.player;
     }
-
+    public UUID getUniqueID() {
+        return uniqueID;
+    }
     public Inventory getInventory(){
         return this.player.getInventory();
     }
@@ -49,13 +59,20 @@ public class FFaPlayer {
     public void updateStats(){
         this.stats = new Stats(this, main);
     }
-
     public void setHealth(double health){
         this.player.setHealth(health);
     }
-
+    public boolean isAutorespawnBoolean() {
+        return autorespawnBoolean;
+    }
+    public AutoRespawnManager getAutoRespawnManager() {
+        return autoRespawnManager;
+    }
     public void setLocation(Location location){
         this.player.teleport(location);
+    }
+    public void setAutorespawnBoolean(){
+        this.autorespawnBoolean = !autorespawnBoolean;
     }
 
 }

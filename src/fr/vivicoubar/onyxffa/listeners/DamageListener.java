@@ -90,8 +90,8 @@ public class DamageListener implements Listener {
                 }
                 if (((Player) beKilledEvent.getEntity()).getHealth() <= beKilledEvent.getFinalDamage()) {
                     beKilledEvent.setCancelled(true);
-                    FFaPlayer damager = new FFaPlayer(main, (Player) beKilledEvent.getDamager());
-                    FFaPlayer victim = new FFaPlayer(main, (Player) beKilledEvent.getEntity());
+                    FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getDamager());
+                    FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getEntity());
                     victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.Kill.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
                     damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.Kill.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                     initKill(damager, victim);
@@ -102,13 +102,13 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onQuitWhileFighting(PlayerQuitEvent quitWhileFightingEvent) throws IOException {
-        FFaPlayer victim = new FFaPlayer(main, quitWhileFightingEvent.getPlayer());
+        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, quitWhileFightingEvent.getPlayer());
         if (lastHitters.containsKey("" + quitWhileFightingEvent.getPlayer().getUniqueId())) {
             String damagerUUid = lastHitters.get("" + quitWhileFightingEvent.getPlayer().getUniqueId());
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (("" + onlinePlayer.getUniqueId()).equalsIgnoreCase(damagerUUid)) {
                     lastHitters.remove("" + quitWhileFightingEvent.getPlayer().getUniqueId());
-                    FFaPlayer damager = new FFaPlayer(main, onlinePlayer);
+                    FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlinePlayer);
                     damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.QuitWhileFighting.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                     initKill(damager, victim);
                     break;
@@ -128,13 +128,13 @@ public class DamageListener implements Listener {
                 if (((Player) damageEvent.getEntity()).getHealth() <= damageEvent.getFinalDamage()) {
                     damageEvent.setCancelled(true);
                     if (((Player) damageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
-                        FFaPlayer victim = new FFaPlayer(main, (Player) damageEvent.getEntity());
+                        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) damageEvent.getEntity());
                         if (lastHitters.containsKey("" + victim.getPlayer().getUniqueId())) {
                             String damagerUUid = lastHitters.get("" + victim.getPlayer().getUniqueId());
                             for (Player onlineplayer : Bukkit.getOnlinePlayers()) {
                                 if (damagerUUid.equalsIgnoreCase("" + onlineplayer.getUniqueId())) {
                                     lastHitters.remove("" + victim.getPlayer().getUniqueId());
-                                    FFaPlayer damager = new FFaPlayer(main, onlineplayer);
+                                    FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlineplayer);
                                     victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
                                     damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                                     initKill(damager, victim);
@@ -161,8 +161,8 @@ public class DamageListener implements Listener {
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (("" + onlinePlayer.getUniqueId()).equals(damagerUUid)) {
                         lastHitters.remove("" + fallIntoVoidEvent.getPlayer().getUniqueId());
-                        FFaPlayer victim = new FFaPlayer(main, fallIntoVoidEvent.getPlayer());
-                        FFaPlayer damager = new FFaPlayer(main, onlinePlayer);
+                        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, fallIntoVoidEvent.getPlayer());
+                        FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlinePlayer);
                         victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.FallenIntoTheVoid.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
                         damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.FallenIntoTheVoid.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                         initKill(damager, victim);
@@ -187,31 +187,7 @@ public class DamageListener implements Listener {
                 victim.getPlayer().removePotionEffect(potionEffect.getType());
             }
             victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
-            FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
-            FileConfiguration configConfiguration = main.getConfigConfiguration();
-            Player player = victim.getPlayer();
-            player.setGameMode(GameMode.ADVENTURE);
-            player.setFoodLevel(20);
-            player.getInventory().setHeldItemSlot(4);
-            player.getActivePotionEffects().clear();
-            //Téléportation au spawn
-            player.teleport(
-                    new Location(Bukkit.getWorld(spawnConfiguration.getString("NewOnyxFFa.Spawns.Lobby.WorldName")),
-                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.x"),
-                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.y"),
-                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.z"),
-                            (float) spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.yaw"),
-                            (float) spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.pitch")));
-            ItemStack menuSelector = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
-            ItemMeta menuMeta = menuSelector.getItemMeta();
-            if ((boolean) configConfiguration.get("NewOnyxFFa.Config.Menu.Item.Enchanted")) {
-                menuMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-            }
-            menuMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
-            menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
-            menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
-            menuSelector.setItemMeta(menuMeta);
-            player.getInventory().setItem(4, menuSelector);
+            victim.getAutoRespawnManager().askRespawn(victim);
 
             Rank oldVictimRank = victim.getStats().getRank();
 
@@ -256,31 +232,7 @@ public class DamageListener implements Listener {
                 victim.getPlayer().removePotionEffect(potionEffect.getType());
             }
             victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
-            FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
-            FileConfiguration configConfiguration = main.getConfigConfiguration();
-            Player player = victim.getPlayer();
-            player.getInventory().setHeldItemSlot(4);
-            player.setGameMode(GameMode.ADVENTURE);
-            player.setFoodLevel(20);
-            player.getActivePotionEffects().clear();
-            //Téléportation au spawn
-            player.teleport(
-                    new Location(Bukkit.getWorld(spawnConfiguration.getString("NewOnyxFFa.Spawns.Lobby.WorldName")),
-                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.x"),
-                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.y"),
-                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.z"),
-                            (float) spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.yaw"),
-                            (float) spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.pitch")));
-            ItemStack menuSelector = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
-            ItemMeta menuMeta = menuSelector.getItemMeta();
-            if ((boolean) configConfiguration.get("NewOnyxFFa.Config.Menu.Item.Enchanted")) {
-                menuMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-            }
-            menuMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
-            menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
-            menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
-            menuSelector.setItemMeta(menuMeta);
-            player.getInventory().setItem(4, menuSelector);
+            victim.getAutoRespawnManager().askRespawn(victim);
 
             Rank oldVictimRank = victim.getStats().getRank();
             Rank oldDamagerRank = damager.getStats().getRank();

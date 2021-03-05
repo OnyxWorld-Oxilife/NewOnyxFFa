@@ -49,7 +49,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         if(player == null){
             return "";
         }
-        FFaPlayer fFaPlayer = new FFaPlayer(main, player);
+        FFaPlayer fFaPlayer =main.getfFaPlayerManager().getFFaPlayer(main, player);
 
         // %someplugin_placeholder1%
         if(identifier.equals("kills")){

@@ -3,10 +3,13 @@ package fr.vivicoubar.onyxffa.utils;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import org.bukkit.*;
 import org.bukkit.entity.Firework;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class FFaEffectBlock {
+public class FFaEffectBlock{
     private Location block;
     private OnyxFFaMain main;
 
@@ -42,7 +45,9 @@ public class FFaEffectBlock {
 
      }.runTaskTimer(this.main,0,20);
 }
+
     public Location getBlock() {
         return block;
     }
 }
+

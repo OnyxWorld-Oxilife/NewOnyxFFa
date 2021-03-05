@@ -44,7 +44,7 @@ public class ItemListener implements Listener {
                 return;
             }
             if (interactEvent.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(main.getConfigConfiguration().getString("NewOnyxFFa.Config.Menu.Item.Name"))) {
-                FFaPlayer fFaPlayer = new FFaPlayer(this.main, interactEvent.getPlayer());
+                FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(this.main, interactEvent.getPlayer());
                 fFaPlayer.getPlayer().closeInventory();
                 fFaPlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 5));
 

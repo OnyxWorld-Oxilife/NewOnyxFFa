@@ -25,7 +25,7 @@ public class CommandResetStats implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("resetstats")){
             if(sender instanceof Player) {
                 if (strings.length == 0) {
-                    FFaPlayer fFaPlayer = new FFaPlayer(main, (Player) sender);
+                    FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, (Player) sender);
                     try {
                         fFaPlayer.getStats().reset();
                     } catch (IOException e) {
@@ -36,7 +36,7 @@ public class CommandResetStats implements CommandExecutor {
                 }else{
                     for(Player player : Bukkit.getOnlinePlayers()){
                         if(player.getName().equalsIgnoreCase(strings[0])){
-                            FFaPlayer ffaplayer = new FFaPlayer(main, Bukkit.getPlayer(strings[0]));
+                            FFaPlayer ffaplayer = main.getfFaPlayerManager().getFFaPlayer(main, Bukkit.getPlayer(strings[0]));
                             try {
                                 ffaplayer.getStats().reset();
                             } catch (IOException e) {
