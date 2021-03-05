@@ -34,8 +34,10 @@ public class FFaBlock{
                     Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).setType(Material.AIR);
                     cancel();
                 }
-                if(timer == main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.ReplaceTime")) {
-                    Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).setType(Material.getMaterial(main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.BlockBeforeBreakState")));
+                if(timer == main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.ReplaceTime")) {
+                    if(Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).getType() != Material.AIR){
+                        Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).setType(Material.getMaterial(main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.BlockBeforeBreakState")));
+                    }
                 }
                 timer--;
             }
