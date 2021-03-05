@@ -26,7 +26,6 @@ public class AutoRespawnManager {
             fFaPlayer.getPlayer().closeInventory();
             fFaPlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 5));
 
-            Location spawn = new SpawnManager(main, main.getSpawnsList()).getSelectedSpawn();
             Location temp = new Location(fFaPlayer.getPlayer().getWorld(), 738, 48, 625);
 
             fFaPlayer.getPlayer().setGameMode(GameMode.SPECTATOR);
@@ -41,6 +40,7 @@ public class AutoRespawnManager {
                         fFaPlayer.getPlayer().sendTitle("§7Vous êtes §cMort!", "§7Respawn dans §c"  + timer + "...", 5 , 10 ,5);
                     } else if(timer == 0){
                         cancel();
+                        Location spawn = new SpawnManager(main, main.getSpawnsList()).getSelectedSpawn();
                         fFaPlayer.getPlayer().teleport(spawn, PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
                         fFaPlayer.getPlayer().setGameMode(GameMode.SURVIVAL);
                         fFaPlayer.getPlayer().getInventory().setHeldItemSlot(0);
