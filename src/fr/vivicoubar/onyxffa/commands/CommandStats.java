@@ -67,9 +67,10 @@ public class CommandStats implements CommandExecutor {
 
                                 }
                         }
-                        sender.sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.StatsCommand.OtherNotFound").replaceAll("%player%",playerName));
-                        return true;
+
                     }
+                    sender.sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.StatsCommand.OtherNotFound").replaceAll("%player%",playerName));
+                    return true;
                 }
 
             }

@@ -27,3 +27,7 @@ commands:
     aliases: [score]
     permission: NewOnyxFFa.points.use
     usage: §cMissing argument (add/set)
+  autorespawn:
+    permission: NewOnyxFFa.autorespawn.use
+  kill:
+    permission: NewOnyxFFa.kill.use

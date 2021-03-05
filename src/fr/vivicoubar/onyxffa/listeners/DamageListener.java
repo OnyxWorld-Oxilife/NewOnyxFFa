@@ -16,6 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemFlag;
@@ -43,8 +44,7 @@ public class DamageListener implements Listener {
             if(takeDamageEvent.getEntity() instanceof Firework){
                 takeDamageEvent.setCancelled(true);
             }
-        }
-        if (takeDamageEvent.getDamager() instanceof Player) {
+        }else if (takeDamageEvent.getDamager() instanceof Player) {
             if (takeDamageEvent.getEntity() instanceof Player) {
                 for (PotionEffect potionEffect : ((Player) takeDamageEvent.getEntity()).getActivePotionEffects()) {
                     if (potionEffect.getType().equals(PotionEffectType.GLOWING)) {
@@ -170,7 +170,7 @@ public class DamageListener implements Listener {
                     }
                 }
             } else {
-                FFaPlayer victim = new FFaPlayer(main, fallIntoVoidEvent.getPlayer());
+                FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, fallIntoVoidEvent.getPlayer());
                 victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.FallenIntoTheVoid.Suicide"));
                 initSuicide(victim);
 

@@ -21,7 +21,13 @@ public class CommandAutoRespawn implements CommandExecutor {
                 if(player.getUniqueID() == sender.getUniqueId()){
                     FFaPlayer ffasender = player;
                     ffasender.setAutorespawnBoolean();
-                    return true;
+                    if(ffasender.isAutorespawnBoolean()) {
+                        ffasender.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.ChangeAutoRespawn.true"));
+                    }else{
+                        ffasender.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.ChangeAutoRespawn.false"));
+                    }
+                        return true;
+
                 }
             }
             FFaPlayer ffasender = new FFaPlayer(this.main, sender);

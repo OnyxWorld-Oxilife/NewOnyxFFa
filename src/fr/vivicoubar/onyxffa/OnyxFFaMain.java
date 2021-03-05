@@ -64,6 +64,7 @@ private ProtocolManager protocolManager;
         getCommand("offa").setExecutor(new CommandOffa(this));
         getCommand("stats").setExecutor(new CommandStats(this));
         getCommand("spawn").setExecutor(new CommandSpawn(this));
+        getCommand("kill").setExecutor(new CommandSpawn(this));
         getCommand("resetStats").setExecutor(new CommandResetStats(this));
         getCommand("points").setExecutor(new CommandPoints(this));
         getCommand("autorespawn").setExecutor(new CommandAutoRespawn(this));
@@ -294,6 +295,8 @@ private ProtocolManager protocolManager;
                 messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommand.Success", "Vos statistiques ont été remises à zéro!");
                 messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommandOther.Error", "Erreur, le joueur %player% n'est pas connecté");
                 messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommandOther.Success", "Les statistiques de %player% ont été remises à zéro!");
+                messagesConfiguration.set("NewOnyxFFa.Messages.ChangeAutoRespawn.true", "Vous avez chosi d'activer l'autorespawn");
+                messagesConfiguration.set("NewOnyxFFa.Messages.ChangeAutoRespawn.false", "Vous avez chosi de désactiver l'autorespawn");
                 messagesConfiguration.save(messagesFile);
             }
         } catch (Exception exception) {
