@@ -83,6 +83,7 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 lore.add("§aCliquer Pour");
                 lore.add("§aRejoindre le FFa");
                 configConfiguration.set("NewOnyxFFa.Config.minY", 50);
+                configConfiguration.set("NewOnyxFFa.Config.UseDeathByFallDamageRecognition", true);
                 configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Material", "GOLD_AXE");
                 configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Name", "RushFFa");
                 configConfiguration.set("NewOnyxFFa.Config.Menu.Item.Enchanted", true);

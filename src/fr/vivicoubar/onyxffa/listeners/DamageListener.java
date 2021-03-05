@@ -115,6 +115,7 @@ public class DamageListener implements Listener {
     @EventHandler(priority= EventPriority.LOWEST)
     public void onDeathByFallDamage(EntityDamageEvent damageEvent) throws IOException {
         if (damageEvent.getEntity() instanceof Player) {
+            if(main.getConfigConfiguration().getBoolean("NewOnyxFFa.Config.UseDeathByFallDamageRecognition")){
             if (damageEvent.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 if (((Player) damageEvent.getEntity()).getGameMode() != GameMode.SURVIVAL) {
                     damageEvent.setCancelled(true);
@@ -143,6 +144,7 @@ public class DamageListener implements Listener {
                     }
                 }
             }
+        }
         }
     }
 
