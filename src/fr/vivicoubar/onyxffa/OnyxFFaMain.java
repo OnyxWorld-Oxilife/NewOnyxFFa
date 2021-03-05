@@ -6,6 +6,7 @@ import fr.vivicoubar.onyxffa.listeners.DamageListener;
 import fr.vivicoubar.onyxffa.listeners.FFaPlayerListener;
 import fr.vivicoubar.onyxffa.listeners.ItemListener;
 import fr.vivicoubar.onyxffa.utils.RanksManager;
+import fr.vivicoubar.onyxffa.utils.SpawnManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,19 +35,25 @@ private FileConfiguration kitsConfiguration;
 private File blockFile;
 private FileConfiguration blockFileConfiguration;
 private RanksManager ranksManager;
+private SpawnManager spawnManager;
 private final List<String> commandsList = new ArrayList<>();
 private final List<String> lore = new ArrayList<>();
 private final List<String> SpawnInWait = new ArrayList<>();
 private final List<Location> spawnsList = new ArrayList<>();
 private final List<String> blockEffectList= new ArrayList<>();
 private final List<String> jumpadsBlocks = new ArrayList<>();
-
+        /*
+private FFaBlockManager fFaBlockManager;
+private ProtocolManager protocolManager;
+         */
     @Override
     public void onEnable() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PlayerPAPIExpansion(this).register();
         }
-
+        /*
+        protocolManager = ProtocolLibrary.getProtocolManager();
+*/
         System.out.println(" ");
         System.out.println("************************");
         System.out.println("[NewOnyxFFA] > DEMARRAGE");
@@ -299,7 +306,6 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
         kitsConfiguration = YamlConfiguration.loadConfiguration(kitsFile);
         blockFileConfiguration = YamlConfiguration.loadConfiguration(blockFile);
 
-        ranksManager = new RanksManager(this);
 
         for (String spawnName : spawnsConfiguration.getConfigurationSection("NewOnyxFFa.Spawns").getKeys(false)) {
             if (!spawnName.equalsIgnoreCase("lobby")) {
@@ -312,6 +318,13 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
                 ));
             }
         }
+
+        /*
+        fFaBlockManager = new FFaBlockManager(this);
+        */
+        ranksManager = new RanksManager(this);
+        spawnManager = new SpawnManager(this, spawnsList);
+
         for (String blockEffect : blockFileConfiguration.getConfigurationSection("NewOnyxFFa.Config.Block.BlockWithEffects").getKeys(false)) {
             blockEffectList.add(blockFileConfiguration.getString("NewOnyxFFa.Config.Block.BlockWithEffects." + blockEffect + ".Material"));
         }
@@ -384,8 +397,20 @@ private final List<String> jumpadsBlocks = new ArrayList<>();
     }
     public File getRanksFile() { return ranksFile; }
     public RanksManager getRanksManager(){return ranksManager;}
+    public SpawnManager getSpawnManager(){return spawnManager;}
+    /*
+    public FFaBlockManager getfFaBlockManager() {
+        return fFaBlockManager;
+    }
 
+     */
     public List<String> getJumpadsBlocks() {
         return jumpadsBlocks;
     }
+/*
+    public ProtocolManager getProtocolManager() {
+        return protocolManager;
+    }
+
+ */
 }

@@ -3,6 +3,7 @@ package fr.vivicoubar.onyxffa.listeners;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
+import fr.vivicoubar.onyxffa.utils.SpawnManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -46,9 +47,10 @@ public class ItemListener implements Listener {
                 FFaPlayer fFaPlayer = new FFaPlayer(this.main, interactEvent.getPlayer());
                 fFaPlayer.getPlayer().closeInventory();
                 fFaPlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 5));
-                int spawn = (int) (Math.random() * (main.getSpawnsList().size() - 1));
-                main.getSpawnsList().get(spawn).setWorld(interactEvent.getPlayer().getWorld());
-                fFaPlayer.getPlayer().teleport(main.getSpawnsList().get(spawn), PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
+
+                Location spawn = new SpawnManager(main, main.getSpawnsList()).getSelectedSpawn();
+
+                fFaPlayer.getPlayer().teleport(spawn, PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
                 fFaPlayer.getPlayer().setGameMode(GameMode.SURVIVAL);
                 fFaPlayer.getPlayer().getInventory().setHeldItemSlot(0);
                 fFaPlayer.getInventory().clear();

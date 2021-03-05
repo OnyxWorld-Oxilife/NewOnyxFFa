@@ -24,7 +24,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -184,6 +183,7 @@ public class DamageListener implements Listener {
             victim.getPlayer().setHealth(20);
             victim.getPlayer().getInventory().clear();
             victim.getPlayer().setFallDistance(-5);
+            victim.getPlayer().getActivePotionEffects().clear();
             victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
             FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
             FileConfiguration configConfiguration = main.getConfigConfiguration();
@@ -250,6 +250,7 @@ public class DamageListener implements Listener {
             victim.getPlayer().setHealth(20);
             victim.getPlayer().getInventory().clear();
             victim.getPlayer().setFallDistance(-500);
+            victim.getPlayer().getActivePotionEffects().clear();
             victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
             FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
             FileConfiguration configConfiguration = main.getConfigConfiguration();

@@ -27,7 +27,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
-
 public class FFaPlayerListener implements Listener {
 
     private final OnyxFFaMain main;
