@@ -37,20 +37,21 @@ public class BlockListener implements Listener {
     }*/
 
         @EventHandler
-    public void OnPlaceBlock(BlockPlaceEvent event) {
-        Player player = event.getPlayer();
-        event.getBlock().getDrops().clear();
-        final NMS nms = NMS.instance;
-        nms.sendBreakPacket(event.getBlock().getLocation(), 0, event.getBlock());
-        nms.placedBlockTypes.put(event.getBlock(), event.getBlock().getType());
-        final int timed = 10000;
-        long randGenerator;
-        long time;
-        for (randGenerator = new Random().nextInt(600) + timed, time = System.currentTimeMillis() + randGenerator; nms.brokenBlocks.containsKey(time); time = System.currentTimeMillis() + randGenerator) {
-            randGenerator = new Random().nextInt(600) + timed;
-        }
-        nms.placedBlocks.put(time, event.getBlock());
-        nms.placedTotalBlocks.put(event.getBlock().getLocation(), event.getBlock());
+    public void OnPlaceBlock(BlockPlaceEvent onPlaceBlockEvent) {
+            if (main.getBlockFileConfiguration().getList("NewOnyxFFa.Config.Block.BlockPlacedByPlayers").contains(onPlaceBlockEvent.getBlock().getType().toString())) {
+                if (onPlaceBlockEvent.getPlayer().getGameMode() != GameMode.CREATIVE) {
+                    onPlaceBlockEvent.getBlock().getDrops().clear();
+                    final NMS nms = NMS.instance;
+                    nms.placedBlockTypes.put(onPlaceBlockEvent.getBlock(), onPlaceBlockEvent.getBlock().getType());
+                    final int timed = 1000 * main.getBlockFileConfiguration().getInt("NewOnyxFFa.Config.Block.TimerUntilBreak");;
+                    long randGenerator;
+                    long time;
+                    randGenerator = new Random().nextInt(400) + timed;
+                    time = System.currentTimeMillis() + randGenerator;
+                    nms.placedBlocks.put(time, onPlaceBlockEvent.getBlock());
+                }
+            }
+
     }
 
 
@@ -87,6 +88,9 @@ public class BlockListener implements Listener {
                                     Material.getMaterial(main.getBlockFileConfiguration().getString(blockPath + ".Item." + item + ".Material")),
                                     main.getBlockFileConfiguration().getInt(blockPath + ".Item." + item + ".Quantity"));
                             ItemMeta itemMeta = itemStack.getItemMeta();
+                            if(main.getBlockFileConfiguration().get(blockPath + ".Item." + item + ".Name") != null){
+                                itemMeta.setDisplayName(main.getBlockFileConfiguration().getString(blockPath + ".Item." + item + ".Name"));
+                            }
                             if (main.getBlockFileConfiguration().getBoolean(blockPath + ".Item." + item + ".isUnbreakable")) {
                                 itemMeta.setUnbreakable(true);
                                 itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);

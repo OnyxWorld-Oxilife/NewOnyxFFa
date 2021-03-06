@@ -1,10 +1,7 @@
 package fr.vivicoubar.onyxffa;
 
 import fr.vivicoubar.onyxffa.commands.*;
-import fr.vivicoubar.onyxffa.listeners.BlockListener;
-import fr.vivicoubar.onyxffa.listeners.DamageListener;
-import fr.vivicoubar.onyxffa.listeners.FFaPlayerListener;
-import fr.vivicoubar.onyxffa.listeners.ItemListener;
+import fr.vivicoubar.onyxffa.listeners.*;
 import fr.vivicoubar.onyxffa.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -72,6 +69,7 @@ public static OnyxFFaMain instance;
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);
         pluginManager.registerEvents(new DamageListener(this), this);
+        pluginManager.registerEvents(new GadgetsAndDiscoListener(this), this);
 
         try {
             if (!getDataFolder().exists()) {

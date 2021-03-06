@@ -48,7 +48,7 @@ public class ItemBuilder {
             //ENCHANTS
             try {
                 for (String enchantmentPath : kitConfig.getConfigurationSection(configpath + ".Enchantments").getKeys(false)) {
-                    itemMeta.addEnchant(Enchantment.getByName(kitConfig.getString(configpath + ".Enchantements." + enchantmentPath + ".Type")), kitConfig.getInt(configpath + ".Enchantements." + enchantmentPath + ".Amplifier"), true);
+                    itemMeta.addEnchant(Enchantment.getByName(kitConfig.getString(configpath + ".Enchantments." + enchantmentPath + ".Type")), kitConfig.getInt(configpath + ".Enchantments." + enchantmentPath + ".Amplifier"), true);
                 }
             } catch (Exception ignored) {
             }
@@ -117,7 +117,7 @@ public class ItemBuilder {
             //ENCHANTS
             try {
                 for (String enchantmentPath : kitConfig.getConfigurationSection(configpath + ".Enchantments").getKeys(false)) {
-                    itemMeta.addEnchant(Enchantment.getByName(kitConfig.getString(configpath + ".Enchantements." + enchantmentPath + ".Type")), kitConfig.getInt(configpath + ".Enchantements." + enchantmentPath + ".Amplifier"), true);
+                    itemMeta.addEnchant(Enchantment.getByName(kitConfig.getString(configpath + ".Enchantments." + enchantmentPath + ".Type")), kitConfig.getInt(configpath + ".Enchantments." + enchantmentPath + ".Amplifier"), true);
                 }
             } catch (Exception ignored) {
             }

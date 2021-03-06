@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFirework;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -34,12 +35,44 @@ public class DamageListener implements Listener {
     @EventHandler
     public void onTakeDamage(EntityDamageByEntityEvent takeDamageEvent) {
         if(takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION){
-            if(takeDamageEvent.getEntity() instanceof CraftFirework){
+            if(takeDamageEvent.getDamager() instanceof CraftFirework){
                 takeDamageEvent.setCancelled(true);
             }
         }
-        if (takeDamageEvent.getDamager() instanceof Player) {
+        if (takeDamageEvent.getDamager() instanceof Player || takeDamageEvent.getDamager() instanceof Snowball) {
             if (takeDamageEvent.getEntity() instanceof Player) {
+                if(takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.PROJECTILE){
+                    String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
+                    String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
+                    lastHitters.put(victimUUid, damagerUuid);
+                    takeDamageEvent.setCancelled(true);
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            if (lastHitters.containsKey(victimUUid)) {
+                                lastHitters.remove(victimUUid);
+                            }
+                        }
+                    }.runTaskLater(this.main, 20 * 10);
+                }else if (takeDamageEvent.getDamager() instanceof Snowball) {
+                    Snowball snowball = (Snowball) takeDamageEvent.getDamager();
+                    if (snowball.getShooter() instanceof Player) {
+                        Player shooter = (Player) snowball.getShooter();
+                        String damagerUuid = "" + shooter.getUniqueId();
+                        String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
+                        lastHitters.put(victimUUid, damagerUuid);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (lastHitters.containsKey(victimUUid)) {
+                                    lastHitters.remove(victimUUid);
+                                }
+                            }
+                        }.runTaskLater(this.main, 20 * 10);
+                    }
+
+                }
+                else{
                 for (PotionEffect potionEffect : ((Player) takeDamageEvent.getEntity()).getActivePotionEffects()) {
                     if (potionEffect.getType().equals(PotionEffectType.GLOWING)) {
                         takeDamageEvent.setCancelled(true);
@@ -64,7 +97,7 @@ public class DamageListener implements Listener {
                         }
                     }
                 }.runTaskLater(this.main, 20 * 10);
-            }
+            }}
         }
     }
 
@@ -157,6 +190,9 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onFallIntoTheVoid(PlayerMoveEvent fallIntoVoidEvent) throws IOException {
+        if(fallIntoVoidEvent.getPlayer().getGameMode() != GameMode.SURVIVAL){
+            return;
+        }
         if (fallIntoVoidEvent.getPlayer().getLocation().getBlockY() <= main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.MinY")) {
             if (lastHitters.containsKey("" + fallIntoVoidEvent.getPlayer().getUniqueId())) {
                 String damagerUUid = lastHitters.get("" + fallIntoVoidEvent.getPlayer().getUniqueId());
