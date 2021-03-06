@@ -68,7 +68,6 @@ private ProtocolManager protocolManager;
         getCommand("offa").setExecutor(new CommandOffa(this));
         getCommand("stats").setExecutor(new CommandStats(this));
         getCommand("spawn").setExecutor(new CommandSpawn(this));
-        getCommand("kill").setExecutor(new CommandSpawn(this));
         getCommand("resetStats").setExecutor(new CommandResetStats(this));
         getCommand("points").setExecutor(new CommandPoints(this));
         getCommand("autorespawn").setExecutor(new CommandAutoRespawn(this));
