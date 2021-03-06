@@ -78,6 +78,14 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler
+    public void onDeath(PlayerDeathEvent playerDeathEvent) throws IOException {
+        playerDeathEvent.setDeathMessage(null);
+        playerDeathEvent.getEntity().spigot().respawn();
+        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) playerDeathEvent.getEntity());
+        initSuicide(victim);
+    }
+
+    @EventHandler
     public void onBeKilled(EntityDamageByEntityEvent beKilledEvent) throws IOException {
         if (beKilledEvent.getDamager() instanceof Player) {
             if (beKilledEvent.getEntity() instanceof Player) {

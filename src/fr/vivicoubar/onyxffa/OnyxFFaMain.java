@@ -5,10 +5,7 @@ import fr.vivicoubar.onyxffa.listeners.BlockListener;
 import fr.vivicoubar.onyxffa.listeners.DamageListener;
 import fr.vivicoubar.onyxffa.listeners.FFaPlayerListener;
 import fr.vivicoubar.onyxffa.listeners.ItemListener;
-import fr.vivicoubar.onyxffa.managers.FFaPlayerManager;
-import fr.vivicoubar.onyxffa.managers.LocationBuilder;
-import fr.vivicoubar.onyxffa.managers.RanksManager;
-import fr.vivicoubar.onyxffa.managers.SpawnManager;
+import fr.vivicoubar.onyxffa.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -22,7 +19,7 @@ import java.util.List;
 
 public class OnyxFFaMain extends JavaPlugin{
 
-private File configFile;
+    private File configFile;
 private FileConfiguration configConfiguration;
 private File statsFile;
 private FileConfiguration statsConfiguration;
@@ -40,24 +37,24 @@ private RanksManager ranksManager;
 private SpawnManager spawnManager;
 private FFaPlayerManager fFaPlayerManager;
 private LocationBuilder locationBuilder;
+private ItemBuilder itemBuilder;
 private final List<String> commandsList = new ArrayList<>();
 private final List<String> lore = new ArrayList<>();
 private final List<String> SpawnInWait = new ArrayList<>();
 private final List<Location> spawnsList = new ArrayList<>();
 private final List<String> blockEffectList= new ArrayList<>();
 private final List<String> jumpadsBlocks = new ArrayList<>();
-        /*
-private FFaBlockManager fFaBlockManager;
-private ProtocolManager protocolManager;
-         */
+
+public static OnyxFFaMain instance;
+
+
     @Override
     public void onEnable() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PlayerPAPIExpansion(this).register();
         }
-        /*
-        protocolManager = ProtocolLibrary.getProtocolManager();
-*/
+        OnyxFFaMain.instance = this;
+
         System.out.println(" ");
         System.out.println("************************");
         System.out.println("[NewOnyxFFA] > DEMARRAGE");
@@ -317,6 +314,7 @@ private ProtocolManager protocolManager;
         spawnManager = new SpawnManager(this, spawnsList);
         fFaPlayerManager = new FFaPlayerManager(this);
         locationBuilder = new LocationBuilder(this);
+        itemBuilder = new ItemBuilder(this);
 
         for (String spawnName : spawnsConfiguration.getConfigurationSection("NewOnyxFFa.Spawns").getKeys(false)) {
             if (!spawnName.equalsIgnoreCase("lobby")) {
@@ -404,6 +402,7 @@ private ProtocolManager protocolManager;
     public FFaPlayerManager getfFaPlayerManager(){return fFaPlayerManager;}
     public SpawnManager getSpawnManager(){return spawnManager;}
     public LocationBuilder getLocationBuilder(){return locationBuilder;}
+    public ItemBuilder getItemBuilder(){return itemBuilder;}
     /*
     public FFaBlockManager getfFaBlockManager() {
         return fFaBlockManager;

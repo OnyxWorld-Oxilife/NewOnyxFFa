@@ -1,6 +1,7 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.managers.ItemBuilder;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -18,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -42,8 +44,6 @@ public class FFaPlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent joinEvent){
         FileConfiguration statsConfiguration = main.getStatsConfiguration();
         FileConfiguration messagesConfiguration = main.getMessagesConfiguration();
-        FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
-        FileConfiguration configConfiguration = main.getConfigConfiguration();
         FFaPlayer ffaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, joinEvent.getPlayer());
         joinEvent.setJoinMessage(null);
         if(!ffaPlayer.getPlayer().hasPermission("OnyxFfa.mod.hideJoinMessage"))
@@ -65,15 +65,8 @@ public class FFaPlayerListener implements Listener {
         player.getInventory().clear();
         player.getActivePotionEffects().clear();
         player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
-        ItemStack menuSelector = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
-        ItemMeta menuMeta = menuSelector.getItemMeta();
-        if((boolean) configConfiguration.get("NewOnyxFFa.Config.Menu.Item.Enchanted")){
-            menuMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        }
-        menuMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
-        menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
-        menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
-        menuSelector.setItemMeta(menuMeta);
+
+        ItemStack menuSelector = main.getItemBuilder().buildItem("NewOnyxFFa.Config.Menu.Item");
         player.getInventory().setItem(4,menuSelector);
         player.getInventory().setHeldItemSlot(4);
     }
@@ -92,6 +85,7 @@ public class FFaPlayerListener implements Listener {
             onTryToMoveItemEvent.setCancelled(true);
         }
     }
+
     @EventHandler
     public void onDrop(PlayerDropItemEvent dropItemEvent){
         if(!dropItemEvent.getPlayer().hasPermission("NewOnyxFFa.drop.bypass")){

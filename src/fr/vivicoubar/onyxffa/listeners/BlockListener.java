@@ -1,14 +1,12 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
-import fr.vivicoubar.onyxffa.utils.FFaBlock;
 import fr.vivicoubar.onyxffa.utils.FFaEffectBlock;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
+import fr.vivicoubar.onyxffa.utils.NMS;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftShulkerBullet;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -19,9 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
-import java.util.List;
+import java.util.Random;
 
 public class BlockListener implements Listener {
     private OnyxFFaMain main;
@@ -29,7 +26,7 @@ public class BlockListener implements Listener {
     public BlockListener(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
     }
-
+/*
     @EventHandler
     public void onPlaceFFaBlock(BlockPlaceEvent onFFablockPlaceEvent) {
         if (main.getBlockFileConfiguration().getList("NewOnyxFFa.Config.Block.BlockPlacedByPlayers").contains(onFFablockPlaceEvent.getBlock().getType().toString())) {
@@ -37,7 +34,26 @@ public class BlockListener implements Listener {
                 FFaBlock Ffablock = new FFaBlock(main, onFFablockPlaceEvent.getBlock());
             }
         }
+    }*/
+
+        @EventHandler
+    public void OnPlaceBlock(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+        event.getBlock().getDrops().clear();
+        final NMS nms = NMS.instance;
+        nms.sendBreakPacket(event.getBlock().getLocation(), 0, event.getBlock());
+        nms.placedBlockTypes.put(event.getBlock(), event.getBlock().getType());
+        final int timed = 10000;
+        long randGenerator;
+        long time;
+        for (randGenerator = new Random().nextInt(600) + timed, time = System.currentTimeMillis() + randGenerator; nms.brokenBlocks.containsKey(time); time = System.currentTimeMillis() + randGenerator) {
+            randGenerator = new Random().nextInt(600) + timed;
+        }
+        nms.placedBlocks.put(time, event.getBlock());
+        nms.placedTotalBlocks.put(event.getBlock().getLocation(), event.getBlock());
     }
+
+
 
     @EventHandler
     public void onBreakBlock(BlockBreakEvent onBreakBlock) {
@@ -50,9 +66,15 @@ public class BlockListener implements Listener {
                     if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("Potion")) {
                         for (String effect : main.getBlockFileConfiguration().getConfigurationSection(blockPath + ".Effect").getKeys(false)) {
                             String effectpath = blockPath + ".Effect." + effect;
+                            int timer = 0;
+                            for(PotionEffect potion : onBreakBlock.getPlayer().getActivePotionEffects()){
+                                if(potion.getType() == PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect"))){
+                                    timer = potion.getDuration();
+                                }
+                            }
                             onBreakBlock.getPlayer().addPotionEffect(new PotionEffect(
                                     PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect")),
-                                    main.getBlockFileConfiguration().getInt(effectpath + ".Duration"),
+                                    timer + main.getBlockFileConfiguration().getInt(effectpath + ".Duration"),
                                     main.getBlockFileConfiguration().getInt(effectpath + ".Amplifier")));
                         }
                     } else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("HealthBonus")) {
