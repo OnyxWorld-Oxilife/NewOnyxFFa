@@ -5,13 +5,8 @@ import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Firework;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFirework;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,9 +15,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -41,9 +33,8 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onTakeDamage(EntityDamageByEntityEvent takeDamageEvent) {
-
         if(takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION){
-            if(takeDamageEvent.getEntity() instanceof Firework){
+            if(takeDamageEvent.getEntity() instanceof CraftFirework){
                 takeDamageEvent.setCancelled(true);
             }
         }

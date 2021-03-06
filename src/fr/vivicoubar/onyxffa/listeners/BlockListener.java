@@ -70,6 +70,7 @@ public class BlockListener implements Listener {
                             for(PotionEffect potion : onBreakBlock.getPlayer().getActivePotionEffects()){
                                 if(potion.getType() == PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect"))){
                                     timer = potion.getDuration();
+                                    onBreakBlock.getPlayer().removePotionEffect(potion.getType());
                                 }
                             }
                             onBreakBlock.getPlayer().addPotionEffect(new PotionEffect(
