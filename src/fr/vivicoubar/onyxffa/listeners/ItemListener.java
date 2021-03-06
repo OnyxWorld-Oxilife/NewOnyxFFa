@@ -42,7 +42,7 @@ public class ItemListener implements Listener {
 
                 Location spawn = new SpawnManager(main, main.getSpawnsList()).getSelectedSpawn();
 
-                fFaPlayer.getPlayer().teleport(spawn, PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
+                fFaPlayer.getPlayer().teleport(spawn);
                 fFaPlayer.getPlayer().setGameMode(GameMode.SURVIVAL);
                 fFaPlayer.getPlayer().getInventory().setHeldItemSlot(0);
                 fFaPlayer.getInventory().clear();

@@ -313,6 +313,10 @@ private ProtocolManager protocolManager;
         kitsConfiguration = YamlConfiguration.loadConfiguration(kitsFile);
         blockFileConfiguration = YamlConfiguration.loadConfiguration(blockFile);
 
+        ranksManager = new RanksManager(this);
+        spawnManager = new SpawnManager(this, spawnsList);
+        fFaPlayerManager = new FFaPlayerManager(this);
+        locationBuilder = new LocationBuilder(this);
 
         for (String spawnName : spawnsConfiguration.getConfigurationSection("NewOnyxFFa.Spawns").getKeys(false)) {
             if (!spawnName.equalsIgnoreCase("lobby")) {
@@ -323,10 +327,6 @@ private ProtocolManager protocolManager;
         /*
         fFaBlockManager = new FFaBlockManager(this);
         */
-        ranksManager = new RanksManager(this);
-        spawnManager = new SpawnManager(this, spawnsList);
-        fFaPlayerManager = new FFaPlayerManager(this);
-        locationBuilder = new LocationBuilder(this);
 
 
         for (String blockEffect : blockFileConfiguration.getConfigurationSection("NewOnyxFFa.Config.Block.BlockWithEffects").getKeys(false)) {

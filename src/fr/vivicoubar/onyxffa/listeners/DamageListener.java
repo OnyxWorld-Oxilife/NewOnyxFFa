@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,11 +41,13 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onTakeDamage(EntityDamageByEntityEvent takeDamageEvent) {
+
         if(takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION){
             if(takeDamageEvent.getEntity() instanceof Firework){
                 takeDamageEvent.setCancelled(true);
             }
-        }else if (takeDamageEvent.getDamager() instanceof Player) {
+        }
+        if (takeDamageEvent.getDamager() instanceof Player) {
             if (takeDamageEvent.getEntity() instanceof Player) {
                 for (PotionEffect potionEffect : ((Player) takeDamageEvent.getEntity()).getActivePotionEffects()) {
                     if (potionEffect.getType().equals(PotionEffectType.GLOWING)) {

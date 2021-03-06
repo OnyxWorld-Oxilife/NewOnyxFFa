@@ -5,7 +5,7 @@ version: 1.0.10
 prefix: "NewOnyxFFa"
 database: false
 api-version: 1.12.2
-load: STARTUP
+load: POSTWORLD
 description: This plugin is a minigame designed originally for OnyxWorld. If any problem occurs, contact the main developper, ViViCoubar
 commands:
   offa:
