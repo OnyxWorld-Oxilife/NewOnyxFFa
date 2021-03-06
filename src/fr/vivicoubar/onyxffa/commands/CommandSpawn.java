@@ -49,13 +49,7 @@ public class CommandSpawn implements CommandExecutor {
                             player.setGameMode(GameMode.ADVENTURE);
                             player.setHealth(20);
                             player.getInventory().clear();
-                            player.teleport(
-                                    new Location(Bukkit.getWorld(spawnConfiguration.getString("NewOnyxFFa.Spawns.Lobby.WorldName")),
-                                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.x"),
-                                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.y"),
-                                            spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.z"),
-                                            (float) spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.yaw"),
-                                            (float) spawnConfiguration.getDouble("NewOnyxFFa.Spawns.Lobby.pitch")));
+                            player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
                             ItemStack menuSelector = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
                             ItemMeta menuMeta = menuSelector.getItemMeta();
                             if ((boolean) configConfiguration.get("NewOnyxFFa.Config.Menu.Item.Enchanted")) {

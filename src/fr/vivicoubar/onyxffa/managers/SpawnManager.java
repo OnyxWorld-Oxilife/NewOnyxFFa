@@ -1,4 +1,4 @@
-package fr.vivicoubar.onyxffa.utils;
+package fr.vivicoubar.onyxffa.managers;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import org.bukkit.Bukkit;

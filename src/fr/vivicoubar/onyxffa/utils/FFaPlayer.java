@@ -1,14 +1,13 @@
 package fr.vivicoubar.onyxffa.utils;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.managers.AutoRespawnManager;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.UUID;
 
 

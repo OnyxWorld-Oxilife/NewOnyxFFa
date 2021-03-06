@@ -1,7 +1,8 @@
-package fr.vivicoubar.onyxffa.utils;
+package fr.vivicoubar.onyxffa.managers;
 
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 

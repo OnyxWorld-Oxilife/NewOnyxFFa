@@ -5,7 +5,10 @@ import fr.vivicoubar.onyxffa.listeners.BlockListener;
 import fr.vivicoubar.onyxffa.listeners.DamageListener;
 import fr.vivicoubar.onyxffa.listeners.FFaPlayerListener;
 import fr.vivicoubar.onyxffa.listeners.ItemListener;
-import fr.vivicoubar.onyxffa.utils.*;
+import fr.vivicoubar.onyxffa.managers.FFaPlayerManager;
+import fr.vivicoubar.onyxffa.managers.LocationBuilder;
+import fr.vivicoubar.onyxffa.managers.RanksManager;
+import fr.vivicoubar.onyxffa.managers.SpawnManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,6 +39,7 @@ private FileConfiguration blockFileConfiguration;
 private RanksManager ranksManager;
 private SpawnManager spawnManager;
 private FFaPlayerManager fFaPlayerManager;
+private LocationBuilder locationBuilder;
 private final List<String> commandsList = new ArrayList<>();
 private final List<String> lore = new ArrayList<>();
 private final List<String> SpawnInWait = new ArrayList<>();
@@ -313,13 +317,7 @@ private ProtocolManager protocolManager;
 
         for (String spawnName : spawnsConfiguration.getConfigurationSection("NewOnyxFFa.Spawns").getKeys(false)) {
             if (!spawnName.equalsIgnoreCase("lobby")) {
-                spawnsList.add(new Location(Bukkit.getWorld(spawnsConfiguration.getString("NewOnyxFFa.Spawns.Lobby.WorldName")),
-                        spawnsConfiguration.getDouble("NewOnyxFFa.Spawns." + spawnName + ".x"),
-                        spawnsConfiguration.getDouble("NewOnyxFFa.Spawns." + spawnName + ".y"),
-                        spawnsConfiguration.getDouble("NewOnyxFFa.Spawns." + spawnName + ".z"),
-                        (float) spawnsConfiguration.getDouble("NewOnyxFFa.Spawns." + spawnName + ".yaw"),
-                        (float) spawnsConfiguration.getDouble("NewOnyxFFa.Spawns." + spawnName + ".pitch")
-                ));
+                spawnsList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.Spawns." + spawnName));
             }
         }
 
@@ -329,6 +327,8 @@ private ProtocolManager protocolManager;
         ranksManager = new RanksManager(this);
         spawnManager = new SpawnManager(this, spawnsList);
         fFaPlayerManager = new FFaPlayerManager(this);
+        locationBuilder = new LocationBuilder(this);
+
 
         for (String blockEffect : blockFileConfiguration.getConfigurationSection("NewOnyxFFa.Config.Block.BlockWithEffects").getKeys(false)) {
             blockEffectList.add(blockFileConfiguration.getString("NewOnyxFFa.Config.Block.BlockWithEffects." + blockEffect + ".Material"));
@@ -404,6 +404,7 @@ private ProtocolManager protocolManager;
     public RanksManager getRanksManager(){return ranksManager;}
     public FFaPlayerManager getfFaPlayerManager(){return fFaPlayerManager;}
     public SpawnManager getSpawnManager(){return spawnManager;}
+    public LocationBuilder getLocationBuilder(){return locationBuilder;}
     /*
     public FFaBlockManager getfFaBlockManager() {
         return fFaBlockManager;

@@ -1,6 +1,7 @@
-package fr.vivicoubar.onyxffa.utils;
+package fr.vivicoubar.onyxffa.managers;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

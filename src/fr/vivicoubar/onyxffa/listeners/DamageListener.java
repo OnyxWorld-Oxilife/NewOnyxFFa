@@ -243,7 +243,7 @@ public class DamageListener implements Listener {
             double victimPoints = victim.getStats().getScore().get(2);
             double damagerPoints = damager.getStats().getScore().get(2);
 
-            victimPoints = victimPoints - (int) oldVictimRank.getRankNumber() * 20 / oldDamagerRank.getRankNumber();
+            victimPoints = victimPoints - (int) oldVictimRank.getRankNumber() * 10 / oldDamagerRank.getRankNumber();
             damagerPoints = damagerPoints + (int) oldVictimRank.getRankNumber() * 20 / oldDamagerRank.getRankNumber();
             if (victimPoints < 0) {
                 victimPoints = 0;
