@@ -57,13 +57,14 @@ public class NMS {
                         //Si le type du bloc est le même que celui dans la iste des blocks
                         if (!newBlock.getType().equals(NMS.this.placedBlockTypes.get(entry.getValue()))) {
                             //Utilisation de la méthode sendPacket
-                            NMS.this.sendBreakPacket(entry.getValue().getLocation(), 0, entry.getValue());
+                            NMS.this.sendBreakPacket(entry.getValue().getLocation(), -1, entry.getValue());
                             //Supression de l'itérateur et du bloc de la liste des types de blocks
                             iterator.remove();
                             NMS.this.placedBlockTypes.remove(entry.getValue());
                         }
                         //Si le temps du bloc (clé random) et plus petit que le temps machine > Le bloc devient de l'air.
                         else if (entry.getKey() < System.currentTimeMillis()) {
+                            NMS.this.sendBreakPacket(entry.getValue().getLocation(), -1, entry.getValue());
                             entry.getValue().setType(Material.AIR);
                             iterator.remove();
                             NMS.this.placedBlockTypes.remove(entry.getValue());
@@ -79,11 +80,12 @@ public class NMS {
             }
         }, 0L, 10L);
     }
-    public void sendBreakPacket(final Location location, final int data, final Block block) {
+    public void sendBreakPacket(final Location location, int data, final Block block) {
         //Nether, END , OverWorld
         final int dimension = ((CraftWorld)block.getWorld()).getHandle().dimension;
         //Récupère la position du block
         final BlockPosition blockPosition = new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+
         //Récupère si il existe l'id du packet du bloc
         int id;
         if (this.uniqueLocationId.containsKey(location)) {
@@ -93,8 +95,10 @@ public class NMS {
             id = new Random().nextInt(Integer.MAX_VALUE);
             this.uniqueLocationId.put(location, id);
         }
-        id = new Random().nextInt(Integer.MAX_VALUE);
         this.uniqueLocationId.put(location, id);
+        if(location.getBlock().getType() == Material.AIR){
+            data = -1;
+        }
         final PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(id, blockPosition, data);
         ((CraftServer) Bukkit.getServer()).getHandle().sendPacketNearby(null, block.getX(), block.getY(), block.getZ(), 120.0, dimension, packet);
     }

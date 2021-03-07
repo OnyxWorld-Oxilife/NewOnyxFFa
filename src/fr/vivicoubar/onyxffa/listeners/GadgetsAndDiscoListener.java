@@ -2,13 +2,14 @@ package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowball;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftSnowball;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
@@ -33,28 +34,31 @@ public class GadgetsAndDiscoListener implements Listener {
             ((Player) playerGrappinUse.getCaught()).sendTitle("§eCapturé!", "", 5, 10, 5);
             playerGrappinUse.getCaught().setVelocity(playerGrappinUse.getPlayer().getLocation().toVector().subtract(playerGrappinUse.getCaught().getLocation().toVector()).normalize());
         }
-    }/*
+    }
     @EventHandler
     public void onUseSwitchSnowball(EntityDamageByEntityEvent onUseSwitchSnowball) {
-        if (onUseSwitchSnowball.getDamager() instanceof Snowball) {
-            Snowball snowball = (Snowball) onUseSwitchSnowball.getDamager();
+        if (onUseSwitchSnowball.getDamager() instanceof Egg) {
+            Egg snowball = (Egg) onUseSwitchSnowball.getDamager();
             if (snowball.getShooter() instanceof Player) {
                 Player shooter = (Player) snowball.getShooter();
                 if (onUseSwitchSnowball.getEntity() instanceof Player) {
                     Player victim = (Player) onUseSwitchSnowball.getEntity();
-                    onUseSwitchSnowball.setCancelled(true);
                     Location victimloc = victim.getLocation();
-                    victim.teleport(shooter.getLocation());
+                    victim.teleport(shooter);
                     shooter.teleport(victimloc);
                     shooter.sendTitle("§eSwap!", "", 5, 10, 5);
                     victim.sendTitle("§eSwap!", "", 5, 10, 5);
                     shooter.playSound(shooter.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 5, 5);
                     victim.playSound(shooter.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 5, 5);
+                    return;
                 }
             }
         }
-    }*/
-
+    }
+    @EventHandler
+    public void eggSpawn(PlayerEggThrowEvent event){
+        event.setHatching(false);
+    }
     @EventHandler
     public void onDisco(PlayerMoveEvent discoEvent){
         if (System.currentTimeMillis() - time > 500) {

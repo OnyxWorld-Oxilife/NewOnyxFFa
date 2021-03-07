@@ -6,8 +6,7 @@ import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFirework;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowball;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -39,28 +39,29 @@ public class DamageListener implements Listener {
                 takeDamageEvent.setCancelled(true);
             }
         }
-        if (takeDamageEvent.getDamager() instanceof Player || takeDamageEvent.getDamager() instanceof Snowball) {
+        if (takeDamageEvent.getDamager() instanceof Player || takeDamageEvent.getDamager() instanceof Egg) {
             if (takeDamageEvent.getEntity() instanceof Player) {
                 if(takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.PROJECTILE){
-                    String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
-                    String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
-                    lastHitters.put(victimUUid, damagerUuid);
-                    takeDamageEvent.setCancelled(true);
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            if (lastHitters.containsKey(victimUUid)) {
-                                lastHitters.remove(victimUUid);
-                            }
-                        }
-                    }.runTaskLater(this.main, 20 * 10);
-                }else if (takeDamageEvent.getDamager() instanceof Snowball) {
-                    Snowball snowball = (Snowball) takeDamageEvent.getDamager();
-                    if (snowball.getShooter() instanceof Player) {
-                        Player shooter = (Player) snowball.getShooter();
-                        String damagerUuid = "" + shooter.getUniqueId();
+                    if(takeDamageEvent.getDamager() instanceof Egg){
+                        Projectile projectile = (Projectile) takeDamageEvent.getDamager();
+                        Player damager = (Player) projectile.getShooter();
+                        String damagerUuid = "" + damager.getUniqueId();
                         String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                         lastHitters.put(victimUUid, damagerUuid);
+                        takeDamageEvent.setCancelled(true);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (lastHitters.containsKey(victimUUid)) {
+                                    lastHitters.remove(victimUUid);
+                                }
+                            }
+                        }.runTaskLater(this.main, 20 * 10);
+                    }else {
+                        String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
+                        String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
+                        lastHitters.put(victimUUid, damagerUuid);
+                        takeDamageEvent.setCancelled(true);
                         new BukkitRunnable() {
                             @Override
                             public void run() {
@@ -70,7 +71,6 @@ public class DamageListener implements Listener {
                             }
                         }.runTaskLater(this.main, 20 * 10);
                     }
-
                 }
                 else{
                 for (PotionEffect potionEffect : ((Player) takeDamageEvent.getEntity()).getActivePotionEffects()) {
@@ -215,7 +215,6 @@ public class DamageListener implements Listener {
             }
         }
     }
-
     public void initSuicide(FFaPlayer victim) throws IOException {
             victim.getPlayer().getVelocity().zero();
             victim.getPlayer().setHealth(20);
