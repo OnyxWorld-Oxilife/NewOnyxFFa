@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -62,6 +64,8 @@ public class FFaPlayerListener implements Listener {
         player.setGameMode(GameMode.ADVENTURE);
         player.setHealth(20);
         player.setFoodLevel(20);
+        AttributeInstance attribute = player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        attribute.setBaseValue(20);
         player.getInventory().clear();
         player.getActivePotionEffects().clear();
         player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));

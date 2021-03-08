@@ -1,7 +1,6 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
-import fr.vivicoubar.onyxffa.managers.LocationBuilder;
 import fr.vivicoubar.onyxffa.utils.FFaEffectBlock;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.NMS;
@@ -22,6 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockListener implements Listener {
@@ -59,39 +59,54 @@ public class BlockListener implements Listener {
     }
 
 
+    public void sendListMessage(ArrayList messages, Player p) {
+            for (Object message : messages) {
+                p.sendMessage((String) message);
+            }
+    }
+
 
     @EventHandler
     public void onBreakBlock(BlockBreakEvent onBreakBlock) {
         if (main.getBlockEffectList().contains(onBreakBlock.getBlock().getType().toString())) {
+            Player breakerPlayer = onBreakBlock.getPlayer();
             for (String block : main.getBlockFileConfiguration().getConfigurationSection("NewOnyxFFa.Config.Block.BlockWithEffects").getKeys(false)) {
                 if (Material.getMaterial(main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.BlockWithEffects." + block + ".Material")) == onBreakBlock.getBlock().getType()) {
                     String blockPath = "NewOnyxFFa.Config.Block.BlockWithEffects." + block;
                     onBreakBlock.setDropItems(false);
-                    FFaEffectBlock blockEffect = new FFaEffectBlock(main, onBreakBlock.getBlock().getLocation());
                     if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("Potion")) {
                         for (String effect : main.getBlockFileConfiguration().getConfigurationSection(blockPath + ".Effect").getKeys(false)) {
                             String effectpath = blockPath + ".Effect." + effect;
                             int timer = 0;
-                            for(PotionEffect potion : onBreakBlock.getPlayer().getActivePotionEffects()){
+                            for(PotionEffect potion : breakerPlayer.getActivePotionEffects()){
                                 if(potion.getType() == PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect"))){
                                     timer = potion.getDuration();
-                                    onBreakBlock.getPlayer().removePotionEffect(potion.getType());
+                                    breakerPlayer.removePotionEffect(potion.getType());
                                 }
                             }
-                            onBreakBlock.getPlayer().addPotionEffect(new PotionEffect(
+                            breakerPlayer.addPotionEffect(new PotionEffect(
                                     PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect")),
                                     timer + main.getBlockFileConfiguration().getInt(effectpath + ".Duration")*20,
                                     main.getBlockFileConfiguration().getInt(effectpath + ".Amplifier")));
                         }
+                        sendListMessage((ArrayList) main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), breakerPlayer);
                     }
 
                     else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("HealthBonus")) {
-                        Player breakerPlayer = onBreakBlock.getPlayer();
-
-                        int MAX_HEALTH = main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus") + 20;
                         AttributeInstance attribute = breakerPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-                        attribute.setBaseValue(MAX_HEALTH);
-                        breakerPlayer.setHealth(breakerPlayer.getHealth() + main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus"));
+                        breakerPlayer.sendMessage(String.valueOf(attribute.getValue()));
+                        if (attribute.getValue() < main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus") + 20) {
+                            int MAX_HEALTH = main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus") + 20;
+                            attribute.setBaseValue(MAX_HEALTH);
+                            breakerPlayer.setHealth(breakerPlayer.getHealth() + main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus"));
+                            sendListMessage((ArrayList) main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), breakerPlayer);
+                        } else {
+
+                            breakerPlayer.sendMessage("§cTu as déjà obtenu un booster de vie permanent !");
+                            onBreakBlock.setCancelled(true);
+                            return;
+
+                        }
                     }
                     else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("Item")) {
                         for (String item : main.getBlockFileConfiguration().getConfigurationSection(blockPath + ".Item").getKeys(false)) {
@@ -112,16 +127,17 @@ public class BlockListener implements Listener {
                                 }
                             }
                             itemStack.setItemMeta(itemMeta);
-                            onBreakBlock.getPlayer().getInventory().addItem(itemStack);
-
-
+                            breakerPlayer.getInventory().addItem(itemStack);
                         }
+                        sendListMessage((ArrayList) main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), onBreakBlock.getPlayer());
                     } else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("CommandBlock")) {
                         for (String command : main.getBlockFileConfiguration().getStringList(blockPath + ".Commands")) {
-                            command = command.replaceAll("%player%", onBreakBlock.getPlayer().getName());
+                            command = command.replaceAll("%player%", breakerPlayer.getName());
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                            sendListMessage((ArrayList) main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), breakerPlayer);
                         }
                     }
+                    new FFaEffectBlock(main, onBreakBlock.getBlock().getLocation());
                 }
             }
         } else if (!main.getBlockFileConfiguration().getList("NewOnyxFFa.Config.Block.AllowedBlocktoBreak").contains(onBreakBlock.getBlock().getType().toString())) {
