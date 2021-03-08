@@ -10,7 +10,7 @@ import org.bukkit.inventory.Inventory;
 import java.io.IOException;
 import java.util.UUID;
 
-
+// Player Object for the whole plugin
 public class FFaPlayer {
     private final Player player;
     private final Inventory inventory;

@@ -1,10 +1,14 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.managers.LocationBuilder;
 import fr.vivicoubar.onyxffa.utils.FFaEffectBlock;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.NMS;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,7 +47,7 @@ public class BlockListener implements Listener {
                     onPlaceBlockEvent.getBlock().getDrops().clear();
                     final NMS nms = NMS.instance;
                     nms.placedBlockTypes.put(onPlaceBlockEvent.getBlock(), onPlaceBlockEvent.getBlock().getType());
-                    final int timed = 1000 * main.getBlockFileConfiguration().getInt("NewOnyxFFa.Config.Block.TimerUntilBreak");;
+                    final int timed = 1000 * main.getBlockFileConfiguration().getInt("NewOnyxFFa.Config.Block.TimerUntilBreak");
                     long randGenerator;
                     long time;
                     randGenerator = new Random().nextInt(400) + timed;
@@ -76,13 +80,20 @@ public class BlockListener implements Listener {
                             }
                             onBreakBlock.getPlayer().addPotionEffect(new PotionEffect(
                                     PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect")),
-                                    timer + main.getBlockFileConfiguration().getInt(effectpath + ".Duration"),
+                                    timer + main.getBlockFileConfiguration().getInt(effectpath + ".Duration")*20,
                                     main.getBlockFileConfiguration().getInt(effectpath + ".Amplifier")));
                         }
-                    } else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("HealthBonus")) {
-                        int MAX_HEALTH = main.getBlockFileConfiguration().getInt(main.getBlockFileConfiguration().getString(blockPath + ".HeartBonus"));
-                        onBreakBlock.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2000, MAX_HEALTH));
-                    } else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("Item")) {
+                    }
+
+                    else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("HealthBonus")) {
+                        Player breakerPlayer = onBreakBlock.getPlayer();
+
+                        int MAX_HEALTH = main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus") + 20;
+                        AttributeInstance attribute = breakerPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                        attribute.setBaseValue(MAX_HEALTH);
+                        breakerPlayer.setHealth(breakerPlayer.getHealth() + main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus"));
+                    }
+                    else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("Item")) {
                         for (String item : main.getBlockFileConfiguration().getConfigurationSection(blockPath + ".Item").getKeys(false)) {
                             ItemStack itemStack = new ItemStack(
                                     Material.getMaterial(main.getBlockFileConfiguration().getString(blockPath + ".Item." + item + ".Material")),
@@ -131,6 +142,24 @@ public class BlockListener implements Listener {
                 player.getPlayer().playSound(playerLocation, Sound.ENTITY_FIREWORK_SHOOT, 10, 10);
             }
     }
+
+    @EventHandler
+    public void onWalkOnStaticJumpad(PlayerMoveEvent walkOnStaticJumpadEvent) {
+        Player player = walkOnStaticJumpadEvent.getPlayer();
+        Location playerLocation = player.getLocation();
+        Location roundedPlayerLocation = new Location(playerLocation.getWorld(), playerLocation.getBlockX(), playerLocation.getBlockY() - 1, playerLocation.getBlockZ());
+        FileConfiguration blockConfig = main.getBlockFileConfiguration();
+        String defaultPath = "NewOnyxFFa.Config.Block.StaticJumpadBlock";
+        for (String path : blockConfig.getConfigurationSection(defaultPath).getKeys(false)) {
+            Location blockLocation = new Location(player.getWorld(), blockConfig.getDouble(defaultPath + "." + path + ".Location.x"), blockConfig.getDouble(defaultPath + "." + path + ".Location.y"), blockConfig.getDouble(defaultPath + "." + path + ".Location.z"));
+            if (blockLocation.equals(roundedPlayerLocation)) {
+                player.setVelocity(player.getLocation().getDirection().multiply(blockConfig.getDouble(defaultPath + "." + path + ".VectorCoords.EyeLocationDirectionMovementMultiplier")).setY(blockConfig.getDouble(defaultPath + "." + path + ".VectorCoords.High")));
+                player.playSound(playerLocation, Sound.ENTITY_FIREWORK_SHOOT, 10, 10);
+            }
+        }
+    }
+
+
 }
 
 

@@ -2,6 +2,8 @@ package fr.vivicoubar.onyxffa.managers;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -38,7 +40,8 @@ public class AutoRespawnManager {
                 public void run() {
 
                     if(timer > 0){
-                        fFaPlayer.getPlayer().sendTitle("§7Vous êtes §cMort!", "§7Respawn dans §c"  + timer + "...", 5 , 10 ,5);
+                        fFaPlayer.getPlayer().sendTitle("§7Vous êtes §cMort !", "§7Respawn dans §c"  + timer + "...", 5 , 10 ,5);
+                        fFaPlayer.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§c/autorespawn §7pour désactiver !"));
                     } else if(timer == 0){
                         cancel();
                         Location spawn = new SpawnManager(main, main.getSpawnsList()).getSelectedSpawn();

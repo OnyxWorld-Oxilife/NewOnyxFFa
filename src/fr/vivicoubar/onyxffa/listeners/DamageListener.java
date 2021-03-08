@@ -5,6 +5,8 @@ import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFirework;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -218,6 +220,9 @@ public class DamageListener implements Listener {
     public void initSuicide(FFaPlayer victim) throws IOException {
             victim.getPlayer().getVelocity().zero();
             victim.getPlayer().setHealth(20);
+            // Added clear GENERIC_MAX_HEALTH
+            AttributeInstance attribute = victim.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            attribute.setBaseValue(20);
             victim.getPlayer().getInventory().clear();
             victim.getPlayer().setFallDistance(-5);
             for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
@@ -263,6 +268,9 @@ public class DamageListener implements Listener {
             }
             damager.getPlayer().setHealth(health);
             victim.getPlayer().setHealth(20);
+            // Added clear GENERIC_MAX_HEALTH
+            AttributeInstance attribute = victim.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            attribute.setBaseValue(20);
             victim.getPlayer().getInventory().clear();
             victim.getPlayer().setFallDistance(-500);
             for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
