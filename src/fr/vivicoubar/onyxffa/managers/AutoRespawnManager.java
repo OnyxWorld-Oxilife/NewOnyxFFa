@@ -27,7 +27,6 @@ public class AutoRespawnManager {
     public void askRespawn(FFaPlayer fFaPlayer) {
         if (fFaPlayer.isAutorespawnBoolean()) {
             fFaPlayer.getPlayer().closeInventory();
-            fFaPlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 5));
 
             Location temp = new Location(fFaPlayer.getPlayer().getWorld(), 738, 48, 625);
 
@@ -44,40 +43,8 @@ public class AutoRespawnManager {
                         fFaPlayer.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§c/autorespawn §7pour désactiver !"));
                     } else if(timer == 0){
                         cancel();
-                        Location spawn = new SpawnManager(main, main.getSpawnsList()).getSelectedSpawn();
-                        fFaPlayer.getPlayer().teleport(spawn, PlayerTeleportEvent.TeleportCause.NETHER_PORTAL);
-                        fFaPlayer.getPlayer().setGameMode(GameMode.SURVIVAL);
-                        fFaPlayer.getPlayer().getInventory().setHeldItemSlot(0);
-                        fFaPlayer.getInventory().clear();
-                        FileConfiguration kitConfiguration = main.getKitsConfiguration();
-                        String rankname = fFaPlayer.getStats().getRank().getName();
-                        for (String rankpath : main.getKitsConfiguration().getConfigurationSection("NewOnyxFFa.Ffa").getKeys(false)) {
-                            if (rankname.equalsIgnoreCase(rankpath)) {
-                                for (String path : kitConfiguration.getConfigurationSection("NewOnyxFFa.Ffa." + rankpath + ".Items").getKeys(false)) {
-                                    String objectPath = "NewOnyxFFa.Ffa." + rankpath + ".Items." + path;
-                                    ItemStack item = main.getItemBuilder().buildItem(objectPath);
-                                    int slot = main.getKitsConfiguration().getInt(objectPath + ".Slot");
-                                    switch (slot) {
-                                        case 103:
-                                            fFaPlayer.getPlayer().getInventory().setHelmet(item);
-                                            break;
-                                        case 102:
-                                            fFaPlayer.getPlayer().getInventory().setChestplate(item);
-                                            break;
-                                        case 101:
-                                            fFaPlayer.getPlayer().getInventory().setLeggings(item);
-                                            break;
-                                        case 100:
-                                            fFaPlayer.getPlayer().getInventory().setBoots(item);
-                                            break;
-                                        default:
-                                            fFaPlayer.getInventory().setItem(slot, item);
-                                            break;
-                                    }
-                                }
-                                break;
-                            }
-                        }
+                        SpawnManager spawnManagerInstance = new SpawnManager(main);
+                        spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
                     }
 
                 timer--;

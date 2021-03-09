@@ -309,7 +309,7 @@ public static OnyxFFaMain instance;
         blockFileConfiguration = YamlConfiguration.loadConfiguration(blockFile);
 
         ranksManager = new RanksManager(this);
-        spawnManager = new SpawnManager(this, spawnsList);
+        spawnManager = new SpawnManager(this);
         fFaPlayerManager = new FFaPlayerManager(this);
         locationBuilder = new LocationBuilder(this);
         itemBuilder = new ItemBuilder(this);
