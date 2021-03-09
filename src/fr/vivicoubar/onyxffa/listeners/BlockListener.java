@@ -94,7 +94,6 @@ public class BlockListener implements Listener {
 
                     else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("HealthBonus")) {
                         AttributeInstance attribute = breakerPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-                        breakerPlayer.sendMessage(String.valueOf(attribute.getValue()));
                         if (attribute.getValue() < main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus") + 20) {
                             int MAX_HEALTH = main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus") + 20;
                             attribute.setBaseValue(MAX_HEALTH);
