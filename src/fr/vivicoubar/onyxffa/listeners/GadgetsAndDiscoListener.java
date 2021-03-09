@@ -29,7 +29,7 @@ public class GadgetsAndDiscoListener implements Listener {
 
     @EventHandler
     public void onGrappin(PlayerFishEvent playerGrappinUse){
-        if(playerGrappinUse.getCaught() instanceof Player){
+        if(playerGrappinUse.getCaught() instanceof Player && ((Player) playerGrappinUse.getCaught()).getPlayer() != playerGrappinUse.getPlayer()){
             playerGrappinUse.getPlayer().getInventory().setItem(playerGrappinUse.getPlayer().getInventory().getHeldItemSlot(), new ItemStack(Material.AIR));
             ((Player) playerGrappinUse.getCaught()).sendTitle("§eCapturé!", "", 5, 10, 5);
             playerGrappinUse.getCaught().setVelocity(playerGrappinUse.getPlayer().getLocation().toVector().subtract(playerGrappinUse.getCaught().getLocation().toVector()).normalize());
@@ -50,7 +50,6 @@ public class GadgetsAndDiscoListener implements Listener {
                     victim.sendTitle("§eSwap!", "", 5, 10, 5);
                     shooter.playSound(shooter.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 5, 5);
                     victim.playSound(shooter.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 5, 5);
-                    return;
                 }
             }
         }
