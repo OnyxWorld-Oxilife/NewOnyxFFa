@@ -55,7 +55,6 @@ public class AutoRespawnManager {
             }
             .runTaskTimer(this.main, 0, 20L);
         } else {
-            FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
             FileConfiguration configConfiguration = main.getConfigConfiguration();
             Player player = fFaPlayer.getPlayer();
             player.getInventory().setHeldItemSlot(4);
@@ -67,7 +66,7 @@ public class AutoRespawnManager {
             player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
             ItemStack menuSelector = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
             ItemMeta menuMeta = menuSelector.getItemMeta();
-            if ((boolean) configConfiguration.get("NewOnyxFFa.Config.Menu.Item.Enchanted")) {
+            if (configConfiguration.getBoolean("NewOnyxFFa.Config.Menu.Item.Enchanted")) {
                 menuMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
             }
             menuMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);

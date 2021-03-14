@@ -32,7 +32,7 @@ public class GadgetsAndDiscoListener implements Listener {
         if(playerGrappinUse.getCaught() instanceof Player && ((Player) playerGrappinUse.getCaught()).getPlayer() != playerGrappinUse.getPlayer()){
             playerGrappinUse.getPlayer().getInventory().setItem(playerGrappinUse.getPlayer().getInventory().getHeldItemSlot(), new ItemStack(Material.AIR));
             ((Player) playerGrappinUse.getCaught()).sendTitle("§eCapturé!", "", 5, 10, 5);
-            playerGrappinUse.getCaught().setVelocity(playerGrappinUse.getPlayer().getLocation().toVector().subtract(playerGrappinUse.getCaught().getLocation().toVector()).normalize());
+            playerGrappinUse.getCaught().setVelocity(playerGrappinUse.getPlayer().getLocation().toVector().subtract(playerGrappinUse.getCaught().getLocation().toVector()).setY(0).normalize().setY(0.1).multiply(1.25));
         }
     }
     @EventHandler

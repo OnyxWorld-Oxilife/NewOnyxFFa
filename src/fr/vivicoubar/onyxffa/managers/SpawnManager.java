@@ -76,19 +76,19 @@ public class SpawnManager {
                     int slot = main.getKitsConfiguration().getInt(objectPath + ".Slot");
                     switch (slot) {
                         case 103:
-                            ffaPlayer.getPlayer().getInventory().setHelmet(item);
+                            p.getInventory().setHelmet(item);
                             break;
                         case 102:
-                            ffaPlayer.getPlayer().getInventory().setChestplate(item);
+                            p.getInventory().setChestplate(item);
                             break;
                         case 101:
-                            ffaPlayer.getPlayer().getInventory().setLeggings(item);
+                            p.getInventory().setLeggings(item);
                             break;
                         case 100:
-                            ffaPlayer.getPlayer().getInventory().setBoots(item);
+                            p.getInventory().setBoots(item);
                             break;
                         default:
-                            ffaPlayer.getInventory().setItem(slot, item);
+                            p.getInventory().setItem(slot, item);
                             break;
                     }
                 }

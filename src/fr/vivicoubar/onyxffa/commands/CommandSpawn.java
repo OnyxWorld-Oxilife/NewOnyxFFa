@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,6 +35,8 @@ public class CommandSpawn implements CommandExecutor {
         FileConfiguration configConfiguration = main.getConfigConfiguration();
         p.setGameMode(GameMode.ADVENTURE);
         p.setHealth(20);
+        AttributeInstance attribute = p.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        attribute.setBaseValue(20);
         p.getInventory().clear();
         p.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
         ItemStack menuSelector = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
@@ -45,6 +49,7 @@ public class CommandSpawn implements CommandExecutor {
         menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
         menuSelector.setItemMeta(menuMeta);
         p.getInventory().setItem(4, menuSelector);
+        p.getInventory().setHeldItemSlot(4);
         for (PotionEffect effect : p.getActivePotionEffects()) {
             p.removePotionEffect(effect.getType());
         }
@@ -60,7 +65,6 @@ public class CommandSpawn implements CommandExecutor {
                     Player player = fFaPlayer.getPlayer();
                     List<String> SpawnInWait = main.getSpawnsInWait();
                     SpawnInWait.add(player.getUniqueId().toString());
-                    player.getActivePotionEffects().clear();
                     player.sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.SpawnCommand.Wait").replaceAll("%timer%", main.getConfigConfiguration().getString("NewOnyxFFa.Config.SpawnCommand.TimerUntilTeleportation")));
                     new BukkitRunnable() {
                         @Override

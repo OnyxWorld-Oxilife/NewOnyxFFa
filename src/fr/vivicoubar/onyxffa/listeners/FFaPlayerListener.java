@@ -1,6 +1,7 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.commands.CommandSpawn;
 import fr.vivicoubar.onyxffa.managers.ItemBuilder;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import net.md_5.bungee.api.ChatMessageType;
@@ -60,19 +61,8 @@ public class FFaPlayerListener implements Listener {
         }else{
             ffaPlayer.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(messagesConfiguration.getString("NewOnyxFFa.Messages.Welcome.HiddenStaff").replaceFirst("%player%",ffaPlayer.getPlayer().getDisplayName())));
         }
-        Player player = ffaPlayer.getPlayer();
-        player.setGameMode(GameMode.ADVENTURE);
-        player.setHealth(20);
-        player.setFoodLevel(20);
-        AttributeInstance attribute = player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
-        attribute.setBaseValue(20);
-        player.getInventory().clear();
-        player.getActivePotionEffects().clear();
-        player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
-
-        ItemStack menuSelector = main.getItemBuilder().buildItem("NewOnyxFFa.Config.Menu.Item");
-        player.getInventory().setItem(4,menuSelector);
-        player.getInventory().setHeldItemSlot(4);
+        CommandSpawn spawnInstance = new CommandSpawn(main);
+        spawnInstance.sendPlayerToSpawn(joinEvent.getPlayer());
     }
     @EventHandler
     public void onMoveAfterSpawn(PlayerMoveEvent playerMoveAfterSpawnEvent){

@@ -5,6 +5,7 @@ import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFirework;
@@ -21,6 +22,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +37,21 @@ public class DamageListener implements Listener {
 
     private final Map<String, String> lastHitters = new HashMap<>();
 
+    /*@EventHandler
+    public void crazyTP(EntityDamageByEntityEvent e) {
+        Player damager = (Player) e.getDamager();
+        Player victim = (Player) e.getEntity();
+        Location damagerLoc = damager.getLocation();
+        Location victimLoc = victim.getLocation();
+        Vector damagerVelocity = damager.getVelocity();
+        Vector victimVelocity = damager.getVelocity();
+        if (victim.getGameMode() == GameMode.SURVIVAL) {
+            damager.teleport(victimLoc);
+            // damager.setVelocity(victimVelocity);
+            victim.teleport(damagerLoc);
+            // victim.setVelocity(damagerVelocity);
+        }
+    }*/
     @EventHandler
     public void onTakeDamage(EntityDamageByEntityEvent takeDamageEvent) {
         if(takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION){
@@ -106,6 +124,7 @@ public class DamageListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent playerDeathEvent) throws IOException {
         playerDeathEvent.setDeathMessage(null);
+        playerDeathEvent.getDrops().clear();
         playerDeathEvent.getEntity().spigot().respawn();
         FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) playerDeathEvent.getEntity());
         initSuicide(victim);
@@ -263,8 +282,9 @@ public class DamageListener implements Listener {
     public void initKill(FFaPlayer damager, FFaPlayer victim) throws IOException {
             victim.getPlayer().getVelocity().zero();
             double health = damager.getPlayer().getHealth() + main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.HealthBonusAfterKill");
-            if (health > 20) {
-                health = 20;
+            Double maxHealth = damager.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            if (health > maxHealth) {
+                health = maxHealth;
             }
             damager.getPlayer().setHealth(health);
             victim.getPlayer().setHealth(20);
