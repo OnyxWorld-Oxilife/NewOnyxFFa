@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,36 +15,41 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnyxFFaMain extends JavaPlugin{
+public class OnyxFFaMain extends JavaPlugin {
 
     private File configFile;
-private FileConfiguration configConfiguration;
-private File statsFile;
-private FileConfiguration statsConfiguration;
-private File ranksFile;
-private FileConfiguration ranksConfiguration;
-private File spawnsFile;
-private FileConfiguration spawnsConfiguration;
-private File messagesFile;
-private FileConfiguration messagesConfiguration;
-private File kitsFile;
-private FileConfiguration kitsConfiguration;
-private File blockFile;
-private FileConfiguration blockFileConfiguration;
-private RanksManager ranksManager;
-private SpawnManager spawnManager;
-private FFaPlayerManager fFaPlayerManager;
-private LocationBuilder locationBuilder;
-private ItemBuilder itemBuilder;
-private final List<String> commandsList = new ArrayList<>();
-private final List<String> lore = new ArrayList<>();
-private final List<String> SpawnInWait = new ArrayList<>();
-private final List<Location> spawnsList = new ArrayList<>();
-private final List<String> blockEffectList= new ArrayList<>();
-private final List<String> jumpadsBlocks = new ArrayList<>();
+    private FileConfiguration configConfiguration;
+    private File statsFile;
+    private FileConfiguration statsConfiguration;
+    private File ranksFile;
+    private FileConfiguration ranksConfiguration;
+    private File spawnsFile;
+    private FileConfiguration spawnsConfiguration;
+    private File messagesFile;
+    private FileConfiguration messagesConfiguration;
+    private File kitsFile;
+    private FileConfiguration kitsConfiguration;
+    private File blockFile;
+    private FileConfiguration blockFileConfiguration;
+    private RanksManager ranksManager;
+    private SpawnManager spawnManager;
+    private FFaPlayerManager fFaPlayerManager;
+    private LocationBuilder locationBuilder;
+    private ItemBuilder itemBuilder;
+    private final List<String> commandsList = new ArrayList<>();
+    private final List<String> lore = new ArrayList<>();
+    private final List<String> SpawnInWait = new ArrayList<>();
+    private final List<Location> spawnsList = new ArrayList<>();
+    private final List<String> blockEffectList= new ArrayList<>();
+    private final List<String> jumpadsBlocks = new ArrayList<>();
 
-public static OnyxFFaMain instance;
+    public static OnyxFFaMain instance;
 
+    public KillStreak killStreak = new KillStreak();
+
+    public static OnyxFFaMain getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
@@ -51,6 +57,11 @@ public static OnyxFFaMain instance;
             new PlayerPAPIExpansion(this).register();
         }
         OnyxFFaMain.instance = this;
+        if (Bukkit.getOnlinePlayers().size() > 0) {
+            for (Player player:Bukkit.getOnlinePlayers()) {
+                killStreak.addPlayer(player);
+            }
+        }
 
         System.out.println(" ");
         System.out.println("************************");
@@ -70,6 +81,8 @@ public static OnyxFFaMain instance;
         pluginManager.registerEvents(new ItemListener(this), this);
         pluginManager.registerEvents(new DamageListener(this), this);
         pluginManager.registerEvents(new GadgetsAndDiscoListener(this), this);
+        pluginManager.registerEvents(new PlayerJoin(), this);
+        pluginManager.registerEvents(new PlayerQuit(), this);
 
         try {
             if (!getDataFolder().exists()) {

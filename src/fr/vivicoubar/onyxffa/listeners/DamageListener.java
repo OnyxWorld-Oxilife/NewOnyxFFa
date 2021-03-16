@@ -122,16 +122,20 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent playerDeathEvent) throws IOException {
+    public void onDeath(PlayerDeathEvent playerDeathEvent) {
         playerDeathEvent.setDeathMessage(null);
         playerDeathEvent.getDrops().clear();
         playerDeathEvent.getEntity().spigot().respawn();
         FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) playerDeathEvent.getEntity());
-        initSuicide(victim);
+        try {
+            initSuicide(victim);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @EventHandler
-    public void onBeKilled(EntityDamageByEntityEvent beKilledEvent) throws IOException {
+    public void onBeKilled(EntityDamageByEntityEvent beKilledEvent) {
         if (beKilledEvent.getDamager() instanceof Player) {
             if (beKilledEvent.getEntity() instanceof Player) {
                 for (PotionEffect potionEffect : ((Player) beKilledEvent.getEntity()).getActivePotionEffects()) {
@@ -157,7 +161,7 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler
-    public void onQuitWhileFighting(PlayerQuitEvent quitWhileFightingEvent) throws IOException {
+    public void onQuitWhileFighting(PlayerQuitEvent quitWhileFightingEvent) {
         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, quitWhileFightingEvent.getPlayer());
         if (lastHitters.containsKey("" + quitWhileFightingEvent.getPlayer().getUniqueId())) {
             String damagerUUid = lastHitters.get("" + quitWhileFightingEvent.getPlayer().getUniqueId());
@@ -174,7 +178,7 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler(priority= EventPriority.LOWEST)
-    public void onDeathByFallDamage(EntityDamageEvent damageEvent) throws IOException {
+    public void onDeathByFallDamage(EntityDamageEvent damageEvent) {
         if (damageEvent.getEntity() instanceof Player) {
             if(main.getConfigConfiguration().getBoolean("NewOnyxFFa.Config.UseDeathByFallDamageRecognition")){
             if (damageEvent.getCause() == EntityDamageEvent.DamageCause.FALL) {
@@ -199,7 +203,11 @@ public class DamageListener implements Listener {
                             }
                         } else {
                             victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.Suicide"));
-                            initSuicide(victim);
+                            try {
+                                initSuicide(victim);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
                         }
                     }
@@ -237,108 +245,131 @@ public class DamageListener implements Listener {
         }
     }
     public void initSuicide(FFaPlayer victim) throws IOException {
-            victim.getPlayer().getVelocity().zero();
-            victim.getPlayer().setHealth(20);
-            // Added clear GENERIC_MAX_HEALTH
-            AttributeInstance attribute = victim.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
-            attribute.setBaseValue(20);
-            victim.getPlayer().getInventory().clear();
-            victim.getPlayer().setFallDistance(-5);
-            for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
-                victim.getPlayer().removePotionEffect(potionEffect.getType());
+
+        main.killStreak.resetPlayer(victim.getPlayer());
+
+        victim.getPlayer().getVelocity().zero();
+        victim.getPlayer().setHealth(20);
+        // Added clear GENERIC_MAX_HEALTH
+        AttributeInstance attribute = victim.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        attribute.setBaseValue(20);
+        victim.getPlayer().getInventory().clear();
+        victim.getPlayer().setFallDistance(-5);
+        for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
+            victim.getPlayer().removePotionEffect(potionEffect.getType());
+        }
+        victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
+        victim.getAutoRespawnManager().askRespawn(victim);
+
+        Rank oldVictimRank = victim.getStats().getRank();
+
+        victim.getStats().iterateDeaths();
+
+        double victimPoints = victim.getStats().getScore().get(2);
+
+        // victimPoints = victimPoints - (int) oldVictimRank.getRankNumber() * 20;
+        victimPoints -= 10;
+        if (victimPoints < 0) {
+            victimPoints = 0;
+        }
+        victim.getStats().setPoints(victimPoints);
+        victim.updateStats();
+        Rank newVictimrank = victim.getStats().getRank();
+
+        if (oldVictimRank != newVictimrank) {
+            for (String command : newVictimrank.getCommandOnGoToRank()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
             }
-            victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
-            victim.getAutoRespawnManager().askRespawn(victim);
-
-            Rank oldVictimRank = victim.getStats().getRank();
-
-            victim.getStats().iterateDeaths();
-
-            double victimPoints = victim.getStats().getScore().get(2);
-
-            victimPoints = victimPoints - (int) oldVictimRank.getRankNumber() * 20;
-            if (victimPoints < 0) {
-                victimPoints = 0;
+            for (String command : oldVictimRank.getCommandOnLeaveRank()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
             }
-            victim.getStats().setPoints(victimPoints);
-            victim.updateStats();
-            Rank newVictimrank = victim.getStats().getRank();
-
-            if (oldVictimRank != newVictimrank) {
-                for (String command : newVictimrank.getCommandOnGoToRank()) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
-                }
-                for (String command : oldVictimRank.getCommandOnLeaveRank()) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
-                }
-            }
+        }
         //Commandes pour le Kill (Money)
         for (String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFallIntoVoid")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()));
         }
 
+    }
+
+    public void initKill(FFaPlayer damager, FFaPlayer victim) {
+
+        // killStreak
+        main.killStreak.incrementPlayer(damager.getPlayer());
+        main.killStreak.resetPlayer(victim.getPlayer());
+
+        if (main.killStreak.getValue(damager.getPlayer()) % 5 == 0) {
+            Bukkit.broadcastMessage("§3" + damager.getPlayer().getName() + "§e est dans une folie meurtrière ! Killstreak de §3" + main.killStreak.getValue(damager.getPlayer()) + "§e!");
         }
 
-    public void initKill(FFaPlayer damager, FFaPlayer victim) throws IOException {
-            victim.getPlayer().getVelocity().zero();
-            double health = damager.getPlayer().getHealth() + main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.HealthBonusAfterKill");
-            Double maxHealth = damager.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-            if (health > maxHealth) {
-                health = maxHealth;
-            }
-            damager.getPlayer().setHealth(health);
-            victim.getPlayer().setHealth(20);
-            // Added clear GENERIC_MAX_HEALTH
-            AttributeInstance attribute = victim.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
-            attribute.setBaseValue(20);
-            victim.getPlayer().getInventory().clear();
-            victim.getPlayer().setFallDistance(-500);
-            for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
-                victim.getPlayer().removePotionEffect(potionEffect.getType());
-            }
-            victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
-            victim.getAutoRespawnManager().askRespawn(victim);
+        victim.getPlayer().getVelocity().zero();
+        double health = damager.getPlayer().getHealth() + main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.HealthBonusAfterKill");
+        Double maxHealth = damager.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+        damager.getPlayer().setHealth(health);
+        victim.getPlayer().setHealth(20);
+        // Added clear GENERIC_MAX_HEALTH
+        AttributeInstance attribute = victim.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        attribute.setBaseValue(20);
+        victim.getPlayer().getInventory().clear();
+        victim.getPlayer().setFallDistance(-500);
+        for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
+            victim.getPlayer().removePotionEffect(potionEffect.getType());
+        }
+        victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
+        victim.getAutoRespawnManager().askRespawn(victim);
 
-            Rank oldVictimRank = victim.getStats().getRank();
-            Rank oldDamagerRank = damager.getStats().getRank();
+        Rank oldVictimRank = victim.getStats().getRank();
+        Rank oldDamagerRank = damager.getStats().getRank();
 
-            damager.getStats().iterateKills();
-            victim.getStats().iterateDeaths();
+        damager.getStats().iterateKills();
+        victim.getStats().iterateDeaths();
 
-            double victimPoints = victim.getStats().getScore().get(2);
-            double damagerPoints = damager.getStats().getScore().get(2);
+        double victimPoints = victim.getStats().getScore().get(2);
+        double damagerPoints = damager.getStats().getScore().get(2);
 
-            victimPoints = victimPoints - (int) oldVictimRank.getRankNumber() * 10 / oldDamagerRank.getRankNumber();
-            damagerPoints = damagerPoints + (int) oldVictimRank.getRankNumber() * 20 / oldDamagerRank.getRankNumber();
-            if (victimPoints < 0) {
-                victimPoints = 0;
-            }
+        // victimPoints = victimPoints - (int) oldVictimRank.getRankNumber() * 10 / oldDamagerRank.getRankNumber();
+        victimPoints -= 10;
+        // damagerPoints = damagerPoints + (int) oldVictimRank.getRankNumber() * 20 / oldDamagerRank.getRankNumber();
+        damagerPoints += 20;
+        if (victimPoints < 0) {
+            victimPoints = 0;
+        }
+        try {
             damager.getStats().setPoints(damagerPoints);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
             victim.getStats().setPoints(victimPoints);
-            damager.updateStats();
-            victim.updateStats();
-            Rank newVictimrank = victim.getStats().getRank();
-            Rank newDamagerank = damager.getStats().getRank();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        damager.updateStats();
+        victim.updateStats();
+        Rank newVictimrank = victim.getStats().getRank();
+        Rank newDamagerank = damager.getStats().getRank();
 
-            if (oldDamagerRank != newDamagerank) {
-                for (String command : newDamagerank.getCommandOnGoToRank()) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
-                }
-                for (String command : oldDamagerRank.getCommandOnLeaveRank()) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
-                }
+        if (oldDamagerRank != newDamagerank) {
+            for (String command : newDamagerank.getCommandOnGoToRank()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
             }
-            if (oldVictimRank != newVictimrank) {
-                for (String command : newVictimrank.getCommandOnGoToRank()) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
-                }
-                for (String command : oldVictimRank.getCommandOnLeaveRank()) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
-                }
+            for (String command : oldDamagerRank.getCommandOnLeaveRank()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", damager.getPlayer().getName()));
             }
-            //Commandes pour le Kill (Money)
-            for (String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFight")) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()).replaceAll("%killer%", damager.getPlayer().getName()));
+        }
+        if (oldVictimRank != newVictimrank) {
+            for (String command : newVictimrank.getCommandOnGoToRank()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
             }
+            for (String command : oldVictimRank.getCommandOnLeaveRank()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", victim.getPlayer().getName()));
+            }
+        }
+        //Commandes pour le Kill (Money)
+        for (String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFight")) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()).replaceAll("%killer%", damager.getPlayer().getName()));
         }
     }
+}

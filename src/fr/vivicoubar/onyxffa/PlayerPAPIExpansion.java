@@ -74,6 +74,9 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         if(identifier.equals("highscore")){
             return "" + fFaPlayer.getStats().getScore().get(3);
         }
+        if(identifier.equals("killstreak")){
+            return "" + main.killStreak.getValue(player);
+        }
         // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)
         // was provided
 
