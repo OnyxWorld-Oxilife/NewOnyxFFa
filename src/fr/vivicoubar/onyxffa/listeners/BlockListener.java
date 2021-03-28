@@ -65,6 +65,12 @@ public class BlockListener implements Listener {
             }
     }
 
+    public void sendListBroadcastMessage(List<String> messages, Player p) {
+        for (Object message : messages) {
+            Bukkit.broadcastMessage(message.toString().replaceAll("%player%", p.getName()));
+        }
+    }
+
 
     @EventHandler
     public void onBreakBlock(BlockBreakEvent onBreakBlock) {
@@ -90,6 +96,7 @@ public class BlockListener implements Listener {
                                     main.getBlockFileConfiguration().getInt(effectpath + ".Amplifier")));
                         }
                         sendListMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), breakerPlayer);
+                        sendListBroadcastMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".BroadcastMessages"), breakerPlayer);
                     }
 
                     else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("HealthBonus")) {
@@ -99,6 +106,7 @@ public class BlockListener implements Listener {
                             attribute.setBaseValue(MAX_HEALTH);
                             breakerPlayer.setHealth(breakerPlayer.getHealth() + main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus"));
                             sendListMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), breakerPlayer);
+                            sendListBroadcastMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".BroadcastMessages"), breakerPlayer);
                         } else {
 
                             breakerPlayer.sendMessage("§cTu as déjà obtenu un booster de vie permanent !");
@@ -129,11 +137,13 @@ public class BlockListener implements Listener {
                             breakerPlayer.getInventory().addItem(itemStack);
                         }
                         sendListMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), onBreakBlock.getPlayer());
+                        sendListBroadcastMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".BroadcastMessages"), breakerPlayer);
                     } else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("CommandBlock")) {
                         for (String command : main.getBlockFileConfiguration().getStringList(blockPath + ".Commands")) {
                             command = command.replaceAll("%player%", breakerPlayer.getName());
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
                             sendListMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), breakerPlayer);
+                            sendListBroadcastMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".BroadcastMessages"), breakerPlayer);
                         }
                     }
                     new FFaEffectBlock(main, onBreakBlock.getBlock().getLocation());

@@ -1,22 +1,13 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
-import fr.vivicoubar.onyxffa.commands.CommandSpawn;
-import fr.vivicoubar.onyxffa.utils.FFaPlayer;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class FFaPlayerListener implements Listener {
@@ -27,7 +18,7 @@ public class FFaPlayerListener implements Listener {
         this.main = onyxFFaMain;
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onJoin(PlayerJoinEvent joinEvent) {
         FileConfiguration statsConfiguration = main.getStatsConfiguration();
         FileConfiguration messagesConfiguration = main.getMessagesConfiguration();
@@ -46,7 +37,7 @@ public class FFaPlayerListener implements Listener {
         }
         CommandSpawn spawnInstance = new CommandSpawn(main);
         spawnInstance.sendPlayerToSpawn(joinEvent.getPlayer());
-    }
+    }*/
 
     @EventHandler
     public void onMoveAfterSpawn(PlayerMoveEvent playerMoveAfterSpawnEvent) {
@@ -80,10 +71,5 @@ public class FFaPlayerListener implements Listener {
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent onWeatherChangeEvent) {
         onWeatherChangeEvent.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent playerQuitEvent) {
-        playerQuitEvent.setQuitMessage(null);
     }
 }

@@ -12,6 +12,7 @@ public class Stats {
     private double points;
     private double highscore;
     private double deaths;
+    private int highestKillStreak;
     private Rank rank;
     private final FFaPlayer player;
     private final OnyxFFaMain main;
@@ -24,6 +25,7 @@ public class Stats {
         this.deaths = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Deaths");
         this.points = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points");
         this.highscore = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore");
+        this.highestKillStreak = statsConfiguration.getInt("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestKillStreak");
         for(Rank setRank : main.getRanksManager().getRanks()){
             if(points >= setRank.lowerBound && points < setRank.upperBound){
                 this.rank = setRank;
@@ -61,8 +63,22 @@ public class Stats {
         }
     }
 
+    public void setHighestKillStreak(int ks) {
+        main.getStatsConfiguration().set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestKillStreak", ks);
+        this.highestKillStreak = ks;
+        try {
+            main.getStatsConfiguration().save(main.getStatsFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getHighestKillStreak() {
+        return this.highestKillStreak;
+    }
+
     public double getHighscore() {
-        return highscore;
+        return this.highscore;
     }
 
     public void reset() throws IOException {

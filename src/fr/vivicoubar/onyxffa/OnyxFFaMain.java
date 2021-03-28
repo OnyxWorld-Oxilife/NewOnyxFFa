@@ -3,6 +3,7 @@ package fr.vivicoubar.onyxffa;
 import fr.vivicoubar.onyxffa.commands.*;
 import fr.vivicoubar.onyxffa.listeners.*;
 import fr.vivicoubar.onyxffa.managers.*;
+import fr.vivicoubar.onyxffa.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -46,6 +47,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public static OnyxFFaMain instance;
 
     public KillStreak killStreak = new KillStreak();
+    public Messages messages = new Messages();
 
     public static OnyxFFaMain getInstance() {
         return instance;

@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 
-    public PlayerJoin() {}
+    // public PlayerJoin() {}
 
     @EventHandler
     public void onJoin(PlayerJoinEvent joinEvent) {

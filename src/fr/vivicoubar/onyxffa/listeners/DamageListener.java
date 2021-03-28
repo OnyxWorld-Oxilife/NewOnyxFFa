@@ -108,7 +108,9 @@ public class DamageListener implements Listener {
                 }
                 String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
                 String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
-                lastHitters.put(victimUUid, damagerUuid);
+                if (((Player) takeDamageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
+                    lastHitters.put(victimUUid, damagerUuid);
+                }
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -296,6 +298,10 @@ public class DamageListener implements Listener {
         // killStreak
         main.killStreak.incrementPlayer(damager.getPlayer());
         main.killStreak.resetPlayer(victim.getPlayer());
+
+        if (damager.getStats().getHighestKillStreak() < main.killStreak.getValue(damager.getPlayer())) {
+            damager.getStats().setHighestKillStreak(main.killStreak.getValue(damager.getPlayer()));
+        }
 
         if (main.killStreak.getValue(damager.getPlayer()) % 5 == 0) {
             Bukkit.broadcastMessage("§3" + damager.getPlayer().getName() + "§e est dans une folie meurtrière ! Killstreak de §3" + main.killStreak.getValue(damager.getPlayer()) + "§e!");

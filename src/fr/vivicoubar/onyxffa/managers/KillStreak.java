@@ -6,11 +6,7 @@ import java.util.HashMap;
 
 public class KillStreak {
 
-    private static HashMap<Player, Integer> killStreaks = new HashMap<Player, Integer>();
-
-    /* public HashMap getHashMap() {
-        return killStreaks;
-    }*/
+    private static HashMap<Player, Integer> killStreaks = new HashMap<>();
 
     public void addPlayer(Player player) {
         if (!killStreaks.containsKey(player)) {
@@ -26,7 +22,7 @@ public class KillStreak {
 
     public void incrementPlayer(Player player) {
         if (killStreaks.containsKey(player)) {
-            killStreaks.replace(player, killStreaks.get(player).intValue() + 1);
+            killStreaks.replace(player, killStreaks.get(player) + 1);
         }
     }
 
@@ -38,7 +34,7 @@ public class KillStreak {
 
     public Integer getValue(Player player) {
         if (killStreaks.containsKey(player)) {
-            return killStreaks.get(player).intValue();
+            return killStreaks.get(player);
         }
         return 0;
     }

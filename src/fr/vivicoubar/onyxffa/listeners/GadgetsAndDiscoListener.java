@@ -2,13 +2,10 @@ package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftSnowball;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -30,8 +27,12 @@ public class GadgetsAndDiscoListener implements Listener {
     @EventHandler
     public void onGrappin(PlayerFishEvent playerGrappinUse){
         if(playerGrappinUse.getCaught() instanceof Player && ((Player) playerGrappinUse.getCaught()).getPlayer() != playerGrappinUse.getPlayer()){
-            playerGrappinUse.getPlayer().getInventory().setItem(playerGrappinUse.getPlayer().getInventory().getHeldItemSlot(), new ItemStack(Material.AIR));
-            ((Player) playerGrappinUse.getCaught()).sendTitle("§eCapturé!", "", 5, 10, 5);
+            if (playerGrappinUse.getPlayer().getInventory().getItemInMainHand().getType() == Material.FISHING_ROD) {
+                playerGrappinUse.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+            } else {
+                playerGrappinUse.getPlayer().getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+            }
+            ((Player) playerGrappinUse.getCaught()).sendTitle("§eCapturé !", "", 5, 10, 5);
             playerGrappinUse.getCaught().setVelocity(playerGrappinUse.getPlayer().getLocation().toVector().subtract(playerGrappinUse.getCaught().getLocation().toVector()).setY(0).normalize().setY(0.1).multiply(1.25));
         }
     }

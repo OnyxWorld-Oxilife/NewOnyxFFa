@@ -2,8 +2,6 @@ package fr.vivicoubar.onyxffa.utils;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;;
 import net.minecraft.server.v1_12_R1.BlockPosition;
-import net.minecraft.server.v1_12_R1.EntityHuman;
-import net.minecraft.server.v1_12_R1.Packet;
 import net.minecraft.server.v1_12_R1.PacketPlayOutBlockBreakAnimation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.Iterator;
