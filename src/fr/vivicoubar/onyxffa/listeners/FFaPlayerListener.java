@@ -18,27 +18,6 @@ public class FFaPlayerListener implements Listener {
         this.main = onyxFFaMain;
     }
 
-    /*@EventHandler
-    public void onJoin(PlayerJoinEvent joinEvent) {
-        FileConfiguration statsConfiguration = main.getStatsConfiguration();
-        FileConfiguration messagesConfiguration = main.getMessagesConfiguration();
-        FFaPlayer ffaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, joinEvent.getPlayer());
-        joinEvent.setJoinMessage(null);
-        if (!ffaPlayer.getPlayer().hasPermission("OnyxFfa.mod.hideJoinMessage")) {
-            if (!statsConfiguration.contains("NewOnyxFFa." + ffaPlayer.getPlayer().getUniqueId())) {
-                ffaPlayer.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(messagesConfiguration.getString("NewOnyxFFa.Messages.Welcome.NewPlayer").replaceFirst("%player%", ffaPlayer.getPlayer().getDisplayName())));
-                Bukkit.broadcastMessage(messagesConfiguration.getString("NewOnyxFFa.Messages.Welcome.NewPlayer").replaceFirst("%player%", ffaPlayer.getPlayer().getDisplayName()));
-            }
-            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(messagesConfiguration.getString("NewOnyxFFa.Messages.Welcome.Player").replaceFirst("%player%", ffaPlayer.getPlayer().getDisplayName())));
-            }
-        } else {
-            ffaPlayer.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(messagesConfiguration.getString("NewOnyxFFa.Messages.Welcome.HiddenStaff").replaceFirst("%player%", ffaPlayer.getPlayer().getDisplayName())));
-        }
-        CommandSpawn spawnInstance = new CommandSpawn(main);
-        spawnInstance.sendPlayerToSpawn(joinEvent.getPlayer());
-    }*/
-
     @EventHandler
     public void onMoveAfterSpawn(PlayerMoveEvent playerMoveAfterSpawnEvent) {
         if (playerMoveAfterSpawnEvent.getFrom().getBlockX() != playerMoveAfterSpawnEvent.getTo().getBlockX() || playerMoveAfterSpawnEvent.getFrom().getBlockZ() != playerMoveAfterSpawnEvent.getTo().getBlockZ()) {
@@ -72,4 +51,5 @@ public class FFaPlayerListener implements Listener {
     public void onWeatherChange(WeatherChangeEvent onWeatherChangeEvent) {
         onWeatherChangeEvent.setCancelled(true);
     }
+
 }

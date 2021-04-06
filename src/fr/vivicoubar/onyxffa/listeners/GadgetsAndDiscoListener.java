@@ -24,8 +24,8 @@ public class GadgetsAndDiscoListener implements Listener {
 
 
 
-    @EventHandler
-    public void onGrappin(PlayerFishEvent playerGrappinUse){
+    /*@EventHandler
+    public void onGrappin(PlayerFishEvent playerGrappinUse) {
         if(playerGrappinUse.getCaught() instanceof Player && ((Player) playerGrappinUse.getCaught()).getPlayer() != playerGrappinUse.getPlayer()){
             if (playerGrappinUse.getPlayer().getInventory().getItemInMainHand().getType() == Material.FISHING_ROD) {
                 playerGrappinUse.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
@@ -35,7 +35,34 @@ public class GadgetsAndDiscoListener implements Listener {
             ((Player) playerGrappinUse.getCaught()).sendTitle("§eCapturé !", "", 5, 10, 5);
             playerGrappinUse.getCaught().setVelocity(playerGrappinUse.getPlayer().getLocation().toVector().subtract(playerGrappinUse.getCaught().getLocation().toVector()).setY(0).normalize().setY(0.1).multiply(1.25));
         }
+    }*/
+
+    @EventHandler
+    public void onFishEvent(PlayerFishEvent playerFishEvent) {
+        Player player = playerFishEvent.getPlayer();
+        PlayerFishEvent.State state = playerFishEvent.getState();
+        ItemStack air = new ItemStack(Material.AIR);
+
+        // Permet d'empêcher l'utilisation "classique" de la canne
+        if(state == PlayerFishEvent.State.FISHING) {
+            main.fishingPlayers.addPlayer(player, playerFishEvent.getHook());
+        } else {
+            main.fishingPlayers.removePlayer(player);
+        }
+
+        if (state == PlayerFishEvent.State.CAUGHT_ENTITY && playerFishEvent.getCaught() instanceof Player && playerFishEvent.getCaught() != player) {
+            Player caughtPlayer = (Player) playerFishEvent.getCaught();
+            if (player.getInventory().getItemInMainHand().getType() == Material.FISHING_ROD) {
+                player.getInventory().setItemInMainHand(air);
+            } else {
+                player.getInventory().setItemInOffHand(air);
+            }
+            caughtPlayer.sendTitle("§eCapturé !", "", 5, 10, 5);
+            caughtPlayer.setVelocity(player.getLocation().toVector().subtract(caughtPlayer.getLocation().toVector()).setY(0).normalize().setY(0.1).multiply(1.25));
+        }
+
     }
+
     @EventHandler
     public void onUseSwitchSnowball(EntityDamageByEntityEvent onUseSwitchSnowball) {
         if (onUseSwitchSnowball.getDamager() instanceof Egg) {

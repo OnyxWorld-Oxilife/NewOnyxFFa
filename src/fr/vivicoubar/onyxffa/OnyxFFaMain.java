@@ -47,6 +47,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public static OnyxFFaMain instance;
 
     public KillStreak killStreak = new KillStreak();
+    public FishingPlayers fishingPlayers = new FishingPlayers();
     public Messages messages = new Messages();
 
     public static OnyxFFaMain getInstance() {
@@ -85,6 +86,7 @@ public class OnyxFFaMain extends JavaPlugin {
         pluginManager.registerEvents(new GadgetsAndDiscoListener(this), this);
         pluginManager.registerEvents(new PlayerJoin(), this);
         pluginManager.registerEvents(new PlayerQuit(), this);
+        pluginManager.registerEvents(new PlayerHeldItem(), this);
 
         try {
             if (!getDataFolder().exists()) {

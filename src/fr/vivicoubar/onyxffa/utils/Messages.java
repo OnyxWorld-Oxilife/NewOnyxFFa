@@ -14,8 +14,8 @@ public class Messages {
     }
 
     public void broadcastActionBarMessage(String msg) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            actionBarMessage(p, msg);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            actionBarMessage(player, msg);
         }
     }
 
