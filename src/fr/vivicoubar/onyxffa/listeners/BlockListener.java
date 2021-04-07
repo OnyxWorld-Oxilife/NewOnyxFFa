@@ -40,29 +40,29 @@ public class BlockListener implements Listener {
         }
     }*/
 
-        @EventHandler
+    @EventHandler
     public void OnPlaceBlock(BlockPlaceEvent onPlaceBlockEvent) {
-            if (main.getBlockFileConfiguration().getList("NewOnyxFFa.Config.Block.BlockPlacedByPlayers").contains(onPlaceBlockEvent.getBlock().getType().toString())) {
-                if (onPlaceBlockEvent.getPlayer().getGameMode() != GameMode.CREATIVE) {
-                    onPlaceBlockEvent.getBlock().getDrops().clear();
-                    final NMS nms = NMS.instance;
-                    nms.placedBlockTypes.put(onPlaceBlockEvent.getBlock(), onPlaceBlockEvent.getBlock().getType());
-                    final int timed = 1000 * main.getBlockFileConfiguration().getInt("NewOnyxFFa.Config.Block.TimerUntilBreak");
-                    long randGenerator;
-                    long time;
-                    randGenerator = new Random().nextInt(400) + timed;
-                    time = System.currentTimeMillis() + randGenerator;
-                    nms.placedBlocks.put(time, onPlaceBlockEvent.getBlock());
-                }
+        if (main.getBlockFileConfiguration().getList("NewOnyxFFa.Config.Block.BlockPlacedByPlayers").contains(onPlaceBlockEvent.getBlock().getType().toString())) {
+            if (onPlaceBlockEvent.getPlayer().getGameMode() != GameMode.CREATIVE) {
+                onPlaceBlockEvent.getBlock().getDrops().clear();
+                final NMS nms = NMS.instance;
+                nms.placedBlockTypes.put(onPlaceBlockEvent.getBlock(), onPlaceBlockEvent.getBlock().getType());
+                final int timed = 1000 * main.getBlockFileConfiguration().getInt("NewOnyxFFa.Config.Block.TimerUntilBreak");
+                long randGenerator;
+                long time;
+                randGenerator = new Random().nextInt(400) + timed;
+                time = System.currentTimeMillis() + randGenerator;
+                nms.placedBlocks.put(time, onPlaceBlockEvent.getBlock());
             }
+        }
 
     }
 
 
     public void sendListMessage(List<String> messages, Player p) {
-            for (Object message : messages) {
-                p.sendMessage((String) message);
-            }
+        for (Object message : messages) {
+            p.sendMessage((String) message);
+        }
     }
 
     public void sendListBroadcastMessage(List<String> messages, Player p) {
@@ -84,22 +84,20 @@ public class BlockListener implements Listener {
                         for (String effect : main.getBlockFileConfiguration().getConfigurationSection(blockPath + ".Effect").getKeys(false)) {
                             String effectpath = blockPath + ".Effect." + effect;
                             int timer = 0;
-                            for(PotionEffect potion : breakerPlayer.getActivePotionEffects()){
-                                if(potion.getType() == PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect"))){
+                            for (PotionEffect potion : breakerPlayer.getActivePotionEffects()) {
+                                if (potion.getType() == PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect"))) {
                                     timer = potion.getDuration();
                                     breakerPlayer.removePotionEffect(potion.getType());
                                 }
                             }
                             breakerPlayer.addPotionEffect(new PotionEffect(
                                     PotionEffectType.getByName(main.getBlockFileConfiguration().getString(effectpath + ".PotionEffect")),
-                                    timer + main.getBlockFileConfiguration().getInt(effectpath + ".Duration")*20,
+                                    timer + main.getBlockFileConfiguration().getInt(effectpath + ".Duration") * 20,
                                     main.getBlockFileConfiguration().getInt(effectpath + ".Amplifier")));
                         }
                         sendListMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".Messages"), breakerPlayer);
                         sendListBroadcastMessage(main.getBlockFileConfiguration().getStringList(blockPath + ".BroadcastMessages"), breakerPlayer);
-                    }
-
-                    else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("HealthBonus")) {
+                    } else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("HealthBonus")) {
                         AttributeInstance attribute = breakerPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH);
                         if (attribute.getValue() < main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus") + 20) {
                             int MAX_HEALTH = main.getBlockFileConfiguration().getInt(blockPath + ".HeartBonus") + 20;
@@ -114,14 +112,13 @@ public class BlockListener implements Listener {
                             return;
 
                         }
-                    }
-                    else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("Item")) {
+                    } else if (main.getBlockFileConfiguration().getString(blockPath + ".EffectType").equalsIgnoreCase("Item")) {
                         for (String item : main.getBlockFileConfiguration().getConfigurationSection(blockPath + ".Item").getKeys(false)) {
                             ItemStack itemStack = new ItemStack(
                                     Material.getMaterial(main.getBlockFileConfiguration().getString(blockPath + ".Item." + item + ".Material")),
                                     main.getBlockFileConfiguration().getInt(blockPath + ".Item." + item + ".Quantity"));
                             ItemMeta itemMeta = itemStack.getItemMeta();
-                            if(main.getBlockFileConfiguration().get(blockPath + ".Item." + item + ".Name") != null){
+                            if (main.getBlockFileConfiguration().get(blockPath + ".Item." + item + ".Name") != null) {
                                 itemMeta.setDisplayName(main.getBlockFileConfiguration().getString(blockPath + ".Item." + item + ".Name"));
                             }
                             if (main.getBlockFileConfiguration().getBoolean(blockPath + ".Item." + item + ".isUnbreakable")) {
@@ -161,9 +158,9 @@ public class BlockListener implements Listener {
         Location playerLocation = walkOnJumpadEvent.getPlayer().getLocation();
         Location blockLocation = new Location(playerLocation.getWorld(), playerLocation.getBlockX(), playerLocation.getBlockY() - 1, playerLocation.getBlockZ());
         for (String path : main.getBlockFileConfiguration().getConfigurationSection("NewOnyxFFa.Config.Block.JumpadBlock").getKeys(false))
-            if (Material.getMaterial(main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.JumpadBlock." + path + ".Material")) == blockLocation.getBlock().getType()){
+            if (Material.getMaterial(main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.JumpadBlock." + path + ".Material")) == blockLocation.getBlock().getType()) {
                 FFaPlayer player = new FFaPlayer(main, walkOnJumpadEvent.getPlayer());
-                player.getPlayer().setVelocity(player.getPlayer().getLocation().getDirection().multiply(main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.JumpadBlock."+ path +".VectorCoords.EyeLocationDirectionMovementMultiplier")).setY(main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.JumpadBlock."+ path +".VectorCoords.High")));
+                player.getPlayer().setVelocity(player.getPlayer().getLocation().getDirection().multiply(main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.JumpadBlock." + path + ".VectorCoords.EyeLocationDirectionMovementMultiplier")).setY(main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.JumpadBlock." + path + ".VectorCoords.High")));
                 player.getPlayer().playSound(playerLocation, Sound.ENTITY_FIREWORK_SHOOT, 10, 10);
             }
     }

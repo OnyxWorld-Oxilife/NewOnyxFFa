@@ -19,22 +19,22 @@ public class FFaBlock {
 
             @Override
             public void run() {
-                if(Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).getType() == Material.AIR){
+                if (Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).getType() == Material.AIR) {
                     cancel();
 
                 }
-                if(timer == 0) {
+                if (timer == 0) {
                     Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).setType(Material.AIR);
                     cancel();
                 }
-                if(timer == main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.ReplaceTime") && block.getType() != Material.TNT) {
-                    if(Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).getType() != Material.AIR){
+                if (timer == main.getBlockFileConfiguration().getDouble("NewOnyxFFa.Config.Block.ReplaceTime") && block.getType() != Material.TNT) {
+                    if (Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).getType() != Material.AIR) {
                         Bukkit.getWorld(block.getWorld().getName()).getBlockAt(block.getLocation()).setType(Material.getMaterial(main.getBlockFileConfiguration().getString("NewOnyxFFa.Config.Block.BlockBeforeBreakState")));
                     }
                 }
                 timer--;
             }
-        }.runTaskTimer(this.main,0 ,(long) (20L));
+        }.runTaskTimer(this.main, 0, (long) (20L));
     }
 
     public Block getBlock() {

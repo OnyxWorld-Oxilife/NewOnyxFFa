@@ -13,10 +13,10 @@ public class RanksManager {
     private final List<Rank> ranks = new ArrayList<>();
     private final OnyxFFaMain main;
 
-    public RanksManager(OnyxFFaMain onyxFFaMain){
+    public RanksManager(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
         ConfigurationSection rankSection = main.getRanksConfiguration().getConfigurationSection("NewOnyxFFa.Ranks");
-        for(String rank : rankSection.getKeys(false)){
+        for (String rank : rankSection.getKeys(false)) {
             FileConfiguration rankconfig = main.getRanksConfiguration();
             ranks.add(new Rank(main,
                     rankconfig.getString("NewOnyxFFa.Ranks." + rank + ".Name"),

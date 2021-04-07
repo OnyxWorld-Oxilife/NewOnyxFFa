@@ -17,25 +17,11 @@ import java.util.Random;
 public class GadgetsAndDiscoListener implements Listener {
     private OnyxFFaMain main;
     private long time;
+
     public GadgetsAndDiscoListener(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
         time = System.currentTimeMillis();
     }
-
-
-
-    /*@EventHandler
-    public void onGrappin(PlayerFishEvent playerGrappinUse) {
-        if(playerGrappinUse.getCaught() instanceof Player && ((Player) playerGrappinUse.getCaught()).getPlayer() != playerGrappinUse.getPlayer()){
-            if (playerGrappinUse.getPlayer().getInventory().getItemInMainHand().getType() == Material.FISHING_ROD) {
-                playerGrappinUse.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
-            } else {
-                playerGrappinUse.getPlayer().getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-            }
-            ((Player) playerGrappinUse.getCaught()).sendTitle("§eCapturé !", "", 5, 10, 5);
-            playerGrappinUse.getCaught().setVelocity(playerGrappinUse.getPlayer().getLocation().toVector().subtract(playerGrappinUse.getCaught().getLocation().toVector()).setY(0).normalize().setY(0.1).multiply(1.25));
-        }
-    }*/
 
     @EventHandler
     public void onFishEvent(PlayerFishEvent playerFishEvent) {
@@ -44,7 +30,7 @@ public class GadgetsAndDiscoListener implements Listener {
         ItemStack air = new ItemStack(Material.AIR);
 
         // Permet d'empêcher l'utilisation "classique" de la canne
-        if(state == PlayerFishEvent.State.FISHING) {
+        if (state == PlayerFishEvent.State.FISHING) {
             main.fishingPlayers.addPlayer(player, playerFishEvent.getHook());
         } else {
             main.fishingPlayers.removePlayer(player);
@@ -82,60 +68,66 @@ public class GadgetsAndDiscoListener implements Listener {
             }
         }
     }
+
     @EventHandler
-    public void eggSpawn(PlayerEggThrowEvent event){
+    public void eggSpawn(PlayerEggThrowEvent event) {
         event.setHatching(false);
     }
+
     @EventHandler
-    public void onDisco(PlayerMoveEvent discoEvent){
+    public void onDisco(PlayerMoveEvent discoEvent) {
         if (System.currentTimeMillis() - time > 500) {
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            if (player.hasPermission("Offa.disco") && player.getGameMode() == GameMode.SURVIVAL) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.hasPermission("Offa.disco") && player.getGameMode() == GameMode.SURVIVAL) {
                     time = System.currentTimeMillis();
-                    if(player.getInventory().getHelmet() != null){
-                    if (player.getInventory().getHelmet().getType() == Material.LEATHER_HELMET) {
-                        ItemStack helmet = player.getInventory().getHelmet();
-                        LeatherArmorMeta itemmeta = (LeatherArmorMeta) helmet.getItemMeta();
-                        int red = new Random().nextInt(256);
-                        int green = new Random().nextInt(256);
-                        int blue = new Random().nextInt(256);
-                        itemmeta.setColor(Color.fromRGB(red, green, blue));
-                        helmet.setItemMeta(itemmeta);
-                        player.getInventory().setHelmet(helmet);
-                    }}
-                if(player.getInventory().getLeggings() != null){
-                    if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
-                        ItemStack leggings = player.getInventory().getLeggings();
-                        LeatherArmorMeta itemmeta = (LeatherArmorMeta) leggings.getItemMeta();
-                        int red = new Random().nextInt(256);
-                        int green = new Random().nextInt(256);
-                        int blue = new Random().nextInt(256);
-                        itemmeta.setColor(Color.fromRGB(red, green, blue));
-                        leggings.setItemMeta(itemmeta);
-                        player.getInventory().setLeggings(leggings);
-                    }}
-                if(player.getInventory().getChestplate() != null){
-                    if (player.getInventory().getChestplate().getType() == Material.LEATHER_CHESTPLATE) {
-                        ItemStack chestplate = player.getInventory().getChestplate();
-                        LeatherArmorMeta itemmeta = (LeatherArmorMeta) chestplate.getItemMeta();
-                        int red = new Random().nextInt(256);
-                        int green = new Random().nextInt(256);
-                        int blue = new Random().nextInt(256);
-                        itemmeta.setColor(Color.fromRGB(red, green, blue));
-                        chestplate.setItemMeta(itemmeta);
-                        player.getInventory().setChestplate(chestplate);
-                    }}
-                if(player.getInventory().getBoots() != null){
-                    if (player.getInventory().getBoots().getType() == Material.LEATHER_BOOTS) {
-                        ItemStack boots = player.getInventory().getBoots();
-                        LeatherArmorMeta itemmeta = (LeatherArmorMeta) boots.getItemMeta();
-                        int red = new Random().nextInt(256);
-                        int green = new Random().nextInt(256);
-                        int blue = new Random().nextInt(256);
-                        itemmeta.setColor(Color.fromRGB(red, green, blue));
-                        boots.setItemMeta(itemmeta);
-                        player.getInventory().setBoots(boots);
-                    }}
+                    if (player.getInventory().getHelmet() != null) {
+                        if (player.getInventory().getHelmet().getType() == Material.LEATHER_HELMET) {
+                            ItemStack helmet = player.getInventory().getHelmet();
+                            LeatherArmorMeta itemmeta = (LeatherArmorMeta) helmet.getItemMeta();
+                            int red = new Random().nextInt(256);
+                            int green = new Random().nextInt(256);
+                            int blue = new Random().nextInt(256);
+                            itemmeta.setColor(Color.fromRGB(red, green, blue));
+                            helmet.setItemMeta(itemmeta);
+                            player.getInventory().setHelmet(helmet);
+                        }
+                    }
+                    if (player.getInventory().getLeggings() != null) {
+                        if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
+                            ItemStack leggings = player.getInventory().getLeggings();
+                            LeatherArmorMeta itemmeta = (LeatherArmorMeta) leggings.getItemMeta();
+                            int red = new Random().nextInt(256);
+                            int green = new Random().nextInt(256);
+                            int blue = new Random().nextInt(256);
+                            itemmeta.setColor(Color.fromRGB(red, green, blue));
+                            leggings.setItemMeta(itemmeta);
+                            player.getInventory().setLeggings(leggings);
+                        }
+                    }
+                    if (player.getInventory().getChestplate() != null) {
+                        if (player.getInventory().getChestplate().getType() == Material.LEATHER_CHESTPLATE) {
+                            ItemStack chestplate = player.getInventory().getChestplate();
+                            LeatherArmorMeta itemmeta = (LeatherArmorMeta) chestplate.getItemMeta();
+                            int red = new Random().nextInt(256);
+                            int green = new Random().nextInt(256);
+                            int blue = new Random().nextInt(256);
+                            itemmeta.setColor(Color.fromRGB(red, green, blue));
+                            chestplate.setItemMeta(itemmeta);
+                            player.getInventory().setChestplate(chestplate);
+                        }
+                    }
+                    if (player.getInventory().getBoots() != null) {
+                        if (player.getInventory().getBoots().getType() == Material.LEATHER_BOOTS) {
+                            ItemStack boots = player.getInventory().getBoots();
+                            LeatherArmorMeta itemmeta = (LeatherArmorMeta) boots.getItemMeta();
+                            int red = new Random().nextInt(256);
+                            int green = new Random().nextInt(256);
+                            int blue = new Random().nextInt(256);
+                            itemmeta.setColor(Color.fromRGB(red, green, blue));
+                            boots.setItemMeta(itemmeta);
+                            player.getInventory().setBoots(boots);
+                        }
+                    }
                 }
             }
         }

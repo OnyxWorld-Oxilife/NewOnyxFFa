@@ -54,15 +54,15 @@ public class DamageListener implements Listener {
     }*/
     @EventHandler
     public void onTakeDamage(EntityDamageByEntityEvent takeDamageEvent) {
-        if(takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION){
-            if(takeDamageEvent.getDamager() instanceof CraftFirework){
+        if (takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
+            if (takeDamageEvent.getDamager() instanceof CraftFirework) {
                 takeDamageEvent.setCancelled(true);
             }
         }
         if (takeDamageEvent.getDamager() instanceof Player || takeDamageEvent.getDamager() instanceof Egg) {
             if (takeDamageEvent.getEntity() instanceof Player) {
-                if(takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.PROJECTILE){
-                    if(takeDamageEvent.getDamager() instanceof Egg){
+                if (takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
+                    if (takeDamageEvent.getDamager() instanceof Egg) {
                         Projectile projectile = (Projectile) takeDamageEvent.getDamager();
                         Player damager = (Player) projectile.getShooter();
                         String damagerUuid = "" + damager.getUniqueId();
@@ -77,7 +77,7 @@ public class DamageListener implements Listener {
                                 }
                             }
                         }.runTaskLater(this.main, 20 * 10);
-                    }else {
+                    } else {
                         String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
                         String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                         lastHitters.put(victimUUid, damagerUuid);
@@ -91,35 +91,35 @@ public class DamageListener implements Listener {
                             }
                         }.runTaskLater(this.main, 20 * 10);
                     }
-                }
-                else{
-                for (PotionEffect potionEffect : ((Player) takeDamageEvent.getEntity()).getActivePotionEffects()) {
-                    if (potionEffect.getType().equals(PotionEffectType.GLOWING)) {
-                        takeDamageEvent.setCancelled(true);
-                    }
-                }
-                for (PotionEffect potionEffect2 : ((Player) takeDamageEvent.getDamager()).getActivePotionEffects()) {
-                    if (potionEffect2.getType().equals(PotionEffectType.GLOWING)) {
-                        takeDamageEvent.setCancelled(true);
-                    }
-                }
-                if (((Player) takeDamageEvent.getEntity()).getGameMode() != GameMode.SURVIVAL) {
-                    takeDamageEvent.setCancelled(true);
-                }
-                String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
-                String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
-                if (((Player) takeDamageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
-                    lastHitters.put(victimUUid, damagerUuid);
-                }
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (lastHitters.containsKey(victimUUid)) {
-                            lastHitters.remove(victimUUid);
+                } else {
+                    for (PotionEffect potionEffect : ((Player) takeDamageEvent.getEntity()).getActivePotionEffects()) {
+                        if (potionEffect.getType().equals(PotionEffectType.GLOWING)) {
+                            takeDamageEvent.setCancelled(true);
                         }
                     }
-                }.runTaskLater(this.main, 20 * 10);
-            }}
+                    for (PotionEffect potionEffect2 : ((Player) takeDamageEvent.getDamager()).getActivePotionEffects()) {
+                        if (potionEffect2.getType().equals(PotionEffectType.GLOWING)) {
+                            takeDamageEvent.setCancelled(true);
+                        }
+                    }
+                    if (((Player) takeDamageEvent.getEntity()).getGameMode() != GameMode.SURVIVAL) {
+                        takeDamageEvent.setCancelled(true);
+                    }
+                    String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
+                    String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
+                    if (((Player) takeDamageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
+                        lastHitters.put(victimUUid, damagerUuid);
+                    }
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            if (lastHitters.containsKey(victimUUid)) {
+                                lastHitters.remove(victimUUid);
+                            }
+                        }
+                    }.runTaskLater(this.main, 20 * 10);
+                }
+            }
         }
     }
 
@@ -164,7 +164,7 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onQuitWhileFighting(PlayerQuitEvent quitWhileFightingEvent) {
-        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, quitWhileFightingEvent.getPlayer());
+        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, quitWhileFightingEvent.getPlayer());
         if (lastHitters.containsKey("" + quitWhileFightingEvent.getPlayer().getUniqueId())) {
             String damagerUUid = lastHitters.get("" + quitWhileFightingEvent.getPlayer().getUniqueId());
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -179,49 +179,49 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onDeathByFallDamage(EntityDamageEvent damageEvent) {
         if (damageEvent.getEntity() instanceof Player) {
-            if(main.getConfigConfiguration().getBoolean("NewOnyxFFa.Config.UseDeathByFallDamageRecognition")){
-            if (damageEvent.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                if (((Player) damageEvent.getEntity()).getGameMode() != GameMode.SURVIVAL) {
-                    damageEvent.setCancelled(true);
-                }
-                if (((Player) damageEvent.getEntity()).getHealth() <= damageEvent.getFinalDamage()) {
-                    damageEvent.setCancelled(true);
-                    if (((Player) damageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
-                        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) damageEvent.getEntity());
-                        if (lastHitters.containsKey("" + victim.getPlayer().getUniqueId())) {
-                            String damagerUUid = lastHitters.get("" + victim.getPlayer().getUniqueId());
-                            for (Player onlineplayer : Bukkit.getOnlinePlayers()) {
-                                if (damagerUUid.equalsIgnoreCase("" + onlineplayer.getUniqueId())) {
-                                    lastHitters.remove("" + victim.getPlayer().getUniqueId());
-                                    FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlineplayer);
-                                    victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
-                                    damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
-                                    initKill(damager, victim);
-                                    break;
+            if (main.getConfigConfiguration().getBoolean("NewOnyxFFa.Config.UseDeathByFallDamageRecognition")) {
+                if (damageEvent.getCause() == EntityDamageEvent.DamageCause.FALL) {
+                    if (((Player) damageEvent.getEntity()).getGameMode() != GameMode.SURVIVAL) {
+                        damageEvent.setCancelled(true);
+                    }
+                    if (((Player) damageEvent.getEntity()).getHealth() <= damageEvent.getFinalDamage()) {
+                        damageEvent.setCancelled(true);
+                        if (((Player) damageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
+                            FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) damageEvent.getEntity());
+                            if (lastHitters.containsKey("" + victim.getPlayer().getUniqueId())) {
+                                String damagerUUid = lastHitters.get("" + victim.getPlayer().getUniqueId());
+                                for (Player onlineplayer : Bukkit.getOnlinePlayers()) {
+                                    if (damagerUUid.equalsIgnoreCase("" + onlineplayer.getUniqueId())) {
+                                        lastHitters.remove("" + victim.getPlayer().getUniqueId());
+                                        FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlineplayer);
+                                        victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
+                                        damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
+                                        initKill(damager, victim);
+                                        break;
+                                    }
                                 }
-                            }
-                        } else {
-                            victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.Suicide"));
-                            try {
-                                initSuicide(victim);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            } else {
+                                victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.Suicide"));
+                                try {
+                                    initSuicide(victim);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
 
+                            }
                         }
                     }
                 }
             }
         }
-        }
     }
 
     @EventHandler
     public void onFallIntoTheVoid(PlayerMoveEvent fallIntoVoidEvent) throws IOException {
-        if(fallIntoVoidEvent.getPlayer().getGameMode() != GameMode.SURVIVAL){
+        if (fallIntoVoidEvent.getPlayer().getGameMode() != GameMode.SURVIVAL) {
             return;
         }
         if (fallIntoVoidEvent.getPlayer().getLocation().getBlockY() <= main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.MinY")) {
@@ -246,6 +246,7 @@ public class DamageListener implements Listener {
             }
         }
     }
+
     public void initSuicide(FFaPlayer victim) throws IOException {
 
         main.killStreak.resetPlayer(victim.getPlayer());
@@ -257,7 +258,7 @@ public class DamageListener implements Listener {
         attribute.setBaseValue(20);
         victim.getPlayer().getInventory().clear();
         victim.getPlayer().setFallDistance(-5);
-        for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
+        for (PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()) {
             victim.getPlayer().removePotionEffect(potionEffect.getType());
         }
         victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
@@ -320,7 +321,7 @@ public class DamageListener implements Listener {
         attribute.setBaseValue(20);
         victim.getPlayer().getInventory().clear();
         victim.getPlayer().setFallDistance(-500);
-        for(PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()){
+        for (PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()) {
             victim.getPlayer().removePotionEffect(potionEffect.getType());
         }
         victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());

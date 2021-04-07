@@ -22,7 +22,7 @@ import java.util.Map;
 public class SpawnManager {
     private OnyxFFaMain main;
 
-    public SpawnManager(OnyxFFaMain main){
+    public SpawnManager(OnyxFFaMain main) {
         this.main = main;
     }
 
@@ -34,25 +34,25 @@ public class SpawnManager {
         Location selectedSpawn;
 
         furthestSpawn = new HashMap<>();
-        for(Location spawn : spawns){
+        for (Location spawn : spawns) {
             nearestPlayer = new HashMap<>();
-            for(Player onlinePlayer : Bukkit.getOnlinePlayers()){
-                if(onlinePlayer.getGameMode() == GameMode.SURVIVAL) {
-                    nearestPlayer.put(onlinePlayer,spawn.toVector().subtract(onlinePlayer.getLocation().toVector()).length());
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (onlinePlayer.getGameMode() == GameMode.SURVIVAL) {
+                    nearestPlayer.put(onlinePlayer, spawn.toVector().subtract(onlinePlayer.getLocation().toVector()).length());
                 }
             }
             List<Map.Entry<Player, Double>> list = new ArrayList<>(nearestPlayer.entrySet());
             list.sort(Map.Entry.comparingByValue());
-            if(list.size() != 0) {
+            if (list.size() != 0) {
                 furthestSpawn.put(spawn, list.get(0).getValue());
             }
         }
         List<Map.Entry<Location, Double>> list = new ArrayList<>(furthestSpawn.entrySet());
         list.sort(Map.Entry.comparingByValue());
-        if(list.size() != 0) {
+        if (list.size() != 0) {
             selectedSpawn = list.get(list.size() - 1).getKey();
         } else {
-            selectedSpawn = spawns.get((int) Math.round(Math.random()*(spawns.size() - 1)));
+            selectedSpawn = spawns.get((int) Math.round(Math.random() * (spawns.size() - 1)));
         }
         return selectedSpawn;
     }

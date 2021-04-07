@@ -41,7 +41,7 @@ public class OnyxFFaMain extends JavaPlugin {
     private final List<String> lore = new ArrayList<>();
     private final List<String> SpawnInWait = new ArrayList<>();
     private final List<Location> spawnsList = new ArrayList<>();
-    private final List<String> blockEffectList= new ArrayList<>();
+    private final List<String> blockEffectList = new ArrayList<>();
     private final List<String> jumpadsBlocks = new ArrayList<>();
 
     public static OnyxFFaMain instance;
@@ -61,7 +61,7 @@ public class OnyxFFaMain extends JavaPlugin {
         }
         OnyxFFaMain.instance = this;
         if (Bukkit.getOnlinePlayers().size() > 0) {
-            for (Player player:Bukkit.getOnlinePlayers()) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
                 killStreak.addPlayer(player);
             }
         }
@@ -350,6 +350,7 @@ public class OnyxFFaMain extends JavaPlugin {
         }
 
     }
+
     /*@Override
     public void onDisable(){
         try {
@@ -379,45 +380,75 @@ public class OnyxFFaMain extends JavaPlugin {
     public FileConfiguration getStatsConfiguration() {
         return statsConfiguration;
     }
+
     public FileConfiguration getRanksConfiguration() {
-        return  ranksConfiguration;
+        return ranksConfiguration;
     }
+
     public FileConfiguration getConfigConfiguration() {
-        return  configConfiguration;
+        return configConfiguration;
     }
+
     public FileConfiguration getSpawnsConfiguration() {
-        return  spawnsConfiguration;
+        return spawnsConfiguration;
     }
+
     public FileConfiguration getKitsConfiguration() {
-        return  kitsConfiguration;
+        return kitsConfiguration;
     }
+
     public FileConfiguration getMessagesConfiguration() {
-        return  messagesConfiguration;
+        return messagesConfiguration;
     }
+
     public FileConfiguration getBlockFileConfiguration() {
         return blockFileConfiguration;
     }
+
     public List<String> getSpawnsInWait() {
         return SpawnInWait;
     }
+
     public File getStatsFile() {
         return statsFile;
     }
+
     public File getSpawnsFile() {
         return spawnsFile;
     }
+
     public List<String> getBlockEffectList() {
         return blockEffectList;
     }
+
     public List<Location> getSpawnsList() {
         return spawnsList;
     }
-    public File getRanksFile() { return ranksFile; }
-    public RanksManager getRanksManager(){return ranksManager;}
-    public FFaPlayerManager getfFaPlayerManager(){return fFaPlayerManager;}
-    public SpawnManager getSpawnManager(){return spawnManager;}
-    public LocationBuilder getLocationBuilder(){return locationBuilder;}
-    public ItemBuilder getItemBuilder(){return itemBuilder;}
+
+    public File getRanksFile() {
+        return ranksFile;
+    }
+
+    public RanksManager getRanksManager() {
+        return ranksManager;
+    }
+
+    public FFaPlayerManager getfFaPlayerManager() {
+        return fFaPlayerManager;
+    }
+
+    public SpawnManager getSpawnManager() {
+        return spawnManager;
+    }
+
+    public LocationBuilder getLocationBuilder() {
+        return locationBuilder;
+    }
+
+    public ItemBuilder getItemBuilder() {
+        return itemBuilder;
+    }
+
     /*
     public FFaBlockManager getfFaBlockManager() {
         return fFaBlockManager;

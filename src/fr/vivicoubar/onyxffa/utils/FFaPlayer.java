@@ -20,16 +20,16 @@ public class FFaPlayer {
     private AutoRespawnManager autoRespawnManager;
     private UUID uniqueID;
 
-    public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player){
+    public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player) {
         this.main = onyxFFaMain;
         FileConfiguration statsConfiguration = main.getStatsConfiguration();
-        if(!statsConfiguration.contains("NewOnyxFFa."+ player.getUniqueId())) {
+        if (!statsConfiguration.contains("NewOnyxFFa." + player.getUniqueId())) {
             try {
-            statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Kills", 0);
-            statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Deaths", 0);
-            statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Points", 0);
-            statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".HighestScore", 0);
-            statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Pseudo", player.getName());
+                statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Kills", 0);
+                statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Deaths", 0);
+                statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Points", 0);
+                statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".HighestScore", 0);
+                statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Pseudo", player.getName());
                 statsConfiguration.save(main.getStatsFile());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -43,34 +43,43 @@ public class FFaPlayer {
         this.main.getfFaPlayerManager().getfFaPlayerList().add(this);
     }
 
-    public Player getPlayer(){
+    public Player getPlayer() {
         return this.player;
     }
+
     public UUID getUniqueID() {
         return uniqueID;
     }
-    public Inventory getInventory(){
+
+    public Inventory getInventory() {
         return this.player.getInventory();
     }
-    public Stats getStats(){
+
+    public Stats getStats() {
         return this.stats;
     }
-    public void updateStats(){
+
+    public void updateStats() {
         this.stats = new Stats(this, main);
     }
-    public void setHealth(double health){
+
+    public void setHealth(double health) {
         this.player.setHealth(health);
     }
+
     public boolean isAutorespawnBoolean() {
         return autorespawnBoolean;
     }
+
     public AutoRespawnManager getAutoRespawnManager() {
         return autoRespawnManager;
     }
-    public void setLocation(Location location){
+
+    public void setLocation(Location location) {
         this.player.teleport(location);
     }
-    public void setAutorespawnBoolean(){
+
+    public void setAutorespawnBoolean() {
         this.autorespawnBoolean = !autorespawnBoolean;
     }
 

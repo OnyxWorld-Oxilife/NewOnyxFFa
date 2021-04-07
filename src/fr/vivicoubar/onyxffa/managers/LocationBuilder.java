@@ -9,44 +9,44 @@ public class LocationBuilder {
 
     private final OnyxFFaMain main;
 
-    public LocationBuilder(OnyxFFaMain onyxFFaMain){
+    public LocationBuilder(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
     }
 
-    public Location getLocation(String parameter){
+    public Location getLocation(String parameter) {
         FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
         double x;
         try {
             x = spawnConfiguration.getDouble(parameter + ".x");
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             x = 0;
         }
         double y;
         try {
             y = spawnConfiguration.getDouble(parameter + ".y");
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             y = 0;
         }
         double z;
         try {
             z = spawnConfiguration.getDouble(parameter + ".z");
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             z = 0;
         }
         float yaw;
         try {
             yaw = (float) spawnConfiguration.getDouble(parameter + ".yaw");
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             yaw = 0f;
         }
         float pitch;
         try {
             pitch = (float) spawnConfiguration.getDouble(parameter + ".pitch");
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             pitch = 0f;
         }

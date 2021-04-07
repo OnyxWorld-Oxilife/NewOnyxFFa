@@ -34,14 +34,15 @@ public class AutoRespawnManager {
             fFaPlayer.getPlayer().teleport(temp);
 
             new BukkitRunnable() {
-                int timer = 3 ;
+                int timer = 3;
+
                 @Override
                 public void run() {
 
-                    if(timer > 0 && fFaPlayer.getPlayer().getGameMode() == GameMode.SPECTATOR){
-                        fFaPlayer.getPlayer().sendTitle("§7Vous êtes §cMort !", "§7Respawn dans §c"  + timer + "...", 5 , 10 ,5);
+                    if (timer > 0 && fFaPlayer.getPlayer().getGameMode() == GameMode.SPECTATOR) {
+                        fFaPlayer.getPlayer().sendTitle("§7Vous êtes §cMort !", "§7Respawn dans §c" + timer + "...", 5, 10, 5);
                         fFaPlayer.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§c/autorespawn §7pour désactiver !"));
-                    } else if(timer == 0 && fFaPlayer.getPlayer().getGameMode() == GameMode.SPECTATOR){
+                    } else if (timer == 0 && fFaPlayer.getPlayer().getGameMode() == GameMode.SPECTATOR) {
                         cancel();
                         SpawnManager spawnManagerInstance = new SpawnManager(main);
                         spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
@@ -50,10 +51,10 @@ public class AutoRespawnManager {
                         return;
                     }
 
-                timer--;
+                    timer--;
                 }
             }
-            .runTaskTimer(this.main, 0, 20L);
+                    .runTaskTimer(this.main, 0, 20L);
         } else {
             FileConfiguration configConfiguration = main.getConfigConfiguration();
             Player player = fFaPlayer.getPlayer();

@@ -14,7 +14,7 @@ public class Rank {
     List<String> commandOnLeaveRank;
     List<String> commandOnGoToRank;
 
-     public Rank(OnyxFFaMain onyxFFaMain, String name, String color, double upperBound, double lowerBound,double rankNumber, List<String> commandOnGoToRank, List<String> commandOnLeaveRank){
+    public Rank(OnyxFFaMain onyxFFaMain, String name, String color, double upperBound, double lowerBound, double rankNumber, List<String> commandOnGoToRank, List<String> commandOnLeaveRank) {
         this.color = color;
         this.main = onyxFFaMain;
         this.upperBound = upperBound;
@@ -28,7 +28,8 @@ public class Rank {
     public String getName() {
         return this.name;
     }
-    public double getRankNumber(){
+
+    public double getRankNumber() {
         return this.rankNumber;
     }
 
@@ -49,7 +50,7 @@ public class Rank {
     }
 
     public String getColor() {
-         return this.color;
+        return this.color;
     }
 }
 

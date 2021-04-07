@@ -65,21 +65,20 @@ public class NMS {
                             entry.getValue().setType(Material.AIR);
                             iterator.remove();
                             NMS.this.placedBlockTypes.remove(entry.getValue());
-                        }
-
-                        else {
+                        } else {
                             //Sinon il récupère le nombre de secondes restantes et update son niveau de dégâts.
-                            final double breakLevel_id = (10 - (int)(entry.getKey() - System.currentTimeMillis()) / 1000) * 0.8;
-                            NMS.this.sendBreakPacket(entry.getValue().getLocation(), (int)breakLevel_id, entry.getValue());
+                            final double breakLevel_id = (10 - (int) (entry.getKey() - System.currentTimeMillis()) / 1000) * 0.8;
+                            NMS.this.sendBreakPacket(entry.getValue().getLocation(), (int) breakLevel_id, entry.getValue());
                         }
                     }
                 }
             }
         }, 0L, 10L);
     }
+
     public void sendBreakPacket(final Location location, int data, final Block block) {
         //Nether, END , OverWorld
-        final int dimension = ((CraftWorld)block.getWorld()).getHandle().dimension;
+        final int dimension = ((CraftWorld) block.getWorld()).getHandle().dimension;
         //Récupère la position du block
         final BlockPosition blockPosition = new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
@@ -87,13 +86,12 @@ public class NMS {
         int id;
         if (this.uniqueLocationId.containsKey(location)) {
             id = this.uniqueLocationId.get(location);
-        }
-        else {
+        } else {
             id = new Random().nextInt(Integer.MAX_VALUE);
             this.uniqueLocationId.put(location, id);
         }
         this.uniqueLocationId.put(location, id);
-        if(location.getBlock().getType() == Material.AIR){
+        if (location.getBlock().getType() == Material.AIR) {
             data = -1;
         }
         final PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(id, blockPosition, data);

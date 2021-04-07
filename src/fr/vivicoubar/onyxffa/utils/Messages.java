@@ -27,13 +27,13 @@ public class Messages {
         Bukkit.broadcastMessage(msg);
     }
 
-    public void multipleChatMessages(Player p, List<String > messages) {
+    public void multipleChatMessages(Player p, List<String> messages) {
         for (String msg : messages) {
             chatMessage(p, msg);
         }
     }
 
-    public void multipleBroadcastMessages(List<String > messages) {
+    public void multipleBroadcastMessages(List<String> messages) {
         for (String msg : messages) {
             broadcastChatMessage(msg);
         }

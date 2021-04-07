@@ -6,7 +6,7 @@ import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class FFaEffectBlock{
+public class FFaEffectBlock {
     private Location block;
     private OnyxFFaMain main;
 
@@ -15,7 +15,7 @@ public class FFaEffectBlock{
         this.block = blockLocation;
 
         block.getBlock().getLocation();
-        final Firework firework = (Firework) block.getWorld().spawn(block.getBlock().getLocation(), (Class<Firework>)Firework.class);
+        final Firework firework = (Firework) block.getWorld().spawn(block.getBlock().getLocation(), (Class<Firework>) Firework.class);
         final FireworkMeta fireworkMeta = firework.getFireworkMeta();
         final FireworkEffect.Builder builder2 = FireworkEffect.builder();
         fireworkMeta.addEffect(builder2.flicker(true).withColor(Color.RED).build());
@@ -26,22 +26,23 @@ public class FFaEffectBlock{
         firework.setFireworkMeta(fireworkMeta);
         new BukkitRunnable() {
             int timer = main.getBlockFileConfiguration().getInt("NewOnyxFFa.Config.EffectBlock.Cooldown");
+
             @Override
             public void run() {
 
-                if (timer == (main.getBlockFileConfiguration().getInt("NewOnyxFFa.Config.EffectBlock.Cooldown"))){
+                if (timer == (main.getBlockFileConfiguration().getInt("NewOnyxFFa.Config.EffectBlock.Cooldown"))) {
                     block.getBlock().setType(Material.BEDROCK);
                 }
-                if(timer == 0){
-                    int random = (int)(Math.random() * ((main.getBlockEffectList().size() - 1) + 1));
+                if (timer == 0) {
+                    int random = (int) (Math.random() * ((main.getBlockEffectList().size() - 1) + 1));
                     block.getBlock().setType(Material.getMaterial(main.getBlockEffectList().get(random)));
                     cancel();
                 }
-                timer --;
+                timer--;
             }
 
-     }.runTaskTimer(this.main,0,20);
-}
+        }.runTaskTimer(this.main, 0, 20);
+    }
 
     public Location getBlock() {
         return block;
