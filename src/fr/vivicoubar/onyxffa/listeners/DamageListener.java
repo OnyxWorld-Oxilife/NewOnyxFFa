@@ -71,7 +71,7 @@ public class DamageListener implements Listener {
                         Player damager = (Player) projectile.getShooter();
                         String damagerUuid = "" + damager.getUniqueId();
                         String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
-                        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, Bukkit.getPlayer(victimUUid));
+                        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                         takeDamageEvent.setCancelled(true);
@@ -79,7 +79,7 @@ public class DamageListener implements Listener {
                         String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
                         String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                         takeDamageEvent.setCancelled(true);
-                        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, Bukkit.getPlayer(victimUUid));
+                        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
@@ -101,9 +101,7 @@ public class DamageListener implements Listener {
                     String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
                     String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                     if (((Player) takeDamageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
-                        System.out.println("debugpvp");
                         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
-                        System.out.println("debugpvp");
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
@@ -217,13 +215,10 @@ public class DamageListener implements Listener {
         }
         if (fallIntoVoidEvent.getPlayer().getLocation().getBlockY() <= main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.MinY")) {
             FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, fallIntoVoidEvent.getPlayer());
-            System.out.println("debug1");
             if (!victim.getLasthitter().equals("") && System.currentTimeMillis() - victim.getTimeWhenLastHitted() < 10000 && victim.getTimeWhenLastHitted() > 0 ) {
                 String damagerUUid = victim.getLasthitter();
-                System.out.println("debug2");
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (("" + onlinePlayer.getUniqueId()).equals(damagerUUid)) {
-                        System.out.println("debug3");
                         victim.setTimeWhenLastHitted(0);
                         victim.setLasthitter("");
                         FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlinePlayer);
