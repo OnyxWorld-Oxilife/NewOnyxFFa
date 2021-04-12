@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FFaPlayerManager {
-    private final List<FFaPlayer> fFaPlayerList;
+    private List<FFaPlayer> fFaPlayerList;
     private final OnyxFFaMain main;
 
     public FFaPlayerManager(OnyxFFaMain onyxFFaMain) {
@@ -27,5 +27,13 @@ public class FFaPlayerManager {
             }
         }
         return new FFaPlayer(main, player);
+    }
+
+    public void removeFFaPlayer(Player player){
+        for(FFaPlayer fFaPlayer : fFaPlayerList){
+            if(fFaPlayer.getUniqueID() == player.getUniqueId()){
+                fFaPlayerList.remove(fFaPlayer);
+            }
+        }
     }
 }

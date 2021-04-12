@@ -11,7 +11,9 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent quitEvent) {
         Player player = quitEvent.getPlayer();
+
         OnyxFFaMain.getInstance().killStreak.removePlayer(player);
+        OnyxFFaMain.getInstance().getfFaPlayerManager().removeFFaPlayer(player);
         quitEvent.setQuitMessage(null);
     }
 
