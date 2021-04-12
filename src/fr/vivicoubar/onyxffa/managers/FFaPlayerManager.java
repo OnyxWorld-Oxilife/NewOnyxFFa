@@ -30,10 +30,6 @@ public class FFaPlayerManager {
     }
 
     public void removeFFaPlayer(Player player){
-        for(FFaPlayer fFaPlayer : fFaPlayerList){
-            if(fFaPlayer.getUniqueID() == player.getUniqueId()){
-                fFaPlayerList.remove(fFaPlayer);
-            }
-        }
+        fFaPlayerList.removeIf(fFaPlayer -> fFaPlayer.getUniqueID() == player.getUniqueId());
     }
 }
