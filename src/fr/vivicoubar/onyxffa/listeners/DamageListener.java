@@ -214,10 +214,13 @@ public class DamageListener implements Listener {
         }
         if (fallIntoVoidEvent.getPlayer().getLocation().getBlockY() <= main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.MinY")) {
             FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, fallIntoVoidEvent.getPlayer());
+            System.out.println("debug1");
             if (!victim.getLasthitter().equals("") && System.currentTimeMillis() - victim.getTimeWhenLastHitted() > 10000 && victim.getTimeWhenLastHitted() > 0 ) {
                 String damagerUUid = victim.getLasthitter();
+                System.out.println("debug2");
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (("" + onlinePlayer.getUniqueId()).equals(damagerUUid)) {
+                        System.out.println("debug3");
                         victim.setTimeWhenLastHitted(0);
                         victim.setLasthitter("");
                         FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlinePlayer);

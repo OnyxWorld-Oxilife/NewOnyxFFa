@@ -18,9 +18,9 @@ public class FFaPlayer {
     private boolean autorespawnBoolean = true;
     private final OnyxFFaMain main;
     private String lasthitter ="";
-    public long timeWhenLastHitted = 0L;
-    private AutoRespawnManager autoRespawnManager;
-    private UUID uniqueID;
+    public long timeWhenLastHitted = 0;
+    private final AutoRespawnManager autoRespawnManager;
+    private final UUID uniqueID;
 
     public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player) {
         this.main = onyxFFaMain;
