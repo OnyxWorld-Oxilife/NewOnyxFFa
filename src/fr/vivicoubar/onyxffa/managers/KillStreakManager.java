@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class KillStreak {
+public class KillStreakManager {
 
     private static HashMap<Player, Integer> killStreaks = new HashMap<>();
 

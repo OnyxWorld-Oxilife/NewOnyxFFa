@@ -44,9 +44,11 @@ public class OnyxFFaMain extends JavaPlugin {
     private final List<String> blockEffectList = new ArrayList<>();
     private final List<String> jumpadsBlocks = new ArrayList<>();
 
+
+
     public static OnyxFFaMain instance;
 
-    public KillStreak killStreak = new KillStreak();
+    public KillStreakManager killStreak = new KillStreakManager();
     public FishingPlayers fishingPlayers = new FishingPlayers();
     public Messages messages = new Messages();
 
@@ -84,9 +86,9 @@ public class OnyxFFaMain extends JavaPlugin {
         pluginManager.registerEvents(new ItemListener(this), this);
         pluginManager.registerEvents(new DamageListener(this), this);
         pluginManager.registerEvents(new GadgetsAndDiscoListener(this), this);
-        pluginManager.registerEvents(new PlayerJoin(), this);
-        pluginManager.registerEvents(new PlayerQuit(), this);
-        pluginManager.registerEvents(new PlayerHeldItem(), this);
+        pluginManager.registerEvents(new PlayerJoinListener(), this);
+        pluginManager.registerEvents(new PlayerQuitListener(), this);
+        pluginManager.registerEvents(new PlayerHeldItemListener(), this);
 
         try {
             if (!getDataFolder().exists()) {

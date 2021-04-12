@@ -17,6 +17,8 @@ public class FFaPlayer {
     private Stats stats;
     private boolean autorespawnBoolean = true;
     private final OnyxFFaMain main;
+    private String lasthitter ="";
+    public long timeWhenLastHitted = 0L;
     private AutoRespawnManager autoRespawnManager;
     private UUID uniqueID;
 
@@ -69,6 +71,20 @@ public class FFaPlayer {
 
     public boolean isAutorespawnBoolean() {
         return autorespawnBoolean;
+    }
+
+    public String getLasthitter() {
+        return lasthitter;
+    }
+
+    public long getTimeWhenLastHitted() {
+        return timeWhenLastHitted;
+    }
+    public void setTimeWhenLastHitted(long time){
+        this.timeWhenLastHitted = time;
+    }
+    public void setLasthitter(String lasthitter) {
+        this.lasthitter = lasthitter;
     }
 
     public AutoRespawnManager getAutoRespawnManager() {

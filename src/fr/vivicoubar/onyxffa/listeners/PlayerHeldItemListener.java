@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
-public class PlayerHeldItem implements Listener {
+public class PlayerHeldItemListener implements Listener {
 
     OnyxFFaMain main = OnyxFFaMain.getInstance();
 
