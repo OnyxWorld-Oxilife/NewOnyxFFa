@@ -97,10 +97,13 @@ public class DamageListener implements Listener {
                     if (((Player) takeDamageEvent.getEntity()).getGameMode() != GameMode.SURVIVAL) {
                         takeDamageEvent.setCancelled(true);
                     }
+
                     String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
                     String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                     if (((Player) takeDamageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
+                        System.out.println("debugpvp");
                         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, Bukkit.getPlayer(victimUUid));
+                        System.out.println("debugpvp");
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
