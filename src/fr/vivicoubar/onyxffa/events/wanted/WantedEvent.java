@@ -52,17 +52,17 @@ public class WantedEvent {
 
     public void setRandomTarget(){
 
-        FFaPlayer newtarget = eventPlayers.get(new Random().nextInt(eventPlayers.size()));
+        FFaPlayer newTarget = eventPlayers.get(new Random().nextInt(eventPlayers.size()));
         int count =0;
-        while(!newtarget.isInArena() && count <= 5){
-           newtarget= eventPlayers.get(new Random().nextInt(eventPlayers.size()));
+        while(!newTarget.isInArena() && count <= 5){
+           newTarget= eventPlayers.get(new Random().nextInt(eventPlayers.size()));
            count ++;
         }
         if(count >= 5){
             stopWanted();
             return;
         }
-        setTarget(newtarget);
+        setTarget(newTarget);
     }
 
     public void setTarget(FFaPlayer newTarget) {

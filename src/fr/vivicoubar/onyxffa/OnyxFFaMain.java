@@ -89,6 +89,7 @@ public class OnyxFFaMain extends JavaPlugin {
         getCommand("autorespawn").setExecutor(new CommandAutoRespawn(this));
         getCommand("joinwanted").setExecutor(new CommandsWanted(this));
         getCommand("startwanted").setExecutor(new CommandsWanted(this));
+        getCommand("addeffect").setExecutor(new CommandAddEffect());
         pluginManager.registerEvents(new FFaPlayerListener(this), this);
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);

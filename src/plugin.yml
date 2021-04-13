@@ -33,3 +33,6 @@ commands:
     permission: NewOnyxFFa.wanted.join
   startwanted:
     permission: NewOnyxFFa.wanted.start
+  addeffect:
+    permission: NewOnyxFFa.addeffect
+    usage: "§cUsage: /addeffect <player> <effect> <duration> <amplifier>"
