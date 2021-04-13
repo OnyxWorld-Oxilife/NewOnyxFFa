@@ -62,7 +62,7 @@ public class CommandSpawn implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String arg, String[] strings) {
         if(command.getName().equalsIgnoreCase("Spawn")){
             if(sender instanceof Player) {
-                if(((Player) sender).getGameMode() == GameMode.SURVIVAL) {
+                if((main.getfFaPlayerManager().getFFaPlayer(main, (Player)sender).isPlaying())) {
                     FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, (Player) sender);
                     Player player = fFaPlayer.getPlayer();
                     List<String> SpawnInWait = main.getSpawnsInWait();

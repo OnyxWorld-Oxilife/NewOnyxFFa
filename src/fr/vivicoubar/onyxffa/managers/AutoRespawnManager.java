@@ -40,7 +40,7 @@ public class AutoRespawnManager {
                 @Override
                 public void run() {
 
-                    if (timer > 0 && fFaPlayer.getPlayer().getGameMode() == GameMode.SPECTATOR) {
+                    if (timer > 0 && fFaPlayer.getState() == FFaPlayerStates.SPECTATOR) {
                         fFaPlayer.getPlayer().sendTitle("§7Vous êtes §cMort !", "§7Respawn dans §c" + timer + "...", 5, 10, 5);
                         fFaPlayer.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§c/autorespawn §7pour désactiver !"));
                     } else if (timer == 0 && fFaPlayer.getPlayer().getGameMode() == GameMode.SPECTATOR) {

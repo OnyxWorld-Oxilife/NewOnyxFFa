@@ -17,11 +17,6 @@ public class FFaPlayerManager {
         this.fFaPlayerList = new ArrayList<>();
 
     }
-    public void starting(){
-        for (Player player :Bukkit.getOnlinePlayers()){
-            fFaPlayerList.add(new FFaPlayer(main, player));
-        }
-    }
 
     public List<FFaPlayer> getfFaPlayerList() {
         return fFaPlayerList;
