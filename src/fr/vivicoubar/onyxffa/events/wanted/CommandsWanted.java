@@ -25,7 +25,7 @@ public class CommandsWanted implements CommandExecutor {
                 }else{
                     return false;
                 }
-            }else if(s.equalsIgnoreCase("startwanted") || main.wantedEvent.getState() == EventState.WAITING){
+            }else if(s.equalsIgnoreCase("startwanted") && main.wantedEvent.getState() == EventState.WAITING){
                 main.wantedEvent.startWanted();
             }
         }
