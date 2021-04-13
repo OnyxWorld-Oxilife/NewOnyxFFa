@@ -72,16 +72,16 @@ public class WantedEvent {
             main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.GLOWING, 9999, 0, true));
             main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.SLOW, 9999, 1, true));
         }else{
-            timer = 5;
             new BukkitRunnable() {
+                int timer2 = 5;
                 @Override
                 public void run() {
-                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer) + "§e sec");
-                    if(timer <= 0) {
+                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer2) + "§e sec");
+                    if(timer2 <= 0) {
                         cancel();
                         setRandomTarget();
                     }
-                    timer--;
+                    timer2--;
                 }
             }.runTaskTimer(main,100,20);
 
