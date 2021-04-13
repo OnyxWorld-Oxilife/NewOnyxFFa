@@ -50,10 +50,6 @@ public class WantedEvent {
         return state;
     }
 
-    public FFaPlayer getTarget() {
-        return target;
-    }
-
     public void setRandomTarget(){
         setTarget(eventPlayers.get(new Random().nextInt(eventPlayers.size())));
     }
@@ -118,6 +114,7 @@ public class WantedEvent {
                                         for (String command : oldWinnerRank.getCommandOnLeaveRank()) {
                                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", winner.getPlayer().getName()));
                                         }
+                                        target = null;
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
