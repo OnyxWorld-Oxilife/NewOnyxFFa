@@ -1,8 +1,6 @@
 package fr.vivicoubar.onyxffa.managers;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
-import fr.vivicoubar.onyxffa.utils.Rank;
-import org.apache.commons.lang.ObjectUtils;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -11,7 +9,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.material.MaterialData;
 
 //OPTIONS : Enchantments, Color, isUnbreakble, Data, Lore, Name,
 public class ItemBuilder {

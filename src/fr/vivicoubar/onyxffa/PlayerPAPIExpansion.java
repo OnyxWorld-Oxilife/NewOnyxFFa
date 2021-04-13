@@ -2,6 +2,7 @@ package fr.vivicoubar.onyxffa;
 
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -68,11 +69,11 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
                return "§4";
             }else{
                 for(PotionEffect potion : player.getActivePotionEffects()){
-                    if(potion.getType() == PotionEffectType.INCREASE_DAMAGE){
-                        return "§c";
+                    if(potion.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
+                        return "§d";
                     }
                 }
-                return "§r";
+                return "§b";
             }
         }
         if (identifier.equals("score")) {
