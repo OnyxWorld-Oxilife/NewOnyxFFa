@@ -241,6 +241,10 @@ public class DamageListener implements Listener {
 
         main.killStreak.resetPlayer(victim.getPlayer());
 
+        if(main.wantedEvent.isTarget(victim)){
+            main.wantedEvent.setRandomTarget();
+        }
+
         victim.getPlayer().getVelocity().zero();
         victim.getPlayer().setHealth(20);
         // Added clear GENERIC_MAX_HEALTH
@@ -287,10 +291,13 @@ public class DamageListener implements Listener {
     }
 
     public void initKill(FFaPlayer damager, FFaPlayer victim) {
-
         // killStreak
         main.killStreak.incrementPlayer(damager.getPlayer());
         main.killStreak.resetPlayer(victim.getPlayer());
+
+        if(main.wantedEvent.isTarget(victim)){
+            main.wantedEvent.setTarget(damager);
+        }
 
         if (damager.getStats().getHighestKillStreak() < main.killStreak.getValue(damager.getPlayer())) {
             damager.getStats().setHighestKillStreak(main.killStreak.getValue(damager.getPlayer()));
