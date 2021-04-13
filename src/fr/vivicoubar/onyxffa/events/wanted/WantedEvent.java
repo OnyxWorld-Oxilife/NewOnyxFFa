@@ -81,7 +81,6 @@ public class WantedEvent {
         new BukkitRunnable() {
             @Override
             public void run() {
-                System.out.println(timer);
                 if (timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
                     Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted va commencer dans §c" + timer + "sec !");
                 } else if (timer <= 0) {
@@ -96,7 +95,6 @@ public class WantedEvent {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            System.out.println(timer);
                             if (timer == 295 || timer == 60 || timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
                                 Bukkit.broadcastMessage("§e[§cWanted§e] La cible est §c" + target.getPlayer().getName() + "§e! Il reste "+ timer + "sec!");
                             } else if (timer <= 0) {
