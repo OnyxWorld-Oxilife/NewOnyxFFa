@@ -64,14 +64,12 @@ public class DamageListener implements Listener {
                         Projectile projectile = (Projectile) takeDamageEvent.getDamager();
                         Player damager = (Player) projectile.getShooter();
                         String damagerUuid = "" + damager.getUniqueId();
-                        String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                         takeDamageEvent.setCancelled(true);
                     } else {
                         String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
-                        String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                         takeDamageEvent.setCancelled(true);
                         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
                         victim.setLasthitter(damagerUuid);
@@ -98,7 +96,7 @@ public class DamageListener implements Listener {
         playerDeathEvent.setDeathMessage(null);
         playerDeathEvent.getDrops().clear();
         playerDeathEvent.getEntity().spigot().respawn();
-        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) playerDeathEvent.getEntity());
+        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, playerDeathEvent.getEntity());
         try {
             initSuicide(victim);
         } catch (IOException e) {
@@ -280,7 +278,7 @@ public class DamageListener implements Listener {
 
         victim.getPlayer().getVelocity().zero();
         double health = damager.getPlayer().getHealth() + main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.HealthBonusAfterKill");
-        Double maxHealth = damager.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+        double maxHealth = damager.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
         if (health > maxHealth) {
             health = maxHealth;
         }
