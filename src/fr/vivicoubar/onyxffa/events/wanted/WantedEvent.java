@@ -83,11 +83,11 @@ public class WantedEvent {
                 } else if (timer <= 0) {
                     cancel();
                     Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted commence!");
+                    setRandomTarget();
                     for (FFaPlayer fFaPlayer : eventPlayers) {
                         SpawnManager spawnManagerInstance = new SpawnManager(main);
                         spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
                     }
-                    setRandomTarget();
                     timer = 300;
                     new BukkitRunnable() {
                         @Override
@@ -104,6 +104,7 @@ public class WantedEvent {
                                 try {
                                     target.getStats().setPoints(target.getStats().getScore().get(2) + 200);
                                     target.updateStats();
+                                    target.getPlayer().getActivePotionEffects().clear();
                                     Rank newWinnerrank = winner.getStats().getRank();
 
                                     if (oldWinnerRank != newWinnerrank) {
