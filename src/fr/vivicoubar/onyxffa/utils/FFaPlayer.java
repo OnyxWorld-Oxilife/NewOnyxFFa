@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.utils;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.managers.AutoRespawnManager;
 import org.bukkit.Location;
@@ -15,6 +16,7 @@ public class FFaPlayer {
     private final Player player;
     private final Inventory inventory;
     private Stats stats;
+    private FFaPlayerStates state = FFaPlayerStates.WAITING;
     private boolean autorespawnBoolean = true;
     private final OnyxFFaMain main;
     private String lasthitter ="";
@@ -65,6 +67,15 @@ public class FFaPlayer {
         this.stats = new Stats(this, main);
     }
 
+    public void setState(FFaPlayerStates state) {
+        this.state = state;
+    }
+    public FFaPlayerStates getState() {
+        return state;
+    }
+    public boolean isPlaying(){
+        return state == FFaPlayerStates.PLAYING;
+    }
     public void setHealth(double health) {
         this.player.setHealth(health);
     }

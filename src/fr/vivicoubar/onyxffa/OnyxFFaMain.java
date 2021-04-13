@@ -54,6 +54,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public KillStreakManager killStreak = new KillStreakManager();
     public FishingPlayers fishingPlayers = new FishingPlayers();
     public Messages messages = new Messages();
+    public PotionEffectManager potionEffectManager = new PotionEffectManager();
     public WantedEvent wantedEvent = new WantedEvent(this);
 
 

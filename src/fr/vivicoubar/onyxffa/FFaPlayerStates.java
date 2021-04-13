@@ -1,5 +1,5 @@
 package fr.vivicoubar.onyxffa;
 
-public enum PlayerState {
+public enum FFaPlayerStates {
     WAITING, SPECTATOR, PLAYING, INVINCIBLE
 }

@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.managers;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import net.md_5.bungee.api.ChatMessageType;
@@ -32,7 +33,7 @@ public class AutoRespawnManager {
 
             fFaPlayer.getPlayer().setGameMode(GameMode.SPECTATOR);
             fFaPlayer.getPlayer().teleport(temp);
-
+            fFaPlayer.setState(FFaPlayerStates.SPECTATOR);
             new BukkitRunnable() {
                 int timer = 3;
 
@@ -60,6 +61,7 @@ public class AutoRespawnManager {
             Player player = fFaPlayer.getPlayer();
             player.getInventory().setHeldItemSlot(4);
             player.setGameMode(GameMode.ADVENTURE);
+            fFaPlayer.setState(FFaPlayerStates.WAITING);
             player.setFoodLevel(20);
             player.getActivePotionEffects().clear();
             //Téléportation au spawn

@@ -5,7 +5,6 @@ import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftFirework;
@@ -18,11 +17,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 
 import java.io.IOException;
@@ -84,22 +80,11 @@ public class DamageListener implements Listener {
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
                 } else {
-                    for (PotionEffect potionEffect : ((Player) takeDamageEvent.getEntity()).getActivePotionEffects()) {
-                        if (potionEffect.getType().equals(PotionEffectType.GLOWING) && !main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()))) {
-                            takeDamageEvent.setCancelled(true);
-                        }
-                    }
-                    for (PotionEffect potionEffect2 : ((Player) takeDamageEvent.getDamager()).getActivePotionEffects()) {
-                        if (potionEffect2.getType().equals(PotionEffectType.GLOWING) && !main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()))) {
-                            takeDamageEvent.setCancelled(true);
-                        }
-                    }
-                    if (((Player) takeDamageEvent.getEntity()).getGameMode() != GameMode.SURVIVAL) {
+                    if(!main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isPlaying() || !main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isPlaying()){
                         takeDamageEvent.setCancelled(true);
                     }
 
                     String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
-                    String victimUUid = "" + takeDamageEvent.getEntity().getUniqueId();
                     if (((Player) takeDamageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
                         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
                         victim.setLasthitter(damagerUuid);
@@ -244,9 +229,7 @@ public class DamageListener implements Listener {
         victim.getPlayer().setFallDistance(-5);
         victim.setTimeWhenLastHitted(0);
         victim.setLasthitter("");
-        for (PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()) {
-            victim.getPlayer().removePotionEffect(potionEffect.getType());
-        }
+        main.potionEffectManager.clearAllPotionEffect(victim.getPlayer());
         victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
         victim.getAutoRespawnManager().askRespawn(victim);
 
@@ -310,9 +293,7 @@ public class DamageListener implements Listener {
         attribute.setBaseValue(20);
         victim.getPlayer().getInventory().clear();
         victim.getPlayer().setFallDistance(-500);
-        for (PotionEffect potionEffect : victim.getPlayer().getActivePotionEffects()) {
-            victim.getPlayer().removePotionEffect(potionEffect.getType());
-        }
+        main.potionEffectManager.clearAllPotionEffect(victim.getPlayer());
         victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
         victim.getAutoRespawnManager().askRespawn(victim);
 

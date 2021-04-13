@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.events.wanted;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
 import fr.vivicoubar.onyxffa.managers.SpawnManager;
@@ -51,15 +52,20 @@ public class WantedEvent {
     }
 
     public void setRandomTarget(){
-        setTarget(eventPlayers.get(new Random().nextInt(eventPlayers.size())));
+
+        FFaPlayer newtarget = eventPlayers.get(new Random().nextInt(eventPlayers.size()));
+        while(!newtarget.isPlaying()){
+           newtarget= eventPlayers.get(new Random().nextInt(eventPlayers.size()));
+        }
+        setTarget(newtarget);
     }
 
     public void setTarget(FFaPlayer newTarget) {
         target = newTarget;
         Bukkit.broadcastMessage("§e[§cWanted§e] La nouvelle cible est §c" + target.getPlayer().getName() + "§e!")  ;
-        target.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999 , 2, true));
-        target.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 9999 , 2, true));
-        target.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 9999 , 1, true));
+        main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999 , 2, true));
+        main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.GLOWING, 9999 , 2, true));
+        main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.SLOW, 9999 , 1, true));
     }
 
 

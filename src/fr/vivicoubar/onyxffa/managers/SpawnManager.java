@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.managers;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +63,8 @@ public class SpawnManager {
 
         FFaPlayer ffaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, p);
         p.setGameMode(GameMode.SURVIVAL);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 60, 5));
+        ffaPlayer.setState(FFaPlayerStates.INVINCIBLE);
+
         AttributeInstance attribute = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         attribute.setBaseValue(20);
         p.getInventory().setHeldItemSlot(0);
@@ -95,6 +98,13 @@ public class SpawnManager {
                 break;
             }
         }
+        main.potionEffectManager.addPotionEffect(p, new PotionEffect(PotionEffectType.GLOWING, 60, 5));
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                ffaPlayer.setState(FFaPlayerStates.PLAYING);
+            }
+        }.runTaskLater(main,20*5);
     }
 
     public void respawnPlayer(Player p) {
