@@ -11,7 +11,6 @@ public class PotionEffectManager {
 
     public void addPotionEffect(Player player, PotionEffect potionEffect){
         for(PotionEffect activepotion : player.getActivePotionEffects()){
-            Bukkit.broadcastMessage(activepotion.getType().getName());
             if(potionEffect.getType() == activepotion.getType()){
                 int time = activepotion.getDuration() + potionEffect.getDuration();
                 player.removePotionEffect(activepotion.getType());
