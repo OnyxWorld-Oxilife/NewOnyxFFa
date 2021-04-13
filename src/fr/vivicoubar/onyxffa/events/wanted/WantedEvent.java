@@ -65,7 +65,7 @@ public class WantedEvent {
     }
 
     public void setTarget(FFaPlayer newTarget) {
-        if(target.isInArena()) {
+        if(newTarget.isInArena()) {
             target = newTarget;
             Bukkit.broadcastMessage("§e[§cWanted§e] La nouvelle cible est §c" + target.getPlayer().getName() + "§e!");
             main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999, 2, true));
@@ -77,6 +77,7 @@ public class WantedEvent {
     }
     public void stopWanted(){
         state = EventState.WAITING;
+        Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted est annulé!");
     }
 
     public void startWanted() {
