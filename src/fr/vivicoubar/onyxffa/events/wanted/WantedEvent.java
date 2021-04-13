@@ -39,7 +39,11 @@ public class WantedEvent {
     }
 
     public boolean isTarget(FFaPlayer fFaPlayer) {
-        return fFaPlayer.getUniqueID() == target.getUniqueID();
+        if(target != null) {
+            return fFaPlayer.getUniqueID() == target.getUniqueID();
+        }else{
+            return false;
+        }
     }
 
     public EventState getState() {
