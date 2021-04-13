@@ -86,11 +86,11 @@ public class WantedEvent {
                 } else if (timer <= 0) {
                     cancel();
                     Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted commence!");
-                    setRandomTarget();
                     for (FFaPlayer fFaPlayer : eventPlayers) {
                         SpawnManager spawnManagerInstance = new SpawnManager(main);
                         spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
                     }
+                    setRandomTarget();
                     timer = 300;
                     new BukkitRunnable() {
                         @Override
