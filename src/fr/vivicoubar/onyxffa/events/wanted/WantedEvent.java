@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.events.wanted;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
 import fr.vivicoubar.onyxffa.managers.SpawnManager;
@@ -118,8 +119,10 @@ public class WantedEvent {
                     cancel();
                     Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted commence!");
                     for (FFaPlayer fFaPlayer : eventPlayers) {
-                        SpawnManager spawnManagerInstance = new SpawnManager(main);
-                        spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
+                        if(fFaPlayer.isInArena() || fFaPlayer.getState() == FFaPlayerStates.SPECTATOR) {
+                            SpawnManager spawnManagerInstance = new SpawnManager(main);
+                            spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
+                        }
                     }
 
                     timer = 310;
@@ -147,7 +150,7 @@ public class WantedEvent {
                                 try {
                                     target.getStats().setPoints(target.getStats().getScore().get(2) + 200);
                                     target.updateStats();
-                                    target.getPlayer().getActivePotionEffects().clear();
+                                    main.potionEffectManager.clearAllPotionEffect(target.getPlayer());
                                     Rank newWinnerrank = winner.getStats().getRank();
 
                                     if (oldWinnerRank != newWinnerrank) {

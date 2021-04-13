@@ -4,6 +4,8 @@ import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 
 public class PlayerPAPIExpansion extends PlaceholderExpansion {
@@ -61,7 +63,18 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         if (identifier.equals("deaths")) {
             return "" + fFaPlayer.getStats().getScore().get(1);
         }
-
+        if(identifier.equals("glowcolor")){
+            if(main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, player))){
+               return "§4";
+            }else{
+                for(PotionEffect potion : player.getActivePotionEffects()){
+                    if(potion.getType() == PotionEffectType.INCREASE_DAMAGE){
+                        return "§c";
+                    }
+                }
+                return "§r";
+            }
+        }
         if (identifier.equals("score")) {
             return "" + fFaPlayer.getStats().getScore().get(2);
         }
