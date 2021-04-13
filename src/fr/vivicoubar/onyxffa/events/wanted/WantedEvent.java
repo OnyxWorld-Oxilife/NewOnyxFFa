@@ -79,7 +79,7 @@ public class WantedEvent {
                 state = EventState.PLAYING;
                 if (timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
                     Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted va commencer dans " + timer + "sec !");
-                } else if (timer >= 0) {
+                } else if (timer <= 0) {
                     cancel();
                     Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted commence!");
                     for (FFaPlayer fFaPlayer : eventPlayers) {
@@ -90,7 +90,7 @@ public class WantedEvent {
                 }
                 timer--;
             }
-        }.runTaskTimer(main,20,20);
+        }.runTaskTimer(main,0,20);
 
         timer = 300;
         new BukkitRunnable() {
@@ -99,7 +99,7 @@ public class WantedEvent {
 
                 if (timer == 300 || timer == 60 || timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
                     Bukkit.broadcastMessage("§e[§rWanted§e] La cible est §r" + target.getPlayer().getName() + "§e! Il reste "+ timer + "sec!");
-                } else if (timer >= 0) {
+                } else if (timer <= 0) {
                     state = EventState.STOPPING;
                     cancel();
                     FFaPlayer winner = target;
@@ -124,6 +124,6 @@ public class WantedEvent {
                 }
                 timer--;
             }
-        }.runTaskTimer(main,20,20);
+        }.runTaskTimer(main,0,20);
     }
 }
