@@ -344,7 +344,8 @@ public class DamageListener implements Listener {
         }
         //Commandes pour le Kill (Money)
         for (String command : main.getConfigConfiguration().getStringList("NewOnyxFFa.Config.onKillCommands.onFight")) {
+            if (damager.isInArena()){
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%victim%", victim.getPlayer().getName()).replaceAll("%killer%", damager.getPlayer().getName()));
-        }
+        }}
     }
 }

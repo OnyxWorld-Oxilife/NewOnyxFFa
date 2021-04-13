@@ -65,11 +65,15 @@ public class WantedEvent {
     }
 
     public void setTarget(FFaPlayer newTarget) {
-        target = newTarget;
-        Bukkit.broadcastMessage("§e[§cWanted§e] La nouvelle cible est §c" + target.getPlayer().getName() + "§e!")  ;
-        main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999 , 2, true));
-        main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.GLOWING, 9999 , 2, true));
-        main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.SLOW, 9999 , 1, true));
+        if(target.isInArena()) {
+            target = newTarget;
+            Bukkit.broadcastMessage("§e[§cWanted§e] La nouvelle cible est §c" + target.getPlayer().getName() + "§e!");
+            main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999, 2, true));
+            main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.GLOWING, 9999, 2, true));
+            main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.SLOW, 9999, 1, true));
+        }else{
+            setRandomTarget();
+        }
     }
     public void stopWanted(){
         state = EventState.WAITING;
