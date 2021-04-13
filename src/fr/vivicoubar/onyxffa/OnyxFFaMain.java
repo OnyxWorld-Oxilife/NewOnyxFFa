@@ -1,6 +1,8 @@
 package fr.vivicoubar.onyxffa;
 
 import fr.vivicoubar.onyxffa.commands.*;
+import fr.vivicoubar.onyxffa.events.wanted.CommandsWanted;
+import fr.vivicoubar.onyxffa.events.wanted.WantedEvent;
 import fr.vivicoubar.onyxffa.listeners.*;
 import fr.vivicoubar.onyxffa.managers.*;
 import fr.vivicoubar.onyxffa.utils.Messages;
@@ -46,11 +48,14 @@ public class OnyxFFaMain extends JavaPlugin {
 
 
 
+
     public static OnyxFFaMain instance;
 
     public KillStreakManager killStreak = new KillStreakManager();
     public FishingPlayers fishingPlayers = new FishingPlayers();
     public Messages messages = new Messages();
+    public WantedEvent wantedEvent = new WantedEvent(this);
+
 
     public static OnyxFFaMain getInstance() {
         return instance;
@@ -81,6 +86,8 @@ public class OnyxFFaMain extends JavaPlugin {
         getCommand("resetStats").setExecutor(new CommandResetStats(this));
         getCommand("points").setExecutor(new CommandPoints(this));
         getCommand("autorespawn").setExecutor(new CommandAutoRespawn(this));
+        getCommand("joinwanted").setExecutor(new CommandsWanted(this));
+        getCommand("startwanted").setExecutor(new CommandsWanted(this));
         pluginManager.registerEvents(new FFaPlayerListener(this), this);
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);

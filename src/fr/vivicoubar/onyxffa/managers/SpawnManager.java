@@ -59,7 +59,7 @@ public class SpawnManager {
 
     public void restoreArenaPlayer(Player p) {
 
-        FFaPlayer ffaPlayer = new FFaPlayer(main, p);
+        FFaPlayer ffaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, p);
         p.setGameMode(GameMode.SURVIVAL);
         p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 60, 5));
         AttributeInstance attribute = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);

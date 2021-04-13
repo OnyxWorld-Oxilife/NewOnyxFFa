@@ -29,3 +29,7 @@ commands:
     usage: §cMissing argument (add/set)
   autorespawn:
     permission: NewOnyxFFa.autorespawn.use
+  joinwanted:
+    permission: NewOnyxFFa.wanted.join
+  startwanted:
+    permission: NewOnyxFFa.wanted.start

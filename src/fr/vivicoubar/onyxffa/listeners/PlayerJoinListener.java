@@ -2,6 +2,8 @@ package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.commands.CommandSpawn;
+import fr.vivicoubar.onyxffa.events.EventState;
+import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -17,8 +19,11 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent joinEvent) {
         Player player = joinEvent.getPlayer();
         OnyxFFaMain.getInstance().killStreak.addPlayer(player);
+        FFaPlayer fFaPlayer = new FFaPlayer(main, player);
         joinEvent.setJoinMessage(null);
-
+        if(OnyxFFaMain.getInstance().wantedEvent.getState() != EventState.WAITING || OnyxFFaMain.getInstance().wantedEvent.getState() != EventState.STOPPING){
+            main.wantedEvent.playerJoinWanted(fFaPlayer);
+        }
         FileConfiguration messagesConfiguration = main.getMessagesConfiguration();
         if (player.hasPermission("OnyxFfa.mod.hideJoinMessage")) {
             if (!player.hasPlayedBefore()) {
