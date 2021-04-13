@@ -52,8 +52,14 @@ public class WantedEvent {
     public void setRandomTarget(){
 
         FFaPlayer newtarget = eventPlayers.get(new Random().nextInt(eventPlayers.size()));
-        while(!newtarget.isInArena()){
+        int count =0;
+        while(!newtarget.isInArena() && count <= 5){
            newtarget= eventPlayers.get(new Random().nextInt(eventPlayers.size()));
+           count ++;
+        }
+        if(count >= 5){
+            stopWanted();
+            return;
         }
         setTarget(newtarget);
     }
@@ -65,7 +71,9 @@ public class WantedEvent {
         main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.GLOWING, 9999 , 2, true));
         main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.SLOW, 9999 , 1, true));
     }
-
+    public void stopWanted(){
+        state = EventState.WAITING;
+    }
 
     public void startWanted() {
         state = EventState.STARTING;
@@ -81,6 +89,9 @@ public class WantedEvent {
         new BukkitRunnable() {
             @Override
             public void run() {
+                if(state == EventState.WAITING){
+                    cancel();
+                }
                 if (timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
                     Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted va commencer dans §c" + timer + "sec !");
                 } else if (timer <= 0) {
@@ -95,6 +106,9 @@ public class WantedEvent {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
+                            if(state == EventState.WAITING){
+                                cancel();
+                            }
                             if (timer == 295 || timer == 60 || timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
                                 Bukkit.broadcastMessage("§e[§cWanted§e] La cible est §c" + target.getPlayer().getName() + "§e! Il reste "+ timer + "sec!");
                             } else if (timer <= 0) {
