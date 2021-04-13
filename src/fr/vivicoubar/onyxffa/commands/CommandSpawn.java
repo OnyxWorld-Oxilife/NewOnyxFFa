@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.commands;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.Bukkit;
@@ -34,6 +35,7 @@ public class CommandSpawn implements CommandExecutor {
     public void sendPlayerToSpawn(Player p) {
         FileConfiguration configConfiguration = main.getConfigConfiguration();
         p.setGameMode(GameMode.ADVENTURE);
+        main.getfFaPlayerManager().getFFaPlayer(main , p).setState(FFaPlayerStates.WAITING);
         p.setHealth(20);
         AttributeInstance attribute = p.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
         attribute.setBaseValue(20);
