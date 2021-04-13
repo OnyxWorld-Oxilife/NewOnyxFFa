@@ -88,43 +88,43 @@ public class WantedEvent {
                         spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
                     }
                     setRandomTarget();
-                }
-                timer--;
-            }
-        }.runTaskTimer(main,0,20);
+                    timer = 300;
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            System.out.println(timer);
+                            if (timer == 300 || timer == 60 || timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
+                                Bukkit.broadcastMessage("§e[§rWanted§e] La cible est §r" + target.getPlayer().getName() + "§e! Il reste "+ timer + "sec!");
+                            } else if (timer <= 0) {
+                                state = EventState.STOPPING;
+                                cancel();
+                                FFaPlayer winner = target;
+                                Rank oldWinnerRank = winner.getStats().getRank();
+                                Bukkit.broadcastMessage("§e[§rWanted§e] Le vainqueur est "+ winner.getPlayer().getName() + " Bravo!");
+                                try {
+                                    target.getStats().setPoints(target.getStats().getScore().get(2) + 200);
+                                    target.updateStats();
+                                    Rank newWinnerrank = winner.getStats().getRank();
 
-        timer = 300;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                System.out.println(timer);
-                if (timer == 300 || timer == 60 || timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
-                    Bukkit.broadcastMessage("§e[§rWanted§e] La cible est §r" + target.getPlayer().getName() + "§e! Il reste "+ timer + "sec!");
-                } else if (timer <= 0) {
-                    state = EventState.STOPPING;
-                    cancel();
-                    FFaPlayer winner = target;
-                    Rank oldWinnerRank = winner.getStats().getRank();
-                    Bukkit.broadcastMessage("§e[§rWanted§e] Le vainqueur est "+ winner.getPlayer().getName() + " Bravo!");
-                    try {
-                        target.getStats().setPoints(target.getStats().getScore().get(2) + 200);
-                        target.updateStats();
-                        Rank newWinnerrank = winner.getStats().getRank();
-
-                        if (oldWinnerRank != newWinnerrank) {
-                            for (String command : newWinnerrank.getCommandOnGoToRank()) {
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", winner.getPlayer().getName()));
+                                    if (oldWinnerRank != newWinnerrank) {
+                                        for (String command : newWinnerrank.getCommandOnGoToRank()) {
+                                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", winner.getPlayer().getName()));
+                                        }
+                                        for (String command : oldWinnerRank.getCommandOnLeaveRank()) {
+                                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", winner.getPlayer().getName()));
+                                        }
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            for (String command : oldWinnerRank.getCommandOnLeaveRank()) {
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", winner.getPlayer().getName()));
-                            }
+                            timer--;
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    }.runTaskTimer(main,0,20);
                 }
                 timer--;
             }
         }.runTaskTimer(main,0,20);
+
     }
 }
