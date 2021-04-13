@@ -72,7 +72,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
                         return "§c";
                     }
                 }
-                return "§r";
+                return "§b";
             }
         }
         if (identifier.equals("score")) {
