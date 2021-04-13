@@ -65,7 +65,7 @@ public class WantedEvent {
     }
 
     public void setTarget(FFaPlayer newTarget) {
-        if(newTarget.isInArena() && target != newTarget) {
+        if(newTarget.isInArena()) {
             target = newTarget;
             Bukkit.broadcastMessage("§e[§cWanted§e] La nouvelle cible est §c" + target.getPlayer().getName() + "§e!");
             main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999, 0, true));
@@ -76,11 +76,11 @@ public class WantedEvent {
                 int timer2 = 5;
                 @Override
                 public void run() {
-                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer2) + "§e sec");
                     if(timer2 <= 0) {
                         cancel();
                         setRandomTarget();
                     }
+                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer2) + "§e sec!");
                     timer2--;
                 }
             }.runTaskTimer(main,100,20);
@@ -120,7 +120,7 @@ public class WantedEvent {
                     }
 
                     timer = 310;
-                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer-300) + "§e sec");
+                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer-300) + "§e sec!");
                     new BukkitRunnable() {
                         @Override
                         public void run() {
@@ -128,7 +128,7 @@ public class WantedEvent {
                                 cancel();
                             }
                             if(timer == 301 || timer == 302 || timer == 303 || timer == 305){
-                                Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer-300) + " §esec");
+                                Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer-300) + " §e sec!");
                             }
                             if(timer == 300){
                                 setRandomTarget();
@@ -140,7 +140,7 @@ public class WantedEvent {
                                 cancel();
                                 FFaPlayer winner = target;
                                 Rank oldWinnerRank = winner.getStats().getRank();
-                                Bukkit.broadcastMessage("§e[§cWanted§e] Le vainqueur est §c"+ winner.getPlayer().getName() + " §eBravo!");
+                                Bukkit.broadcastMessage("§e[§cWanted§e] Le vainqueur est §c"+ winner.getPlayer().getName() + "§e! §eBravo!");
                                 try {
                                     target.getStats().setPoints(target.getStats().getScore().get(2) + 200);
                                     target.updateStats();
