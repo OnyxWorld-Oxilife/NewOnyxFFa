@@ -2,6 +2,7 @@ package fr.vivicoubar.onyxffa.managers;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ public class FFaPlayerManager {
     public FFaPlayerManager(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
         this.fFaPlayerList = new ArrayList<>();
+        for (Player player :Bukkit.getOnlinePlayers()){
+            fFaPlayerList.add(getFFaPlayer(main,player));
+        }
     }
 
     public List<FFaPlayer> getfFaPlayerList() {
