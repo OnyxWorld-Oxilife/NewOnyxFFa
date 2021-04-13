@@ -102,7 +102,9 @@ public class SpawnManager {
         new BukkitRunnable(){
             @Override
             public void run() {
-                ffaPlayer.setState(FFaPlayerStates.PLAYING);
+                if(ffaPlayer.getState() == FFaPlayerStates.INVINCIBLE){
+                    ffaPlayer.setState(FFaPlayerStates.PLAYING);
+                }
             }
         }.runTaskLater(main,20*5);
     }

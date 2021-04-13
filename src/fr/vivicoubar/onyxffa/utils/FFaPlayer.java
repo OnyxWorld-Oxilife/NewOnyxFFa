@@ -73,9 +73,10 @@ public class FFaPlayer {
     public FFaPlayerStates getState() {
         return state;
     }
-    public boolean isPlaying(){
-        return state == FFaPlayerStates.PLAYING;
+    public boolean isInArena(){
+        return state == FFaPlayerStates.PLAYING || state == FFaPlayerStates.INVINCIBLE;
     }
+    public boolean isPlaying(){return state == FFaPlayerStates.PLAYING;}
     public void setHealth(double health) {
         this.player.setHealth(health);
     }

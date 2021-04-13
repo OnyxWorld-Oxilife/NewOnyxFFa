@@ -22,7 +22,7 @@ public class ItemListener implements Listener {
 
     @EventHandler
     private void onClickFFaItem(PlayerInteractEvent interactEvent) {
-        if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE && !main.getfFaPlayerManager().getFFaPlayer(main ,interactEvent.getPlayer()).isPlaying()) {
+        if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE && !main.getfFaPlayerManager().getFFaPlayer(main ,interactEvent.getPlayer()).isInArena()) {
             if (interactEvent.getAction() != Action.RIGHT_CLICK_BLOCK && interactEvent.getAction() != Action.RIGHT_CLICK_AIR) {
                 return;
             }

@@ -3,9 +3,7 @@ package fr.vivicoubar.onyxffa.commands;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -62,7 +60,7 @@ public class CommandSpawn implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String arg, String[] strings) {
         if(command.getName().equalsIgnoreCase("Spawn")){
             if(sender instanceof Player) {
-                if((main.getfFaPlayerManager().getFFaPlayer(main, (Player)sender).isPlaying())) {
+                if((main.getfFaPlayerManager().getFFaPlayer(main, (Player)sender).isInArena())) {
                     FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, (Player) sender);
                     Player player = fFaPlayer.getPlayer();
                     List<String> SpawnInWait = main.getSpawnsInWait();

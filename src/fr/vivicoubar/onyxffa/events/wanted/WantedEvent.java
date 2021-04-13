@@ -1,6 +1,5 @@
 package fr.vivicoubar.onyxffa.events.wanted;
 
-import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
 import fr.vivicoubar.onyxffa.managers.SpawnManager;
@@ -10,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +52,7 @@ public class WantedEvent {
     public void setRandomTarget(){
 
         FFaPlayer newtarget = eventPlayers.get(new Random().nextInt(eventPlayers.size()));
-        while(!newtarget.isPlaying()){
+        while(!newtarget.isInArena()){
            newtarget= eventPlayers.get(new Random().nextInt(eventPlayers.size()));
         }
         setTarget(newtarget);

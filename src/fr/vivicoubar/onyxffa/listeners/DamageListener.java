@@ -17,8 +17,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 
 import java.io.IOException;
@@ -80,7 +78,7 @@ public class DamageListener implements Listener {
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
                 } else {
-                    if(!main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isPlaying() || !main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isPlaying()){
+                    if(!main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isInArena() || !main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isInArena()){
                         takeDamageEvent.setCancelled(true);
                     }
 
