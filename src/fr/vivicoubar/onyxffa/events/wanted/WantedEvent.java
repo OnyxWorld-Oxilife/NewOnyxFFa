@@ -72,6 +72,7 @@ public class WantedEvent {
             main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.GLOWING, 9999, 0, true));
             main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.SLOW, 9999, 1, true));
         }else{
+            Bukkit.broadcastMessage("§e[§cWanted§e]La cible a disparu, désignation d'une nouvelle cible...!");
             new BukkitRunnable() {
                 int timer2 = 5;
                 @Override
@@ -80,7 +81,9 @@ public class WantedEvent {
                         cancel();
                         setRandomTarget();
                     }
-                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer2) + "§e sec!");
+                    if(timer2 > 0) {
+                        Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer2) + "§e sec!");
+                    }
                     timer2--;
                 }
             }.runTaskTimer(main,100,20);
