@@ -164,6 +164,7 @@ public class WantedEvent {
 
                                     }
                                     state = EventState.WAITING;
+                                    target = null;
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
