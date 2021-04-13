@@ -85,12 +85,12 @@ public class DamageListener implements Listener {
                     }
                 } else {
                     for (PotionEffect potionEffect : ((Player) takeDamageEvent.getEntity()).getActivePotionEffects()) {
-                        if (potionEffect.getType().equals(PotionEffectType.GLOWING)) {
+                        if (potionEffect.getType().equals(PotionEffectType.GLOWING) && !main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()))) {
                             takeDamageEvent.setCancelled(true);
                         }
                     }
                     for (PotionEffect potionEffect2 : ((Player) takeDamageEvent.getDamager()).getActivePotionEffects()) {
-                        if (potionEffect2.getType().equals(PotionEffectType.GLOWING)) {
+                        if (potionEffect2.getType().equals(PotionEffectType.GLOWING) && !main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()))) {
                             takeDamageEvent.setCancelled(true);
                         }
                     }
