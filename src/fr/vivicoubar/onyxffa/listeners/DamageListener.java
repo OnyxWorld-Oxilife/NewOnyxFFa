@@ -127,16 +127,6 @@ public class DamageListener implements Listener {
     public void onBeKilled(EntityDamageByEntityEvent beKilledEvent) {
         if (beKilledEvent.getDamager() instanceof Player) {
             if (beKilledEvent.getEntity() instanceof Player) {
-                for (PotionEffect potionEffect : ((Player) beKilledEvent.getEntity()).getActivePotionEffects()) {
-                    if (potionEffect.getType().equals(PotionEffectType.GLOWING)) {
-                        beKilledEvent.setCancelled(true);
-                    }
-                }
-                for (PotionEffect potionEffect2 : ((Player) beKilledEvent.getDamager()).getActivePotionEffects()) {
-                    if (potionEffect2.getType().equals(PotionEffectType.GLOWING)) {
-                        beKilledEvent.setCancelled(true);
-                    }
-                }
                 if (((Player) beKilledEvent.getEntity()).getHealth() <= beKilledEvent.getFinalDamage()) {
                     beKilledEvent.setCancelled(true);
                     FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getDamager());
