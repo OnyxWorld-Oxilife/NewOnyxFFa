@@ -101,15 +101,18 @@ public class WantedEvent {
                         SpawnManager spawnManagerInstance = new SpawnManager(main);
                         spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
                     }
-                    setRandomTarget();
-                    timer = 300;
+
+                    timer = 305;
                     new BukkitRunnable() {
                         @Override
                         public void run() {
                             if(state == EventState.WAITING){
                                 cancel();
                             }
-                            if (timer == 295 || timer == 60 || timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
+                            if(timer == 300){
+                                setRandomTarget();
+                            }
+                            if (timer == 300|| timer == 60 || timer == 30 || timer == 15 || timer == 10 || timer == 3 || timer == 2 || timer == 1) {
                                 Bukkit.broadcastMessage("§e[§cWanted§e] La cible est §c" + target.getPlayer().getName() + "§e! Il reste "+ timer + "sec!");
                             } else if (timer <= 0) {
                                 state = EventState.STOPPING;
