@@ -117,6 +117,7 @@ public class WantedEvent {
                                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", winner.getPlayer().getName()));
                                         }
                                         target = null;
+                                        state = EventState.WAITING;
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
