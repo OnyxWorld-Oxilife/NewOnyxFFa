@@ -15,8 +15,11 @@ public class FFaPlayerManager {
     public FFaPlayerManager(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
         this.fFaPlayerList = new ArrayList<>();
+
+    }
+    public void starting(){
         for (Player player :Bukkit.getOnlinePlayers()){
-            fFaPlayerList.add(getFFaPlayer(main,player));
+            fFaPlayerList.add(new FFaPlayer(main, player));
         }
     }
 
