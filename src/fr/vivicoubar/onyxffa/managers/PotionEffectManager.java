@@ -3,6 +3,7 @@ package fr.vivicoubar.onyxffa.managers;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -13,6 +14,7 @@ public class PotionEffectManager {
             Bukkit.broadcastMessage(activepotion.getType().getName());
             if(potionEffect.getType() == activepotion.getType()){
                 int time = activepotion.getDuration() + potionEffect.getDuration();
+                player.removePotionEffect(activepotion.getType());
                 player.addPotionEffect(new PotionEffect(potionEffect.getType(), time, potionEffect.getAmplifier()));
                 return;
             }

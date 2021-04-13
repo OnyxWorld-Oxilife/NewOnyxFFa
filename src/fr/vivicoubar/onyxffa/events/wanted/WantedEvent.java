@@ -102,12 +102,16 @@ public class WantedEvent {
                         spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
                     }
 
-                    timer = 305;
+                    timer = 310;
+                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible est sera désignée dans §c" + (timer-300) + "§esecs");
                     new BukkitRunnable() {
                         @Override
                         public void run() {
                             if(state == EventState.WAITING){
                                 cancel();
+                            }
+                            if(timer == 301 || timer == 302 || timer == 303 || timer == 305){
+                                Bukkit.broadcastMessage("§e[§cWanted§e] La cible est sera désignée dans §c" + (timer-300) + "§esecs");
                             }
                             if(timer == 300){
                                 setRandomTarget();
