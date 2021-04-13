@@ -30,7 +30,7 @@ public class CommandAutoRespawn implements CommandExecutor {
 
                 }
             }
-            FFaPlayer ffasender = new FFaPlayer(this.main, sender);
+            FFaPlayer ffasender = main.getfFaPlayerManager().getFFaPlayer(this.main, sender);
             ffasender.setAutorespawnBoolean();
             return true;
         }
