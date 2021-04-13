@@ -98,7 +98,7 @@ public class SpawnManager {
                 break;
             }
         }
-        main.potionEffectManager.addPotionEffect(p, new PotionEffect(PotionEffectType.GLOWING, 60, 5));
+        main.potionEffectManager.addPotionEffect(p, new PotionEffect(PotionEffectType.GLOWING, 100, 2));
         new BukkitRunnable(){
             @Override
             public void run() {
