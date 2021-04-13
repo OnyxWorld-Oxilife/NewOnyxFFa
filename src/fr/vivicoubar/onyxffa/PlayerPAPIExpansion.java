@@ -68,7 +68,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
             if(main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, player))){
                return "§4";
             }else{
-                for(PotionEffect potion : player.getActivePotionEffects()){
+                for(PotionEffect potion : player.getActivePotionEffects()) {
                     if(potion.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                         return "§d";
                     }
