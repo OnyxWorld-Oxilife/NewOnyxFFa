@@ -72,7 +72,19 @@ public class WantedEvent {
             main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.GLOWING, 9999, 0, true));
             main.potionEffectManager.addPotionEffect(target.getPlayer(), new PotionEffect(PotionEffectType.SLOW, 9999, 1, true));
         }else{
-            setRandomTarget();
+            timer = 5;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer) + "§e sec");
+                    if(timer <= 0) {
+                        cancel();
+                        setRandomTarget();
+                    }
+                    timer--;
+                }
+            }.runTaskTimer(main,100,20);
+
         }
     }
     public void stopWanted(){
@@ -108,7 +120,7 @@ public class WantedEvent {
                     }
 
                     timer = 310;
-                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible est sera désignée dans §c" + (timer-300) + "§esecs");
+                    Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer-300) + "§e sec");
                     new BukkitRunnable() {
                         @Override
                         public void run() {
@@ -116,7 +128,7 @@ public class WantedEvent {
                                 cancel();
                             }
                             if(timer == 301 || timer == 302 || timer == 303 || timer == 305){
-                                Bukkit.broadcastMessage("§e[§cWanted§e] La cible est sera désignée dans §c" + (timer-300) + "§esecs");
+                                Bukkit.broadcastMessage("§e[§cWanted§e] La cible sera désignée dans §c" + (timer-300) + " §esec");
                             }
                             if(timer == 300){
                                 setRandomTarget();
