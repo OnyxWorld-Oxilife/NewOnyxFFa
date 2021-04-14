@@ -3,7 +3,6 @@ package fr.vivicoubar.onyxffa.duels;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class ArenaManager {
     private OnyxFFaMain main;

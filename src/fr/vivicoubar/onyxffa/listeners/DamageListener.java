@@ -32,24 +32,6 @@ public class DamageListener implements Listener {
 
     private final Map<String, String> lastHitters = new HashMap<>();
 
-    /*@EventHandler
-    public void crazyTP(EntityDamageByEntityEvent e) {
-        Player damager = (Player) e.getDamager();
-        Player victim = (Player) e.getEntity();
-        Location damagerLoc = damager.getLocation();
-        Location victimLoc = victim.getLocation();
-        Vector damagerVelocity = damager.getVelocity();
-        Vector victimVelocity = damager.getVelocity();
-        if (victim.getGameMode() == GameMode.SURVIVAL) {
-            damager.teleport(victimLoc);
-            // damager.setVelocity(victimVelocity);
-            victim.teleport(damagerLoc);
-            // victim.setVelocity(damagerVelocity);
-        }
-    }*/
-
-
-
     @EventHandler
     public void onTakeDamage(EntityDamageByEntityEvent takeDamageEvent) {
         if (takeDamageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {

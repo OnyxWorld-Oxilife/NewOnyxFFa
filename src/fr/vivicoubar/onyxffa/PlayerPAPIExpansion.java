@@ -2,7 +2,6 @@ package fr.vivicoubar.onyxffa;
 
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;

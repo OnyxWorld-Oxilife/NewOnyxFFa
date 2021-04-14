@@ -1,7 +1,6 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
-import fr.vivicoubar.onyxffa.commands.CommandSpawn;
 import fr.vivicoubar.onyxffa.events.EventState;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.Bukkit;

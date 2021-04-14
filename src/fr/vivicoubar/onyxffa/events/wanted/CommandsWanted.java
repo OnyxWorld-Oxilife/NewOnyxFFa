@@ -2,7 +2,6 @@ package fr.vivicoubar.onyxffa.events.wanted;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
-import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

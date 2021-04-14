@@ -3,7 +3,6 @@ package fr.vivicoubar.onyxffa.events.wanted;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
-import fr.vivicoubar.onyxffa.managers.SpawnManager;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
