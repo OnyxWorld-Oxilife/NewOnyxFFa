@@ -173,15 +173,7 @@ public class FFaPlayer {
         player.setHealth(20);
         player.getInventory().clear();
         player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
-        ItemStack joinItem = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
-        ItemMeta joinItemMeta = joinItem.getItemMeta();
-        if (configConfiguration.getBoolean("NewOnyxFFa.Config.Menu.Item.Enchanted")) {
-            joinItemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-        }
-        joinItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
-        joinItemMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
-        joinItemMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
-        joinItem.setItemMeta(joinItemMeta);
+        ItemStack joinItem = main.getItemBuilder().buildItem(configConfiguration, "NewOnyxFFa.Config.Menu.Item");
         player.getInventory().setItem(4, joinItem);
         player.getInventory().setHeldItemSlot(4);
         clearEffects();

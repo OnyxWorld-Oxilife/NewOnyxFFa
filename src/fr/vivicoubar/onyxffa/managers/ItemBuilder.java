@@ -18,72 +18,71 @@ public class ItemBuilder {
         this.main = onyxFFaMain;
     }
 
-    public ItemStack buildItem(String configpath) {
+    public ItemStack buildItem(FileConfiguration configuration, String configPath) {
         ItemStack itemStack;
-        FileConfiguration kitConfig = main.getKitsConfiguration();
-        if (kitConfig.get(configpath + ".Color") == null) {
+        if (configuration.get(configPath + ".Color") == null) {
 
             ItemMeta itemMeta;
             //DATA
             try {
-                itemStack = new ItemStack(Material.getMaterial(kitConfig.getString(configpath + ".Material")), kitConfig.getInt(configpath + ".Quantity"), (byte) kitConfig.getInt(configpath + ".Data"));
+                itemStack = new ItemStack(Material.getMaterial(configuration.getString(configPath + ".Material")), configuration.getInt(configPath + ".Quantity"), (byte) configuration.getInt(configPath + ".Data"));
             } catch (Exception e) {
-                if (main.getKitsConfiguration().get(configpath + ".Data") != null) {
+                if (main.getKitsConfiguration().get(configPath + ".Data") != null) {
                     e.printStackTrace();
                 }
             }
             //QUANTITY
             try {
-                itemStack = new ItemStack(Material.getMaterial(kitConfig.getString(configpath + ".Material")), kitConfig.getInt(configpath + ".Quantity"));
+                itemStack = new ItemStack(Material.getMaterial(configuration.getString(configPath + ".Material")), configuration.getInt(configPath + ".Quantity"));
             } catch (Exception e) {
-                if (kitConfig.getStringList(configpath + ".Quantity") != null) {
+                if (configuration.getStringList(configPath + ".Quantity") != null) {
                     e.printStackTrace();
                 }
-                itemStack = new ItemStack(Material.getMaterial(kitConfig.getString(configpath + ".Material")), 1);
+                itemStack = new ItemStack(Material.getMaterial(configuration.getString(configPath + ".Material")), 1);
             }
             itemMeta = itemStack.getItemMeta();
             //ENCHANTS
             try {
-                for (String enchantmentPath : kitConfig.getConfigurationSection(configpath + ".Enchantments").getKeys(false)) {
-                    itemMeta.addEnchant(Enchantment.getByName(kitConfig.getString(configpath + ".Enchantments." + enchantmentPath + ".Type")), kitConfig.getInt(configpath + ".Enchantments." + enchantmentPath + ".Amplifier"), true);
+                for (String enchantmentPath : configuration.getConfigurationSection(configPath + ".Enchantments").getKeys(false)) {
+                    itemMeta.addEnchant(Enchantment.getByName(configuration.getString(configPath + ".Enchantments." + enchantmentPath + ".Type")), configuration.getInt(configPath + ".Enchantments." + enchantmentPath + ".Amplifier"), true);
                 }
             } catch (Exception ignored) {
             }
             //ENCHANTED
             try {
-                if (kitConfig.getBoolean(configpath + ".Enchanted")) {
+                if (configuration.getBoolean(configPath + ".Enchanted")) {
                     itemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
                     itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 }
             } catch (Exception e) {
-                if (kitConfig.get(configpath + ".Enchanted") != null) {
+                if (configuration.get(configPath + ".Enchanted") != null) {
                     e.printStackTrace();
                 }
             }
             //Lore
             try {
-                itemMeta.setLore(kitConfig.getStringList(configpath + ".Lore"));
+                itemMeta.setLore(configuration.getStringList(configPath + ".Lore"));
             } catch (Exception e) {
-                if (kitConfig.getStringList(configpath + ".Lore") != null) {
+                if (configuration.getStringList(configPath + ".Lore") != null) {
                     e.printStackTrace();
                 }
             }
             //Name
             try {
-                itemMeta.setDisplayName(kitConfig.getString(configpath + ".Name"));
+                itemMeta.setDisplayName(configuration.getString(configPath + ".Name"));
             } catch (Exception e) {
-                if (kitConfig.getStringList(configpath + ".Name") != null) {
+                if (configuration.getStringList(configPath + ".Name") != null) {
                     e.printStackTrace();
                 }
             }
             //UNBREAKABLE
             try {
-                if (kitConfig.getBoolean(configpath + ".isUnbreakable")) {
+                if (configuration.getBoolean(configPath + ".isUnbreakable")) {
                     itemMeta.setUnbreakable(true);
                     itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                 }
             } catch (Exception e) {
-                if (kitConfig.get(configpath + ".isUnbreakable") != null) {
+                if (configuration.get(configPath + ".isUnbreakable") != null) {
                     e.printStackTrace();
                 }
             }
@@ -95,78 +94,78 @@ public class ItemBuilder {
             LeatherArmorMeta itemMeta;
             //DATA
             try {
-                itemStack = new ItemStack(Material.getMaterial(kitConfig.getString(configpath + ".Material")), kitConfig.getInt(configpath + ".Quantity"), (byte) kitConfig.getInt(configpath + ".Data"));
+                itemStack = new ItemStack(Material.getMaterial(configuration.getString(configPath + ".Material")), configuration.getInt(configPath + ".Quantity"), (byte) configuration.getInt(configPath + ".Data"));
             } catch (Exception e) {
-                if (main.getKitsConfiguration().get(configpath + ".Data") != null) {
+                if (main.getKitsConfiguration().get(configPath + ".Data") != null) {
                     e.printStackTrace();
                 }
             }
             //QUANTITY
             try {
-                itemStack = new ItemStack(Material.getMaterial(kitConfig.getString(configpath + ".Material")), kitConfig.getInt(configpath + ".Quantity"));
+                itemStack = new ItemStack(Material.getMaterial(configuration.getString(configPath + ".Material")), configuration.getInt(configPath + ".Quantity"));
             } catch (Exception e) {
-                if (kitConfig.getStringList(configpath + ".Quantity") != null) {
+                if (configuration.getStringList(configPath + ".Quantity") != null) {
                     e.printStackTrace();
                 }
-                itemStack = new ItemStack(Material.getMaterial(kitConfig.getString(configpath + ".Material")), 1);
+                itemStack = new ItemStack(Material.getMaterial(configuration.getString(configPath + ".Material")), 1);
             }
             itemMeta = (LeatherArmorMeta) itemStack.getItemMeta();
             //ENCHANTS
             try {
-                for (String enchantmentPath : kitConfig.getConfigurationSection(configpath + ".Enchantments").getKeys(false)) {
-                    itemMeta.addEnchant(Enchantment.getByName(kitConfig.getString(configpath + ".Enchantments." + enchantmentPath + ".Type")), kitConfig.getInt(configpath + ".Enchantments." + enchantmentPath + ".Amplifier"), true);
+                for (String enchantmentPath : configuration.getConfigurationSection(configPath + ".Enchantments").getKeys(false)) {
+                    itemMeta.addEnchant(Enchantment.getByName(configuration.getString(configPath + ".Enchantments." + enchantmentPath + ".Type")), configuration.getInt(configPath + ".Enchantments." + enchantmentPath + ".Amplifier"), true);
                 }
             } catch (Exception ignored) {
             }
             //ENCHANTED
             try {
-                if (kitConfig.getBoolean(configpath + ".Enchanted")) {
+                if (configuration.getBoolean(configPath + ".Enchanted")) {
                     itemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
                     itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 }
             } catch (Exception e) {
-                if (kitConfig.get(configpath + ".Enchanted") != null) {
+                if (configuration.get(configPath + ".Enchanted") != null) {
                     e.printStackTrace();
                 }
             }
             //Lore
             try {
-                itemMeta.setLore(kitConfig.getStringList(configpath + ".Lore"));
+                itemMeta.setLore(configuration.getStringList(configPath + ".Lore"));
             } catch (Exception e) {
-                if (kitConfig.getStringList(configpath + ".Lore") != null) {
+                if (configuration.getStringList(configPath + ".Lore") != null) {
                     e.printStackTrace();
                 }
             }
             //Name
             try {
-                itemMeta.setDisplayName(kitConfig.getString(configpath + ".Name"));
+                itemMeta.setDisplayName(configuration.getString(configPath + ".Name"));
             } catch (Exception e) {
-                if (kitConfig.getStringList(configpath + ".Name") != null) {
+                if (configuration.getStringList(configPath + ".Name") != null) {
                     e.printStackTrace();
                 }
             }
             //UNBREAKABLE
             try {
-                if (kitConfig.getBoolean(configpath + ".isUnbreakable")) {
+                if (configuration.getBoolean(configPath + ".isUnbreakable")) {
                     itemMeta.setUnbreakable(true);
                     itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                 }
             } catch (Exception e) {
-                if (kitConfig.get(configpath + ".isUnbreakable") != null) {
+                if (configuration.get(configPath + ".isUnbreakable") != null) {
                     e.printStackTrace();
                 }
             }
 
             //COLOR
             try {
-                int red = kitConfig.getInt(configpath + ".Color.R");
-                int green = kitConfig.getInt(configpath + ".Color.G");
-                int blue = kitConfig.getInt(configpath + ".Color.B");
+                int red = configuration.getInt(configPath + ".Color.R");
+                int green = configuration.getInt(configPath + ".Color.G");
+                int blue = configuration.getInt(configPath + ".Color.B");
                 itemMeta.setColor(Color.fromRGB(red, green, blue));
                 itemStack.setItemMeta(itemMeta);
                 return itemStack;
             } catch (Exception e) {
-                if (kitConfig.get(configpath + ".Color") != null) {
+                if (configuration.get(configPath + ".Color") != null) {
                     e.printStackTrace();
                 }
                 itemStack.setItemMeta(itemMeta);

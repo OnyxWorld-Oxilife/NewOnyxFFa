@@ -71,7 +71,7 @@ public class SpawnManager {
             if (rankname.equalsIgnoreCase(rankpath)) {
                 for (String path : kitConfiguration.getConfigurationSection("NewOnyxFFa.Ffa." + rankpath + ".Items").getKeys(false)) {
                     String objectPath = "NewOnyxFFa.Ffa." + rankpath + ".Items." + path;
-                    ItemStack item = main.getItemBuilder().buildItem(objectPath);
+                    ItemStack item = main.getItemBuilder().buildItem(kitConfiguration ,objectPath);
                     int slot = main.getKitsConfiguration().getInt(objectPath + ".Slot");
                     switch (slot) {
                         case 103:
