@@ -1,6 +1,8 @@
 package fr.vivicoubar.onyxffa;
 
 import fr.vivicoubar.onyxffa.commands.*;
+import fr.vivicoubar.onyxffa.duels.ArenaManager;
+import fr.vivicoubar.onyxffa.duels.DuelManager;
 import fr.vivicoubar.onyxffa.events.wanted.CommandsWanted;
 import fr.vivicoubar.onyxffa.events.wanted.WantedEvent;
 import fr.vivicoubar.onyxffa.listeners.*;
@@ -56,6 +58,8 @@ public class OnyxFFaMain extends JavaPlugin {
     public Messages messages = new Messages();
     public PotionEffectManager potionEffectManager = new PotionEffectManager();
     public WantedEvent wantedEvent = new WantedEvent(this);
+    public DuelManager duelManager = new DuelManager(this);
+    public ArenaManager arenaManager = new ArenaManager(this);
 
 
     public static OnyxFFaMain getInstance() {
@@ -90,6 +94,7 @@ public class OnyxFFaMain extends JavaPlugin {
         getCommand("joinwanted").setExecutor(new CommandsWanted(this));
         getCommand("startwanted").setExecutor(new CommandsWanted(this));
         getCommand("addeffect").setExecutor(new CommandAddEffect());
+        getCommand("duel").setExecutor(new CommandAskDuel(this));
         pluginManager.registerEvents(new FFaPlayerListener(this), this);
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);

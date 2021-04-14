@@ -33,6 +33,15 @@ commands:
     permission: NewOnyxFFa.wanted.join
   startwanted:
     permission: NewOnyxFFa.wanted.start
+  duel:
+    permission: NewOnyxFFa.duel.player
+    usage: "§cUsage: /duel <pseudo>"
+  duelaccept:
+    permission: NewOnyxFFa.duel.player
+    usage: "§cUsage: /duelaccept <pseudo>"
+  dueldeny:
+    permission: NewOnyxFFa.duel.player
+    usage: "§cUsage: /dueldeny <pseudo>"
   addeffect:
     permission: NewOnyxFFa.addeffect
     usage: "§cUsage: /addeffect <player> <effect> <duration> <amplifier>"
