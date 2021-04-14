@@ -154,28 +154,28 @@ public class FFaPlayer {
     }
 
     public void resetMaxHealth() {
-        AttributeInstance attribute = player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = this.player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
         attribute.setBaseValue(20);
     }
 
     public void clearEffects() {
-        for (PotionEffect effect : player.getActivePotionEffects()) {
-            player.removePotionEffect(effect.getType());
+        for (PotionEffect effect : this.player.getActivePotionEffects()) {
+            this.player.removePotionEffect(effect.getType());
         }
     }
 
     // Encore un peu dégueu, à mettre dans l'ItemBuilder
     public void sendToSpawn() {
         FileConfiguration configConfiguration = main.getConfigConfiguration();
-        player.setGameMode(GameMode.ADVENTURE);
+        this.player.setGameMode(GameMode.ADVENTURE);
         this.setState(FFaPlayerStates.WAITING);
         resetMaxHealth();
-        player.setHealth(20);
-        player.getInventory().clear();
-        player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
+        this.player.setHealth(20);
+        this.player.getInventory().clear();
+        this.player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
         ItemStack joinItem = main.getItemBuilder().buildItem(configConfiguration, "NewOnyxFFa.Config.Menu.Item");
-        player.getInventory().setItem(4, joinItem);
-        player.getInventory().setHeldItemSlot(4);
+        this.player.getInventory().setItem(4, joinItem);
+        this.player.getInventory().setHeldItemSlot(4);
         clearEffects();
     }
 

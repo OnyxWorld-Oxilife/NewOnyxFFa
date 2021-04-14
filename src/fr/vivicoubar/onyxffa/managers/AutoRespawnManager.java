@@ -52,26 +52,7 @@ public class AutoRespawnManager {
             }
                     .runTaskTimer(this.main, 0, 20L);
         } else {
-            FileConfiguration configConfiguration = main.getConfigConfiguration();
-            Player player = fFaPlayer.getPlayer();
-            player.getInventory().setHeldItemSlot(4);
-            player.setGameMode(GameMode.ADVENTURE);
-            fFaPlayer.setState(FFaPlayerStates.WAITING);
-            player.setFoodLevel(20);
-            player.getActivePotionEffects().clear();
-            //Téléportation au spawn
-
-            player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
-            ItemStack menuSelector = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
-            ItemMeta menuMeta = menuSelector.getItemMeta();
-            if (configConfiguration.getBoolean("NewOnyxFFa.Config.Menu.Item.Enchanted")) {
-                menuMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-            }
-            menuMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
-            menuMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
-            menuMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
-            menuSelector.setItemMeta(menuMeta);
-            player.getInventory().setItem(4, menuSelector);
+            fFaPlayer.sendToSpawn();
         }
     }
 }

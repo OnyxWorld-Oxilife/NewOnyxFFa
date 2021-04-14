@@ -34,8 +34,7 @@ public class PlayerJoinListener implements Listener {
         } else {
             main.messages.actionBarMessage(player, messagesConfiguration.getString("NewOnyxFFa.Messages.Welcome.HiddenStaff").replaceAll("%player%", player.getName()));
         }
-        CommandSpawn spawnInstance = new CommandSpawn(main);
-        spawnInstance.sendPlayerToSpawn(player);
+        fFaPlayer.sendToSpawn();
     }
 
 }
