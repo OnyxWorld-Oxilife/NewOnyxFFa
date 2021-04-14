@@ -53,7 +53,6 @@ public class OnyxFFaMain extends JavaPlugin {
 
     public static OnyxFFaMain instance;
 
-    public KillStreakManager killStreak = new KillStreakManager();
     public FishingPlayers fishingPlayers = new FishingPlayers();
     public Messages messages = new Messages();
     public PotionEffectManager potionEffectManager = new PotionEffectManager();
@@ -72,11 +71,6 @@ public class OnyxFFaMain extends JavaPlugin {
             new PlayerPAPIExpansion(this).register();
         }
         OnyxFFaMain.instance = this;
-        if (Bukkit.getOnlinePlayers().size() > 0) {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                killStreak.addPlayer(player);
-            }
-        }
 
         System.out.println(" ");
         System.out.println("************************");

@@ -1,4 +1,4 @@
-package fr.vivicoubar.onyxffa.managers;
+package fr.vivicoubar.onyxffa.unused;
 
 import org.bukkit.entity.Player;
 

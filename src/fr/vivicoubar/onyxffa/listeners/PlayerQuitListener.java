@@ -12,7 +12,6 @@ public class PlayerQuitListener implements Listener {
     public void onQuit(PlayerQuitEvent quitEvent) {
         Player player = quitEvent.getPlayer();
         OnyxFFaMain main = OnyxFFaMain.getInstance();
-        main.killStreak.removePlayer(player);
         main.wantedEvent.playerQuitWanted(main.getfFaPlayerManager().getFFaPlayer(main, player));
         if(main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, player))){
             main.wantedEvent.setRandomTarget();

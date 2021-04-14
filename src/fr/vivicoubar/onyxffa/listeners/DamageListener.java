@@ -210,7 +210,7 @@ public class DamageListener implements Listener {
 
     public void initSuicide(FFaPlayer victim) throws IOException {
 
-        main.killStreak.resetPlayer(victim.getPlayer());
+        victim.resetKillStreak();
 
         if(main.wantedEvent.isTarget(victim)){
             main.wantedEvent.setRandomTarget();
@@ -260,20 +260,20 @@ public class DamageListener implements Listener {
     }
 
     public void initKill(FFaPlayer damager, FFaPlayer victim) {
-        // killStreak
-        main.killStreak.incrementPlayer(damager.getPlayer());
-        main.killStreak.resetPlayer(victim.getPlayer());
 
         if(main.wantedEvent.isTarget(victim)){
             main.wantedEvent.setTarget(damager);
         }
+        // killStreak
+        damager.incrementKillStreak();
+        victim.resetKillStreak();
 
-        if (damager.getStats().getHighestKillStreak() < main.killStreak.getValue(damager.getPlayer())) {
-            damager.getStats().setHighestKillStreak(main.killStreak.getValue(damager.getPlayer()));
+        if (damager.getStats().getHighestKillStreak() < damager.getKillStreak()) {
+            damager.getStats().setHighestKillStreak(damager.getKillStreak());
         }
 
-        if (main.killStreak.getValue(damager.getPlayer()) % 5 == 0) {
-            Bukkit.broadcastMessage("§3" + damager.getPlayer().getName() + "§e est dans une folie meurtrière ! Killstreak de §3" + main.killStreak.getValue(damager.getPlayer()) + "§e!");
+        if (damager.getKillStreak() % 5 == 0) {
+            Bukkit.broadcastMessage("§3" + damager.getPlayer().getName() + "§e est dans une folie meurtrière ! Killstreak de §3" + damager.getKillStreak() + "§e !");
         }
 
         victim.getPlayer().getVelocity().zero();
