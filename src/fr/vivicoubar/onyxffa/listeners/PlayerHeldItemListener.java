@@ -1,6 +1,7 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,11 +13,12 @@ public class PlayerHeldItemListener implements Listener {
 
     @EventHandler
     public void onChangeHeldItemSlot(PlayerItemHeldEvent itemHeldEvent) {
-        Player player = itemHeldEvent.getPlayer();
-        if (main.fishingPlayers.isFishing(player) && main.fishingPlayers.isHookSpawned(player)) {
+        FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, itemHeldEvent.getPlayer());
+        if (fFaPlayer.isFishing() && fFaPlayer.getFishHook().isValid()) {
             itemHeldEvent.setCancelled(true);
         } else {
-            main.fishingPlayers.removePlayer(player);
+            fFaPlayer.setFishing(false);
+            fFaPlayer.setFishHook(null);
         }
     }
 

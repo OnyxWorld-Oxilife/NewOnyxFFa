@@ -1,6 +1,7 @@
 package fr.vivicoubar.onyxffa.listeners;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -26,14 +27,19 @@ public class GadgetsAndDiscoListener implements Listener {
     @EventHandler
     public void onFishEvent(PlayerFishEvent playerFishEvent) {
         Player player = playerFishEvent.getPlayer();
+        FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, player);
         PlayerFishEvent.State state = playerFishEvent.getState();
         ItemStack air = new ItemStack(Material.AIR);
 
         // Permet d'empêcher l'utilisation "classique" de la canne
         if (state == PlayerFishEvent.State.FISHING) {
-            main.fishingPlayers.addPlayer(player, playerFishEvent.getHook());
+            fFaPlayer.setFishHook(playerFishEvent.getHook());
+            fFaPlayer.setFishing(true);
+            // main.fishingPlayers.addPlayer(player, playerFishEvent.getHook());
         } else {
-            main.fishingPlayers.removePlayer(player);
+            fFaPlayer.setFishing(false);
+            fFaPlayer.setFishHook(null);
+            // main.fishingPlayers.removePlayer(player);
         }
 
         if (state == PlayerFishEvent.State.CAUGHT_ENTITY && playerFishEvent.getCaught() instanceof Player && playerFishEvent.getCaught() != player) {

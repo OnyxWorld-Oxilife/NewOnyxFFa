@@ -53,7 +53,6 @@ public class OnyxFFaMain extends JavaPlugin {
 
     public static OnyxFFaMain instance;
 
-    public FishingPlayers fishingPlayers = new FishingPlayers();
     public Messages messages = new Messages();
     public PotionEffectManager potionEffectManager = new PotionEffectManager();
     public WantedEvent wantedEvent = new WantedEvent(this);
