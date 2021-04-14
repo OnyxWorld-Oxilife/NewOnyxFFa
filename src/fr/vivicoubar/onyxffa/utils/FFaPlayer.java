@@ -3,10 +3,20 @@ package fr.vivicoubar.onyxffa.utils;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.managers.AutoRespawnManager;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -19,10 +29,13 @@ public class FFaPlayer {
     private FFaPlayerStates state = FFaPlayerStates.WAITING;
     private boolean autorespawnBoolean = true;
     private final OnyxFFaMain main;
-    private String lasthitter ="";
+    private String lasthitter = "";
     public long timeWhenLastHitted = 0;
     private final AutoRespawnManager autoRespawnManager;
     private final UUID uniqueID;
+    private int killStreak = 0;
+    private Boolean fishing = false;
+    private FishHook fishHook;
 
     public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player) {
         this.main = onyxFFaMain;
@@ -33,6 +46,7 @@ public class FFaPlayer {
                 statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Deaths", 0);
                 statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Points", 0);
                 statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".HighestScore", 0);
+                statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".HighestKillStreak", 0);
                 statsConfiguration.set("NewOnyxFFa." + player.getUniqueId() + ".Pseudo", player.getName());
                 statsConfiguration.save(main.getStatsFile());
             } catch (IOException e) {
@@ -52,7 +66,7 @@ public class FFaPlayer {
     }
 
     public UUID getUniqueID() {
-        return uniqueID;
+        return this.uniqueID;
     }
 
     public Inventory getInventory() {
@@ -71,7 +85,7 @@ public class FFaPlayer {
         this.state = state;
     }
     public FFaPlayerStates getState() {
-        return state;
+        return this.state;
     }
     public boolean isInArena(){
         return state == FFaPlayerStates.PLAYING || state == FFaPlayerStates.INVINCIBLE;
@@ -82,15 +96,15 @@ public class FFaPlayer {
     }
 
     public boolean isAutorespawnBoolean() {
-        return autorespawnBoolean;
+        return this.autorespawnBoolean;
     }
 
     public String getLasthitter() {
-        return lasthitter;
+        return this.lasthitter;
     }
 
     public long getTimeWhenLastHitted() {
-        return timeWhenLastHitted;
+        return this.timeWhenLastHitted;
     }
     public void setTimeWhenLastHitted(long time){
         this.timeWhenLastHitted = time;
@@ -100,7 +114,7 @@ public class FFaPlayer {
     }
 
     public AutoRespawnManager getAutoRespawnManager() {
-        return autoRespawnManager;
+        return this.autoRespawnManager;
     }
 
     public void setLocation(Location location) {
@@ -109,6 +123,72 @@ public class FFaPlayer {
 
     public void setAutorespawnBoolean() {
         this.autorespawnBoolean = !autorespawnBoolean;
+    }
+
+    public int getKillStreak() {
+        return killStreak;
+    }
+
+    public void incrementKillStreak() {
+        this.killStreak++;
+    }
+
+    public void resetKillStreak() {
+        this.killStreak = 0;
+    }
+
+    public Boolean isFishing() {
+        return fishing;
+    }
+
+    public void setFishing(Boolean value) {
+        this.fishing = value;
+    }
+
+    public void setFishHook(FishHook hook) {
+        this.fishHook = hook;
+    }
+
+    public FishHook getFishHook() {
+        return fishHook;
+    }
+
+    public void resetMaxHealth() {
+        AttributeInstance attribute = player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        attribute.setBaseValue(20);
+    }
+
+    public void clearEffects() {
+        for (PotionEffect effect : player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
+    }
+
+    // Encore un peu dégueu, à mettre dans l'ItemBuilder
+    public void sendToSpawn() {
+        FileConfiguration configConfiguration = main.getConfigConfiguration();
+        player.setGameMode(GameMode.ADVENTURE);
+        this.setState(FFaPlayerStates.WAITING);
+        resetMaxHealth();
+        player.setHealth(20);
+        player.getInventory().clear();
+        player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
+        ItemStack joinItem = new ItemStack(Material.getMaterial(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Material")));
+        ItemMeta joinItemMeta = joinItem.getItemMeta();
+        if (configConfiguration.getBoolean("NewOnyxFFa.Config.Menu.Item.Enchanted")) {
+            joinItemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        }
+        joinItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
+        joinItemMeta.setDisplayName(configConfiguration.getString("NewOnyxFFa.Config.Menu.Item.Name"));
+        joinItemMeta.setLore(configConfiguration.getStringList("NewOnyxFFa.Config.Menu.Item.Lore"));
+        joinItem.setItemMeta(joinItemMeta);
+        player.getInventory().setItem(4, joinItem);
+        player.getInventory().setHeldItemSlot(4);
+        clearEffects();
+    }
+
+    public void spawnInArena() {
+        main.getSpawnManager().respawnPlayer(player);
     }
 
 }

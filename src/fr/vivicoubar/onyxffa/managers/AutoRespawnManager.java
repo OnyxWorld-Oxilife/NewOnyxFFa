@@ -41,8 +41,7 @@ public class AutoRespawnManager {
                         fFaPlayer.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§c/autorespawn §7pour désactiver !"));
                     } else if (timer == 0 && fFaPlayer.getPlayer().getGameMode() == GameMode.SPECTATOR) {
                         cancel();
-                        SpawnManager spawnManagerInstance = new SpawnManager(main);
-                        spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
+                        fFaPlayer.spawnInArena();
                     } else {
                         cancel();
                         return;

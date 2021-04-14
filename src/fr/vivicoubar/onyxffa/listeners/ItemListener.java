@@ -32,9 +32,7 @@ public class ItemListener implements Listener {
             if (interactEvent.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(main.getConfigConfiguration().getString("NewOnyxFFa.Config.Menu.Item.Name"))) {
                 FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(this.main, interactEvent.getPlayer());
                 fFaPlayer.getPlayer().closeInventory();
-                SpawnManager spawnManagerInstance = new SpawnManager(main);
-                spawnManagerInstance.respawnPlayer(fFaPlayer.getPlayer());
-
+                fFaPlayer.spawnInArena();
             }
         }
     }

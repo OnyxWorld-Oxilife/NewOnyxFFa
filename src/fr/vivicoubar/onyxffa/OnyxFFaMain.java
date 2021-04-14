@@ -342,7 +342,7 @@ public class OnyxFFaMain extends JavaPlugin {
         blockFileConfiguration = YamlConfiguration.loadConfiguration(blockFile);
 
         ranksManager = new RanksManager(this);
-        spawnManager = new SpawnManager(this);
+        spawnManager = new SpawnManager();
         fFaPlayerManager = new FFaPlayerManager(this);
         locationBuilder = new LocationBuilder(this);
         itemBuilder = new ItemBuilder(this);

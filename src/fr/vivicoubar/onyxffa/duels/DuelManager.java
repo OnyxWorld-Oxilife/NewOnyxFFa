@@ -1,7 +1,6 @@
 package fr.vivicoubar.onyxffa.duels;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
-import fr.vivicoubar.onyxffa.duels.Duel;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 
 import java.util.ArrayList;

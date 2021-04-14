@@ -22,12 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 public class SpawnManager {
-    private OnyxFFaMain main;
 
-    public SpawnManager(OnyxFFaMain main) {
-        this.main = main;
-    }
-
+    private OnyxFFaMain main = OnyxFFaMain.getInstance();
 
     public Location getSelectedSpawn() {
         List<Location> spawns = main.getSpawnsList();
