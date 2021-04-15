@@ -7,10 +7,10 @@ public class Duel {
     private FFaPlayer player1;
     private FFaPlayer player2;
 
-    private DuelArena arena;
+    private Arena arena;
     private DuelState state;
 
-    public Duel(FFaPlayer asker, FFaPlayer asked, DuelArena askedarena){
+    public Duel(FFaPlayer asker, FFaPlayer asked, Arena askedarena){
         player1 = asker;
         player2 = asked;
         asked.setState(FFaPlayerStates.DUEL);

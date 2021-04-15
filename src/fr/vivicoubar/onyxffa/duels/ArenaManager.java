@@ -1,23 +1,28 @@
 package fr.vivicoubar.onyxffa.duels;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.utils.FFaPlayer;
+import org.bukkit.Location;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ArenaManager {
-    private OnyxFFaMain main;
-    private HashMap<DuelArena, ArenaState> arenaList = new HashMap<>();
+    private final List<Arena> arenaList = new ArrayList<>();
 
-    public ArenaManager(OnyxFFaMain onyxFFaMain) {
-        main = onyxFFaMain;
-        loadArena();
+    public void addArena(Location loc1, Location loc2, String name){
+        Arena arena = new Arena(loc1,loc2,name);
+        arenaList.add(arena);
     }
 
-    public void loadArena(){
-        //TODO ARENE EN CONFIG?
+    public Arena nextArena(){
+        for(Arena arena : arenaList){
+            if(arena.getArenaState() == ArenaState.AVAILABLE){
+                return arena;
+            }
+        }
+        return null;
     }
 
-    public HashMap<DuelArena, ArenaState> getArenaList() {
-        return arenaList;
-    }
 }

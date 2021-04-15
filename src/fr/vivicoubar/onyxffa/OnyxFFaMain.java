@@ -10,6 +10,7 @@ import fr.vivicoubar.onyxffa.managers.*;
 import fr.vivicoubar.onyxffa.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -35,6 +36,8 @@ public class OnyxFFaMain extends JavaPlugin {
     private FileConfiguration kitsConfiguration;
     private File blockFile;
     private FileConfiguration blockFileConfiguration;
+    private File arenaFile;
+    private FileConfiguration arenaFileConfiguration;
     private RanksManager ranksManager;
     private SpawnManager spawnManager;
     private FFaPlayerManager fFaPlayerManager;
@@ -56,7 +59,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public PotionEffectManager potionEffectManager = new PotionEffectManager();
     public WantedEvent wantedEvent = new WantedEvent(this);
     public DuelManager duelManager = new DuelManager(this);
-    public ArenaManager arenaManager = new ArenaManager(this);
+    public ArenaManager arenaManager = new ArenaManager();
 
 
     public static OnyxFFaMain getInstance() {
@@ -107,6 +110,7 @@ public class OnyxFFaMain extends JavaPlugin {
             ranksFile = new File(this.getDataFolder(), "ranks.yml");
             spawnsFile = new File(this.getDataFolder(), "spawns.yml");
             blockFile = new File(this.getDataFolder(), "blocks.yml");
+            arenaFile = new File(this.getDataFolder(), "arenas.yml");
 
             if (!configFile.exists()) {
                 configFile.createNewFile();
@@ -186,6 +190,34 @@ public class OnyxFFaMain extends JavaPlugin {
                 statsConfiguration = YamlConfiguration.loadConfiguration(statsFile);
                 statsConfiguration.set("NewOnyxFFa.Description", "You can use this file to change players stats, using their UUIDS");
                 statsConfiguration.save(statsFile);
+            }
+            if (!arenaFile.exists()) {
+                arenaFile.createNewFile();
+                arenaFileConfiguration = YamlConfiguration.loadConfiguration(arenaFile);
+                arenaFileConfiguration.set("NewOnyxFFa.Description", "You can use this file to add arenas for duels");
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Name", "Alpha");
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.X", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Y", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Z", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Yaw", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Pitch", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.X", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Y", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Z", 103);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Yaw", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Pitch", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Name", "Beta");
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.X", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Y", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Z", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Yaw", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Pitch", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.X", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Y", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Z", 103);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Yaw", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Pitch", 100);
+                arenaFileConfiguration.save(arenaFile);
             }
 
             if (!ranksFile.exists()) {
@@ -332,6 +364,7 @@ public class OnyxFFaMain extends JavaPlugin {
         configConfiguration = YamlConfiguration.loadConfiguration(configFile);
         kitsConfiguration = YamlConfiguration.loadConfiguration(kitsFile);
         blockFileConfiguration = YamlConfiguration.loadConfiguration(blockFile);
+        arenaFileConfiguration = YamlConfiguration.loadConfiguration(arenaFile);
 
         ranksManager = new RanksManager(this);
         spawnManager = new SpawnManager();
@@ -344,6 +377,27 @@ public class OnyxFFaMain extends JavaPlugin {
                 spawnsList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.Spawns." + spawnName));
             }
         }
+
+        for(String arena : arenaFileConfiguration.getConfigurationSection("NewOnyxFFa.Arena").getKeys(false)){
+            String arenaName = arenaFileConfiguration.getString("NewOnyxFFa.Arena." + arena + ".Name");
+            String world = spawnsConfiguration.getString("NewOnyxFFa.Spawns.Lobby.WorldName");
+            double x1 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn1.X");
+            double y1 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn1.Y");
+            double z1 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn1.Z");
+            float yaw1 = (float) arenaFileConfiguration.get("NewOnyxFFa.Arena." + arena + ".Spawn1.Yaw");
+            float pitch1 = (float) arenaFileConfiguration.get("NewOnyxFFa.Arena." + arena + ".Spawn1.Pitch");
+            double x2 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn2.X");
+            double y2 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn2.Y");
+            double z2 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn2.Z");
+            float yaw2 = (float) arenaFileConfiguration.get("NewOnyxFFa.Arena." + arena + ".Spawn2.Yaw");
+            float pitch2 = (float) arenaFileConfiguration.get("NewOnyxFFa.Arena." + arena + ".Spawn2.Pitch");
+
+            Location spawn1 = new Location(Bukkit.getWorld(world), x1,y1,z1,yaw1,pitch1);
+            Location spawn2 = new Location(Bukkit.getWorld(world), x2,y2,z2,yaw2,pitch2);
+            arenaManager.addArena(spawn1, spawn2, arenaName);
+        }
+
+
 
         /*
         fFaBlockManager = new FFaBlockManager(this);

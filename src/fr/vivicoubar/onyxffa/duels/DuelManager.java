@@ -16,7 +16,7 @@ public class DuelManager {
         main = onyxFFaMain;
     }
 
-    public void addDemand(FFaPlayer asker, FFaPlayer sender, DuelArena arena){
+    public void addDemand(FFaPlayer asker, FFaPlayer sender, Arena arena){
         Duel demandDuel = new Duel(asker, sender, arena);
         duelsDemands.put(asker,demandDuel);
     }
