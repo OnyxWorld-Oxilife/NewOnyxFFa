@@ -55,12 +55,12 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
 
         // %someplugin_placeholder1%
         if (identifier.equals("kills")) {
-            return "" + fFaPlayer.getStats().getScore().get(0);
+            return "" + Math.round(fFaPlayer.getStats().getScore().get(0));
         }
 
         // %someplugin_placeholder2%
         if (identifier.equals("deaths")) {
-            return "" + fFaPlayer.getStats().getScore().get(1);
+            return "" + Math.round(fFaPlayer.getStats().getScore().get(1));
         }
         if(identifier.equals("glowcolor")){
             if(main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, player))){
@@ -75,7 +75,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
             }
         }
         if (identifier.equals("score")) {
-            return "" + fFaPlayer.getStats().getScore().get(2);
+            return "" + Math.round(fFaPlayer.getStats().getScore().get(2));
         }
 
         if (identifier.equals("rank")) {
@@ -85,13 +85,20 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
             return fFaPlayer.getStats().getRank().getColor();
         }
         if (identifier.equals("highscore")) {
-            return "" + fFaPlayer.getStats().getScore().get(3);
+            return "" + Math.round(fFaPlayer.getStats().getScore().get(3));
         }
         if (identifier.equals("killstreak")) {
             return "" + fFaPlayer.getKillStreak();
         }
         if (identifier.equals("highestkillstreak")) {
             return "" + fFaPlayer.getStats().getHighestKillStreak();
+        }
+        if (identifier.equals("score")) {
+            if (fFaPlayer.getStats().getScore().get(1) > 0) {
+                return "" + fFaPlayer.getStats().getScore().get(0) / fFaPlayer.getStats().getScore().get(1);
+            } else {
+                return "" + fFaPlayer.getStats().getScore().get(0);
+            }
         }
 
         return null;
