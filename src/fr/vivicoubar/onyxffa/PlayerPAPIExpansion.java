@@ -6,11 +6,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.text.DecimalFormat;
+
 
 public class PlayerPAPIExpansion extends PlaceholderExpansion {
 
     private OnyxFFaMain main;
 
+    DecimalFormat df = new DecimalFormat("###.###");
 
     public PlayerPAPIExpansion(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
@@ -95,7 +98,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         }
         if (identifier.equals("ratio")) {
             if (fFaPlayer.getStats().getScore().get(1) > 0) {
-                return "" + fFaPlayer.getStats().getScore().get(0) / fFaPlayer.getStats().getScore().get(1);
+                return "" + df.format(fFaPlayer.getStats().getScore().get(0) / fFaPlayer.getStats().getScore().get(1));
             } else {
                 return "" + fFaPlayer.getStats().getScore().get(0);
             }
