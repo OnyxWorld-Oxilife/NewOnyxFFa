@@ -17,7 +17,7 @@ public class DuelManager {
     }
 
     public void addDemand(FFaPlayer asker, FFaPlayer sender, DuelArena arena){
-        Duel demandDuel = new Duel(asker, arena);
+        Duel demandDuel = new Duel(asker, sender, arena);
         duelsDemands.put(asker,demandDuel);
     }
 
@@ -26,7 +26,6 @@ public class DuelManager {
         duelsDemands.remove(asker);
         duelsInProgress.add(acceptedDuel);
         acceptedDuel.launchDuel();
-
     }
 }
 //TODO 1) Joueur asker envoie demande > addDemand() création d'un duel en state Asked, ajout à la hashmap duelDemands
