@@ -17,7 +17,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent joinEvent) {
         Player player = joinEvent.getPlayer();
-        FFaPlayer fFaPlayer = new FFaPlayer(main, player);
+        FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, player);
         joinEvent.setJoinMessage(null);
         if(OnyxFFaMain.getInstance().wantedEvent.getState() != EventState.WAITING || OnyxFFaMain.getInstance().wantedEvent.getState() != EventState.STOPPING){
             main.wantedEvent.playerJoinWanted(fFaPlayer);
