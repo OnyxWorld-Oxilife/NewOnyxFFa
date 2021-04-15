@@ -98,6 +98,7 @@ public class OnyxFFaMain extends JavaPlugin {
         pluginManager.registerEvents(new PlayerJoinListener(), this);
         pluginManager.registerEvents(new PlayerQuitListener(), this);
         pluginManager.registerEvents(new PlayerHeldItemListener(), this);
+        pluginManager.registerEvents(new PlayerMoveEventListener(), this);
 
         try {
             if (!getDataFolder().exists()) {
@@ -196,27 +197,27 @@ public class OnyxFFaMain extends JavaPlugin {
                 arenaFileConfiguration = YamlConfiguration.loadConfiguration(arenaFile);
                 arenaFileConfiguration.set("NewOnyxFFa.Description", "You can use this file to add arenas for duels");
                 arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Name", "Alpha");
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.X", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Y", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Z", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Yaw", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Pitch", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.X", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Y", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Z", 103);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Yaw", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Pitch", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.X", 828.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Y", 139.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Z", 840.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Yaw", -90);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Pitch", 0);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.X", 864.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Y", 139.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Z", 840.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Yaw", 90);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Pitch", 0);
                 arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Name", "Beta");
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.X", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Y", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Z", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Yaw", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Pitch", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.X", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Y", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Z", 103);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Yaw", 100);
-                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Pitch", 100);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.X", 827.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Y", 139.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Z", 801.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Yaw", -90);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn1.Pitch", 0);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.X", 863.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Y", 139.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Z", 801.5);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Yaw", 90);
+                arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Pitch", 0);
                 arenaFileConfiguration.save(arenaFile);
             }
 
@@ -384,13 +385,13 @@ public class OnyxFFaMain extends JavaPlugin {
             double x1 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn1.X");
             double y1 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn1.Y");
             double z1 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn1.Z");
-            float yaw1 = (float) arenaFileConfiguration.get("NewOnyxFFa.Arena." + arena + ".Spawn1.Yaw");
-            float pitch1 = (float) arenaFileConfiguration.get("NewOnyxFFa.Arena." + arena + ".Spawn1.Pitch");
+            float yaw1 = (float) arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn1.Yaw");
+            float pitch1 = (float) arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn1.Pitch");
             double x2 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn2.X");
             double y2 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn2.Y");
             double z2 = arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn2.Z");
-            float yaw2 = (float) arenaFileConfiguration.get("NewOnyxFFa.Arena." + arena + ".Spawn2.Yaw");
-            float pitch2 = (float) arenaFileConfiguration.get("NewOnyxFFa.Arena." + arena + ".Spawn2.Pitch");
+            float yaw2 = (float) arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn2.Yaw");
+            float pitch2 = (float) arenaFileConfiguration.getDouble("NewOnyxFFa.Arena." + arena + ".Spawn2.Pitch");
 
             Location spawn1 = new Location(Bukkit.getWorld(world), x1,y1,z1,yaw1,pitch1);
             Location spawn2 = new Location(Bukkit.getWorld(world), x2,y2,z2,yaw2,pitch2);

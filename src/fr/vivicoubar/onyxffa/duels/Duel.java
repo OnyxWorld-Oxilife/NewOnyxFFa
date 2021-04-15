@@ -3,7 +3,10 @@ package fr.vivicoubar.onyxffa.duels;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
+import net.minecraft.server.v1_12_R1.DataConverterZombieType;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Duel {
@@ -45,7 +48,9 @@ public class Duel {
                 @Override
                 public void run() {
                     if(timer <= 0) {
+                        arena.setArenaState(ArenaState.LOADING);
                         arena.spawnPlayers(asker, asked);
+                        startDuel();
                         cancel();
                     }
                     if(timer > 0) {
@@ -54,18 +59,23 @@ public class Duel {
                     timer--;
                 }
             }.runTaskTimer(main,0,20);
-            //TODO Téléporter à l'arène, donner kit, mettre compte à rebours (FFaPlayer en state Freeze duel?) , mettre FFaPlayer en Duel
         }
     }
 
     public void startDuel() {
+        asker.setFrozen(true);
+        asked.setFrozen(true);
+        asker.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE, 1));
+        asked.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE, 1));
         if(this.state == DuelState.LOADING) {
             new BukkitRunnable() {
                 int timer = 5;
                 @Override
                 public void run() {
                     if(timer <= 0) {
-                        arena.spawnPlayers(asker, asked);
+                        arena.setArenaState(ArenaState.USED);
+                        asker.setFrozen(false);
+                        asked.setFrozen(false);
                         cancel();
                     }
                     if(timer > 0) {
@@ -80,6 +90,23 @@ public class Duel {
     public void endDuel(FFaPlayer winner) {
         FFaPlayer loser = winner == asked ? asker : asked;
         Bukkit.broadcastMessage(winner.getPlayer().getName() + " a gagné son combat contre " + loser.getPlayer().getName());
+
+        new BukkitRunnable() {
+            int timer = 5;
+            @Override
+            public void run() {
+                if(timer <= 0) {
+                    arena.setArenaState(ArenaState.AVAILABLE);
+                    winner.sendToSpawn();
+                    loser.sendToSpawn();
+                    cancel();
+                }
+                if(timer > 0) {
+                    asker.getPlayer().sendTitle("Vous allez être renvoyés au spawn dans", String.valueOf(timer), 4, 16, 0);
+                }
+                timer--;
+            }
+        }.runTaskTimer(main,0,20);
     }
 
 }

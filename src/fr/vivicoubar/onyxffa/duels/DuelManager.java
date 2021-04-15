@@ -33,6 +33,10 @@ public class DuelManager {
         }
     }
 
+    public void removeDuel(Duel duel) {
+        duels.remove(duel);
+    }
+
 }
 //TODO 1) Joueur asker envoie demande > addDemand() création d'un duel en state Asked, ajout à la hashmap duelDemands
 //TODO 2) Envoi d'un message au joueur demandé

@@ -33,6 +33,7 @@ public class FFaPlayer {
     private int killStreak = 0;
     private Boolean fishing = false;
     private FishHook fishHook;
+    private Boolean frozen = false;
 
     public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player) {
         this.main = onyxFFaMain;
@@ -86,6 +87,9 @@ public class FFaPlayer {
     }
     public boolean isInArena(){
         return state == FFaPlayerStates.PLAYING || state == FFaPlayerStates.INVINCIBLE;
+    }
+    public boolean isInArenaOrDuel() {
+        return isInArena() || state == FFaPlayerStates.DUEL;
     }
     public boolean isPlaying(){return state == FFaPlayerStates.PLAYING;}
     public void setHealth(double health) {
@@ -177,7 +181,15 @@ public class FFaPlayer {
     }
 
     public void spawnInArena() {
-        main.getSpawnManager().respawnPlayer(player);
+        main.getSpawnManager().respawnPlayer(this.player);
+    }
+
+    public void setFrozen(Boolean condition) {
+        this.frozen = condition;
+    }
+
+    public Boolean isFrozen() {
+        return this.frozen;
     }
 
 }

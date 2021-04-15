@@ -1,11 +1,8 @@
 package fr.vivicoubar.onyxffa.duels;
 
-import fr.vivicoubar.onyxffa.OnyxFFaMain;
-import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ArenaManager {

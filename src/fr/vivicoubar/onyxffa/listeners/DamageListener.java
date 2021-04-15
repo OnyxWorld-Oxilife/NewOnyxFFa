@@ -58,7 +58,7 @@ public class DamageListener implements Listener {
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
                 } else {
-                    if(!main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isInArena() || !main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isInArena()){
+                    if(!main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isInArenaOrDuel() || !main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isInArenaOrDuel()) {
                         takeDamageEvent.setCancelled(true);
                     }
 
