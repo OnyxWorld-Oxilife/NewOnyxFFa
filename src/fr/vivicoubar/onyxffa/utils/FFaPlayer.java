@@ -2,6 +2,7 @@ package fr.vivicoubar.onyxffa.utils;
 
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.duels.Duel;
 import fr.vivicoubar.onyxffa.managers.AutoRespawnManager;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.duels;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 
 public class Duel {
@@ -9,14 +10,13 @@ public class Duel {
     private DuelArena arena;
     private DuelState state;
 
-    public Duel(FFaPlayer asker, DuelArena askedarena){
+    public Duel(FFaPlayer asker, FFaPlayer asked, DuelArena askedarena){
         player1 = asker;
+        player2 = asked;
+        asked.setState(FFaPlayerStates.DUEL);
+        asker.setState(FFaPlayerStates.DUEL);
         state = DuelState.ASKED;
         arena = askedarena;
-    }
-    public void acceptDuel(FFaPlayer asked){
-        player2 = asked;
-        launchDuel();
     }
     public void launchDuel(){
         if(state == DuelState.ASKED){

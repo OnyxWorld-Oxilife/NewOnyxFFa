@@ -23,7 +23,7 @@ public class PlayerJoinListener implements Listener {
             main.wantedEvent.playerJoinWanted(fFaPlayer);
         }
         FileConfiguration messagesConfiguration = main.getMessagesConfiguration();
-        if (player.hasPermission("OnyxFfa.mod.hideJoinMessage")) {
+        if (!player.hasPermission("OnyxFfa.mod.hideJoinMessage")) {
             if (!player.hasPlayedBefore()) {
                 main.messages.actionBarMessage(player, messagesConfiguration.getString("NewOnyxFFa.Messages.Welcome.NewPlayer").replaceAll("%player%", player.getName()));
                 Bukkit.broadcastMessage(messagesConfiguration.getString("NewOnyxFFa.Messages.Welcome.NewPlayer").replaceAll("%player%", player.getName()));
