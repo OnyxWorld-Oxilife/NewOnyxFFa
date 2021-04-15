@@ -93,7 +93,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         if (identifier.equals("highestkillstreak")) {
             return "" + fFaPlayer.getStats().getHighestKillStreak();
         }
-        if (identifier.equals("score")) {
+        if (identifier.equals("ratio")) {
             if (fFaPlayer.getStats().getScore().get(1) > 0) {
                 return "" + fFaPlayer.getStats().getScore().get(0) / fFaPlayer.getStats().getScore().get(1);
             } else {
