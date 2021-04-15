@@ -58,7 +58,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public Messages messages = new Messages();
     public PotionEffectManager potionEffectManager = new PotionEffectManager();
     public WantedEvent wantedEvent = new WantedEvent(this);
-    public DuelManager duelManager = new DuelManager(this);
+    public DuelManager duelManager = new DuelManager();
     public ArenaManager arenaManager = new ArenaManager();
 
 
@@ -510,6 +510,10 @@ public class OnyxFFaMain extends JavaPlugin {
     public ItemBuilder getItemBuilder() {
         return itemBuilder;
     }
+
+    public DuelManager getDuelManager() {return duelManager;}
+
+    public ArenaManager getArenaManager() {return arenaManager;}
 
     /*
     public FFaBlockManager getfFaBlockManager() {

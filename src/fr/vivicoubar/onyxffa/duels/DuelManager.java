@@ -4,29 +4,35 @@ import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class DuelManager {
-    private HashMap<FFaPlayer, Duel> duelsDemands = new HashMap<>();
-    private List<Duel> duelsInProgress = new ArrayList<>();
-    private OnyxFFaMain main;
 
-    public DuelManager(OnyxFFaMain onyxFFaMain) {
-        main = onyxFFaMain;
+    private static List<Duel> duels = new ArrayList<>();
+    private OnyxFFaMain main = OnyxFFaMain.getInstance();
+
+    public void addDuel(FFaPlayer asker, FFaPlayer asked) {
+        Duel duel = new Duel(asker, asked);
+        duels.add(duel);
     }
 
-    public void addDemand(FFaPlayer asker, FFaPlayer sender, Arena arena){
-        Duel demandDuel = new Duel(asker, sender, arena);
-        duelsDemands.put(asker,demandDuel);
+    public Duel getDuelByPlayer(FFaPlayer fFaPlayer) {
+        for (Duel duel : this.duels) {
+            if (duel.getAsker() == fFaPlayer || duel.getAsked() == fFaPlayer) {
+                return duel;
+            }
+        }
+        return null;
     }
 
-    public void acceptDemand(FFaPlayer asker){
-        Duel acceptedDuel = duelsDemands.get(asker);
-        duelsDemands.remove(asker);
-        duelsInProgress.add(acceptedDuel);
-        acceptedDuel.launchDuel();
+    public void removeDuelByPlayer(FFaPlayer fFaPlayer) {
+        for (Duel duel : this.duels) {
+            if (duel.getAsker() == fFaPlayer || duel.getAsked() == fFaPlayer) {
+                duels.remove(duel);
+            }
+        }
     }
+
 }
 //TODO 1) Joueur asker envoie demande > addDemand() création d'un duel en state Asked, ajout à la hashmap duelDemands
 //TODO 2) Envoi d'un message au joueur demandé
