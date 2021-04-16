@@ -355,6 +355,18 @@ public class OnyxFFaMain extends JavaPlugin {
                 messagesConfiguration.set("NewOnyxFFa.Messages.ResetStatsCommandOther.Success", "Les statistiques de %player% ont été remises à zéro!");
                 messagesConfiguration.set("NewOnyxFFa.Messages.ChangeAutoRespawn.true", "Vous avez chosi d'activer l'autorespawn");
                 messagesConfiguration.set("NewOnyxFFa.Messages.ChangeAutoRespawn.false", "Vous avez chosi de désactiver l'autorespawn");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.Invitation.Demand.Sender", "Vous avez bien invité %player% à vous combattre en duel.");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.Invitation.Demand.Asked", "%player% vous invite à combattre en duel ! /duel accept pour accepter ce duel !");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.Invitation.Denied.Sender", "Vous avez refusé le duel avec %player%");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.Invitation.Denied.Asked", "%player% a refusé votre invitation en duel");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.Invitation.Accepted.Sender", "Vous avez accepté le duel avec %player%");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.Invitation.Accepted.Asked", "%player% a accepté votre invitation en duel");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.Invitation.Cancel.Sender", "Vous avez annulé le duel avec %player%");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.Invitation.Cancel.Asked", "%player% a annulé sa demande de duel");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.End.Broadcast", "%winner% a vaincu %loser% en Duel !");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.NotFinished", "Attendez que votre duel finisse !");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.AlreadyInDuel", "%player% est déjà en duel !");
+                messagesConfiguration.set("NewOnyxFFa.Messages.Duel.InFFAArena", "%player% est occupé à combattre dans le FFA, il doit être au lobby !");
                 messagesConfiguration.save(messagesFile);
             }
         } catch (Exception exception) {

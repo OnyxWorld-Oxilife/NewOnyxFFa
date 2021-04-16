@@ -5,6 +5,7 @@ import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -13,6 +14,7 @@ public class Duel {
     private FFaPlayer asked;
     private OnyxFFaMain main = OnyxFFaMain.getInstance();
     private ArenaManager arenaManager = main.getArenaManager();
+    private FileConfiguration messagesConfig = main.getMessagesConfiguration();
 
     private Arena arena;
     private DuelState state;
@@ -94,7 +96,7 @@ public class Duel {
 
     public void winDuel(FFaPlayer winner) {
         FFaPlayer loser = winner == asked ? asker : asked;
-        Bukkit.broadcastMessage(winner.getPlayer().getName() + " a gagné son combat contre " + loser.getPlayer().getName());
+        Bukkit.broadcastMessage(messagesConfig.getString("NewOnyxFFa.Messages.Duel..End.Broadcast").replaceAll("%winner%", winner.getPlayer().getName()).replaceAll("%loser%", loser.getPlayer().getName()));
         loser.getPlayer().sendMessage("§b[§eDuel§b]: Il restait §c" + winner.getPlayer().getHealth()+  "§bcoeurs à  ");
         new BukkitRunnable() {
             int timer = 5;
