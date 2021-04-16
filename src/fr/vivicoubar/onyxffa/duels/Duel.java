@@ -41,6 +41,8 @@ public class Duel {
             this.asker.setState(FFaPlayerStates.DUEL);
             this.asked.setState(FFaPlayerStates.DUEL);
             this.arena = arenaManager.nextArena();
+            this.asker.getPlayer().getInventory().clear();
+            this.asked.getPlayer().getInventory().clear();
 
             new BukkitRunnable() {
                 int timer = 3;
@@ -67,7 +69,7 @@ public class Duel {
         asked.setFrozen(true);
         asker.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE, 1));
         asked.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE, 1));
-
+        //TODO Kits
         if(this.state == DuelState.LOADING) {
             new BukkitRunnable() {
                 int timer = 5;
@@ -109,8 +111,8 @@ public class Duel {
                     cancel();
                 }
                 if(timer > 0) {
-                    winner.getPlayer().sendTitle("§aVous avez gagné !", "Retour au spawn dans" + String.valueOf(timer), 4, 16, 0);
-                    loser.getPlayer().sendTitle("§cVous avez perdu !", "Retour au spawn dans" + String.valueOf(timer), 4, 16, 0);
+                    winner.getPlayer().sendTitle("§aVous avez gagné !", "Retour au spawn dans " + String.valueOf(timer), 4, 16, 0);
+                    loser.getPlayer().sendTitle("§cVous avez perdu !", "Retour au spawn dans " + String.valueOf(timer), 4, 16, 0);
                 }
                 timer--;
             }

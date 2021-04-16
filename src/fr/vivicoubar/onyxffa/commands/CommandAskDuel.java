@@ -82,6 +82,8 @@ public class CommandAskDuel implements CommandExecutor {
                     player.sendMessage(args[0] + " n'est pas connecté !");
                     return true;
                 }
+            } else {
+
             }
         }
         return false;
