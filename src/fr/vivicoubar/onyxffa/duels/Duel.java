@@ -108,8 +108,8 @@ public class Duel {
                     cancel();
                 }
                 if(timer > 0) {
-                    asker.getPlayer().sendTitle("Vous allez être renvoyés au spawn dans", String.valueOf(timer), 4, 16, 0);
-                    asked.getPlayer().sendTitle("Vous allez être renvoyés au spawn dans", String.valueOf(timer), 4, 16, 0);
+                    winner.getPlayer().sendTitle("§aVous avez gagné !", "Retour au spawn dans" + String.valueOf(timer), 4, 16, 0);
+                    loser.getPlayer().sendTitle("§cVous avez perdu !", "Retour au spawn dans" + String.valueOf(timer), 4, 16, 0);
                 }
                 timer--;
             }
