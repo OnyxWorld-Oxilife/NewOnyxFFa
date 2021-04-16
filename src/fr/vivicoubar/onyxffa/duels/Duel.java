@@ -95,7 +95,7 @@ public class Duel {
     public void winDuel(FFaPlayer winner) {
         FFaPlayer loser = winner == asked ? asker : asked;
         Bukkit.broadcastMessage(winner.getPlayer().getName() + " a gagné son combat contre " + loser.getPlayer().getName());
-
+        loser.getPlayer().sendMessage("§b[§eDuel§b]: Il restait §c" + winner.getPlayer().getHealth()+  "§bcoeurs à  ");
         new BukkitRunnable() {
             int timer = 5;
             @Override
