@@ -47,4 +47,9 @@ commands:
     usage: "§cUsage: /addeffect <player> <effect> <duration> <amplifier>"
   spec:
     permission: NewOnyxFFa.spec.use
-    usage: "§cUsage: /spec <pseudo>"
+    usage: "§cUsage: /spec <pseudo>".
+  vanish:
+    permission: NewOnyxFFa.vanish.use
+    aliases:
+      - "v"
+    usage: "§cUsage: /vanish"
