@@ -54,6 +54,7 @@ public class Duel {
                     }
                     if(timer > 0) {
                         asker.getPlayer().sendTitle("Vous allez être téléporté dans", String.valueOf(timer), 4, 16, 0);
+                        asked.getPlayer().sendTitle("Vous allez être téléporté dans", String.valueOf(timer), 4, 16, 0);
                     }
                     timer--;
                 }
@@ -81,6 +82,7 @@ public class Duel {
                     }
                     if(timer > 0) {
                         asker.getPlayer().sendTitle("Le combat commence dans", String.valueOf(timer), 4, 16, 0);
+                        asked.getPlayer().sendTitle("Le combat commence dans", String.valueOf(timer), 4, 16, 0);
                     }
                     timer--;
                 }
@@ -98,23 +100,30 @@ public class Duel {
             public void run() {
                 if(timer <= 0) {
                     arena.setArenaState(ArenaState.AVAILABLE);
+                    winner.setState(FFaPlayerStates.WAITING);
+                    loser.setState(FFaPlayerStates.WAITING);
                     winner.sendToSpawn();
                     loser.sendToSpawn();
+                    ending();
                     cancel();
                 }
                 if(timer > 0) {
                     asker.getPlayer().sendTitle("Vous allez être renvoyés au spawn dans", String.valueOf(timer), 4, 16, 0);
+                    asked.getPlayer().sendTitle("Vous allez être renvoyés au spawn dans", String.valueOf(timer), 4, 16, 0);
                 }
                 timer--;
             }
         }.runTaskTimer(main,0,20);
     }
     public void loseDuel(FFaPlayer loser){
-        if(loser == asked){
-            winDuel(asker);
-        }else{
-            winDuel(asked);
-        }
+        winDuel(loser == asked ? asker : asked);
+    }
+
+    public void ending() {
+        asked = null;
+        asker = null;
+        state = DuelState.ENDING;
+        main.getDuelManager().removeDuel(this);
     }
 
     public void setState(DuelState duelState){

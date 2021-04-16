@@ -34,7 +34,7 @@ commands:
   startwanted:
     permission: NewOnyxFFa.wanted.start
   duel:
-    permission: NewOnyxFFa.duel.player
+    permission: newonyxffa.duel.player
     usage: "§cUsage: /duel <pseudo>"
   duelaccept:
     permission: NewOnyxFFa.duel.player
