@@ -3,6 +3,7 @@ package fr.vivicoubar.onyxffa.duels;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +24,8 @@ public class DuelListener implements Listener {
             if(victim.getState() == FFaPlayerStates.DUEL && damager.getState() == FFaPlayerStates.DUEL){
                 if(victim.getPlayer().getHealth() <= beKilledinDuelEvent.getFinalDamage()){
                     beKilledinDuelEvent.setCancelled(true);
+                    victim.getPlayer().setGameMode(GameMode.SPECTATOR);
+                    victim.setFrozen(true);
                     Duel duel = main.getDuelManager().getDuelByPlayer(damager);
                     duel.winDuel(damager);
                     main.getDuelManager().removeDuel(duel);

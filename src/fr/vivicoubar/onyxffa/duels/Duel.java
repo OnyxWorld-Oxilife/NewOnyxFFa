@@ -102,8 +102,9 @@ public class Duel {
                     arena.setArenaState(ArenaState.AVAILABLE);
                     winner.setState(FFaPlayerStates.WAITING);
                     loser.setState(FFaPlayerStates.WAITING);
-                    winner.sendToSpawn();
                     loser.sendToSpawn();
+                    loser.setFrozen(false);
+                    winner.sendToSpawn();
                     ending();
                     cancel();
                 }
