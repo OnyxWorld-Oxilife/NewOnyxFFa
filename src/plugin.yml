@@ -45,3 +45,6 @@ commands:
   addeffect:
     permission: NewOnyxFFa.addeffect
     usage: "§cUsage: /addeffect <player> <effect> <duration> <amplifier>"
+  spec:
+    permission: NewOnyxFFa.spec.use
+    usage: "§cUsage: /spec <pseudo>"

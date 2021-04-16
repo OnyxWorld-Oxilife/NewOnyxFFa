@@ -89,6 +89,7 @@ public class OnyxFFaMain extends JavaPlugin {
         getCommand("autorespawn").setExecutor(new CommandAutoRespawn(this));
         getCommand("joinwanted").setExecutor(new CommandsWanted(this));
         getCommand("startwanted").setExecutor(new CommandsWanted(this));
+        getCommand("spec").setExecutor(new CommandSpec(this));
         getCommand("addeffect").setExecutor(new CommandAddEffect());
         getCommand("duel").setExecutor(new CommandAskDuel(this));
         pluginManager.registerEvents(new FFaPlayerListener(this), this);
@@ -101,6 +102,7 @@ public class OnyxFFaMain extends JavaPlugin {
         pluginManager.registerEvents(new PlayerHeldItemListener(), this);
         pluginManager.registerEvents(new PlayerMoveEventListener(), this);
         pluginManager.registerEvents(new DuelListener(this), this);
+        pluginManager.registerEvents(new CommandSpec(this), this);
 
         try {
             if (!getDataFolder().exists()) {
