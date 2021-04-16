@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 
 public class CommandAskDuel implements CommandExecutor {
     private OnyxFFaMain main;
-    private FileConfiguration messagesConfig = main.getMessagesConfiguration();
     private String path = "NewOnyxFFa.Messages.Duel.";
 
     public CommandAskDuel(OnyxFFaMain onyxFFaMain) {
@@ -23,6 +22,7 @@ public class CommandAskDuel implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        FileConfiguration messagesConfig = main.getMessagesConfiguration();
         if(sender instanceof Player) {
             if(args.length > 0) {
                 Player player = (Player) sender;
