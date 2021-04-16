@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.listeners;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
@@ -47,13 +48,21 @@ public class DamageListener implements Listener {
                         Player damager = (Player) projectile.getShooter();
                         String damagerUuid = "" + damager.getUniqueId();
                         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
+                        if(victim.getState() == FFaPlayerStates.DUEL || main.getfFaPlayerManager().getFFaPlayer(main, damager).getState() == FFaPlayerStates.DUEL){
+                            takeDamageEvent.setCancelled(true);
+                            return;
+                        }
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                         takeDamageEvent.setCancelled(true);
                     } else {
                         String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
-                        takeDamageEvent.setCancelled(true);
                         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
+                        if(victim.getState() == FFaPlayerStates.DUEL || main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()).getState() == FFaPlayerStates.DUEL){
+                            takeDamageEvent.setCancelled(true);
+                            return;
+                        }
+                        takeDamageEvent.setCancelled(true);
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
@@ -61,7 +70,9 @@ public class DamageListener implements Listener {
                     if(!main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isInArenaOrDuel() || !main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isInArenaOrDuel()) {
                         takeDamageEvent.setCancelled(true);
                     }
-
+                    if(main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getEntity()).getState() == FFaPlayerStates.DUEL || main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()).getState() == FFaPlayerStates.DUEL){
+                        return;
+                    }
                     String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
                     if (((Player) takeDamageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
                         FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());

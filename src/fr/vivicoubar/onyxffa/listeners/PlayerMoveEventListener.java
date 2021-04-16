@@ -15,7 +15,6 @@ public class PlayerMoveEventListener implements Listener {
     public void onMoveEvent(PlayerMoveEvent moveEvent) {
         Player player = moveEvent.getPlayer();
         FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, player);
-
         moveEvent.setCancelled(fFaPlayer.isFrozen());
     }
 }

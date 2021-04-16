@@ -2,6 +2,7 @@ package fr.vivicoubar.onyxffa;
 
 import fr.vivicoubar.onyxffa.commands.*;
 import fr.vivicoubar.onyxffa.duels.ArenaManager;
+import fr.vivicoubar.onyxffa.duels.DuelListener;
 import fr.vivicoubar.onyxffa.duels.DuelManager;
 import fr.vivicoubar.onyxffa.events.wanted.CommandsWanted;
 import fr.vivicoubar.onyxffa.events.wanted.WantedEvent;
@@ -99,6 +100,7 @@ public class OnyxFFaMain extends JavaPlugin {
         pluginManager.registerEvents(new PlayerQuitListener(), this);
         pluginManager.registerEvents(new PlayerHeldItemListener(), this);
         pluginManager.registerEvents(new PlayerMoveEventListener(), this);
+        pluginManager.registerEvents(new DuelListener(this), this);
 
         try {
             if (!getDataFolder().exists()) {

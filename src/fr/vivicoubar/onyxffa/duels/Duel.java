@@ -3,7 +3,6 @@ package fr.vivicoubar.onyxffa.duels;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
-import net.minecraft.server.v1_12_R1.DataConverterZombieType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -67,6 +66,7 @@ public class Duel {
         asked.setFrozen(true);
         asker.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE, 1));
         asked.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.DIAMOND_AXE, 1));
+
         if(this.state == DuelState.LOADING) {
             new BukkitRunnable() {
                 int timer = 5;
@@ -76,6 +76,7 @@ public class Duel {
                         arena.setArenaState(ArenaState.USED);
                         asker.setFrozen(false);
                         asked.setFrozen(false);
+                        setState(DuelState.PLAYING);
                         cancel();
                     }
                     if(timer > 0) {
@@ -87,7 +88,7 @@ public class Duel {
         }
     }
 
-    public void endDuel(FFaPlayer winner) {
+    public void winDuel(FFaPlayer winner) {
         FFaPlayer loser = winner == asked ? asker : asked;
         Bukkit.broadcastMessage(winner.getPlayer().getName() + " a gagné son combat contre " + loser.getPlayer().getName());
 
@@ -107,6 +108,17 @@ public class Duel {
                 timer--;
             }
         }.runTaskTimer(main,0,20);
+    }
+    public void loseDuel(FFaPlayer loser){
+        if(loser == asked){
+            winDuel(asker);
+        }else{
+            winDuel(asked);
+        }
+    }
+
+    public void setState(DuelState duelState){
+        this.state = duelState;
     }
 
 }
