@@ -99,8 +99,8 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onBeKilled(EntityDamageByEntityEvent beKilledEvent) {
-        if (beKilledEvent.getDamager() instanceof Player) {
-            if (beKilledEvent.getEntity() instanceof Player) {
+        if (beKilledEvent.getDamager() instanceof Player && main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getDamager()).getState() != FFaPlayerStates.DUEL) {
+            if (beKilledEvent.getEntity() instanceof Player && main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getEntity()).getState() != FFaPlayerStates.DUEL) {
                 if (((Player) beKilledEvent.getEntity()).getHealth() <= beKilledEvent.getFinalDamage()) {
                     beKilledEvent.setCancelled(true);
                     FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getDamager());
@@ -116,6 +116,9 @@ public class DamageListener implements Listener {
     @EventHandler
     public void onQuitWhileFighting(PlayerQuitEvent quitWhileFightingEvent) {
         FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, quitWhileFightingEvent.getPlayer());
+        if(victim.getState() == FFaPlayerStates.DUEL){
+            return;
+        }
         if (!victim.getLasthitter().equals("") && System.currentTimeMillis() - victim.getTimeWhenLastHitted() < 10000 && victim.getTimeWhenLastHitted() > 0 ) {
             String damagerUUid = victim.getLasthitter();
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
