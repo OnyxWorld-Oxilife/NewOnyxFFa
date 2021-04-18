@@ -225,6 +225,7 @@ public class DamageListener implements Listener {
         victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
         victim.getAutoRespawnManager().askRespawn(victim);
 
+
         Rank oldVictimRank = victim.getStats().getRank();
 
         victim.getStats().iterateDeaths();
@@ -288,7 +289,8 @@ public class DamageListener implements Listener {
         main.potionEffectManager.clearAllPotionEffect(victim.getPlayer());
         victim.getPlayer().setVelocity(victim.getPlayer().getVelocity().zero());
         victim.getAutoRespawnManager().askRespawn(victim);
-
+        victim.setLasthitter("");
+        victim.setTimeWhenLastHitted(0);
         Rank oldVictimRank = victim.getStats().getRank();
         Rank oldDamagerRank = damager.getStats().getRank();
 
