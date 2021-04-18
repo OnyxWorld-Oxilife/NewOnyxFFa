@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -35,12 +36,13 @@ public class CommandSpec implements CommandExecutor, Listener {
                         modo.getPlayer().setGameMode(GameMode.SPECTATOR);
                         modosInSpec.add(modo);
                         for(Player player : Bukkit.getOnlinePlayers()){
-                            if(!player.hasPermission("NewOnyxFFa.spec.see") && player.canSee(modo.getPlayer())){
+                            if(modo.getUniqueID() != player.getUniqueId() && !player.hasPermission("NewOnyxFFa.spec.see") && player.canSee(modo.getPlayer())){
                                 player.hidePlayer(main, modo.getPlayer());
                             }
                         }
                         modo.getPlayer().teleport(Bukkit.getPlayer(args[0]));
                         modo.getPlayer().sendMessage("§cSpec Activé!");
+                        return true;
                     }else if(modo.getState() == FFaPlayerStates.MODO && modo.getPlayer().getGameMode() == GameMode.SPECTATOR){
                         modo.setState(FFaPlayerStates.WAITING);
                         modo.sendToSpawn();
@@ -52,19 +54,25 @@ public class CommandSpec implements CommandExecutor, Listener {
                             }
                         }
                         modo.getPlayer().sendMessage("§cSpec Désactivé!");
+                        return true;
                     }
                 }else{
                     commandSender.sendMessage("§cErreur! Le joueur" + args[0] + "n'est pas connecté...");
+                    return true;
                 }
 
             }
         }
         return false;
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void HidePlayerWhenJoinEvent(PlayerJoinEvent hidePlayerEvent){
         for(FFaPlayer modo : modosInSpec){
             hidePlayerEvent.getPlayer().hidePlayer(main, modo.getPlayer());
         }
+    }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onQuitVanishedModo(PlayerJoinEvent playerJoinEvent){
+        modosInSpec.remove(main.getfFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
     }
 }

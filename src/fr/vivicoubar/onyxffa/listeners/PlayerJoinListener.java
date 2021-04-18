@@ -19,6 +19,11 @@ public class PlayerJoinListener implements Listener {
         Player player = joinEvent.getPlayer();
         FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, player);
         joinEvent.setJoinMessage(null);
+        for(Player online : Bukkit.getOnlinePlayers()){
+            if(!player.hasPermission("NewOnyxFFa.vanish.use")){
+                online.showPlayer(main,player);
+            }
+        }
         if(OnyxFFaMain.getInstance().wantedEvent.getState() != EventState.WAITING || OnyxFFaMain.getInstance().wantedEvent.getState() != EventState.STOPPING){
             main.wantedEvent.playerJoinWanted(fFaPlayer);
         }

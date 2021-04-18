@@ -70,6 +70,10 @@ public class CommandAskDuel implements CommandExecutor {
                         if (potentialAsked.getName().equalsIgnoreCase(args[0])) {
                             FFaPlayer asked = main.getfFaPlayerManager().getFFaPlayer(main, potentialAsked);
                             if (asked.getState() == FFaPlayerStates.WAITING) {
+                                if(main.arenaManager.nextArena() == null){
+                                    player.sendMessage("§cErreur! Aucune arène n'est disponible!");
+                                    return true;
+                                }
                                 main.getDuelManager().addDuel(fFaPlayer, asked);
                                 player.sendMessage(messagesConfig.getString(path + "Invitation.Demand.Sender").replaceAll("%player%", potentialAsked.getName()));
                                 potentialAsked.sendMessage(messagesConfig.getString(path + "Invitation.Demand.Asked").replaceAll("%player%", player.getName()));

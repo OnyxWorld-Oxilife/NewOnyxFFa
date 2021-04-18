@@ -33,7 +33,7 @@ public class CommandVanish implements Listener, CommandExecutor {
             FFaPlayer modo = main.getfFaPlayerManager().getFFaPlayer(main, ((Player) sender).getPlayer());
             if(modo.getState() == FFaPlayerStates.WAITING){
                 for(Player player : Bukkit.getOnlinePlayers()){
-                    if(!player.hasPermission("NewOnyxFFa.spec.see")) {
+                    if(modo.getUniqueID() != player.getUniqueId() && !player.hasPermission("NewOnyxFFa.spec.see")) {
                         player.hidePlayer(main, modo.getPlayer());
                     }
                 }
@@ -42,6 +42,7 @@ public class CommandVanish implements Listener, CommandExecutor {
                 modo.getPlayer().teleport(middle);
                 modo.getPlayer().setGameMode(GameMode.SPECTATOR);
                 modo.getPlayer().sendMessage("§cVous êtes invisible!");
+                return true;
             }else{
                 modo.setState(FFaPlayerStates.WAITING);
                 modo.sendToSpawn();
@@ -50,12 +51,13 @@ public class CommandVanish implements Listener, CommandExecutor {
                     player.showPlayer(main, modo.getPlayer());
                 }
                 modo.getPlayer().sendMessage("§cVous êtes de nouveau visible!");
+                return true;
             }
         }
         return false;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onHideVanishedModo(PlayerJoinEvent playerJoinEvent){
         for(FFaPlayer modo : modoInVanish){
             if(!playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.spec.see")) {
@@ -76,5 +78,9 @@ public class CommandVanish implements Listener, CommandExecutor {
             modo.getPlayer().teleport(middle);
 
         }
+    }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onQuitVanishedModo(PlayerJoinEvent playerJoinEvent){
+        modoInVanish.remove(main.getfFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
     }
 }
