@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.listeners;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.*;
@@ -22,14 +23,14 @@ public class ItemListener implements Listener {
     @EventHandler
     private void onClickFFaItem(PlayerInteractEvent interactEvent) {
         if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE && !main.getfFaPlayerManager().getFFaPlayer(main ,interactEvent.getPlayer()).isInArena()) {
+            FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(this.main, interactEvent.getPlayer());
             if (interactEvent.getAction() != Action.RIGHT_CLICK_BLOCK && interactEvent.getAction() != Action.RIGHT_CLICK_AIR) {
                 return;
             }
             if (interactEvent.getItem() == null) {
                 return;
             }
-            if (interactEvent.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(main.getConfigConfiguration().getString("NewOnyxFFa.Config.Menu.Item.Name"))) {
-                FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(this.main, interactEvent.getPlayer());
+            if (interactEvent.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(main.getConfigConfiguration().getString("NewOnyxFFa.Config.Menu.Item.Name")) && fFaPlayer.getState() == FFaPlayerStates.WAITING) {
                 fFaPlayer.getPlayer().closeInventory();
                 fFaPlayer.spawnInArena();
             }

@@ -1,6 +1,5 @@
 package fr.vivicoubar.onyxffa.duels;
 
-import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 
@@ -32,14 +31,6 @@ public class DuelManager {
 
     public void removeDuel(Duel duel) {
         duels.remove(duel);
-        FFaPlayer player1 = duel.getAsked();
-        FFaPlayer player2 = duel.getAsker();
-        if(player1 != null){
-            player1.setState(FFaPlayerStates.WAITING);
-        }
-        if(player2 != null){
-            player2.setState(FFaPlayerStates.WAITING);
-        }
     }
 
 }
