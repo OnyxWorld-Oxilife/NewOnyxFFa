@@ -19,13 +19,13 @@ public class CommandsWanted implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(commandSender instanceof Player){
             if(s.equalsIgnoreCase("joinwanted")){
-                if(main.wantedEvent.state == EventState.STARTING && ((Player) commandSender).getGameMode() == GameMode.ADVENTURE){
-                    main.wantedEvent.playerJoinWanted(main.getfFaPlayerManager().getFFaPlayer(main, (Player) commandSender));
+                if(main.wantedEvent.getState() == EventState.STARTING && ((Player) commandSender).getGameMode() == GameMode.ADVENTURE){
+                    main.wantedEvent.playerJoinOnyxEvent(main.getfFaPlayerManager().getFFaPlayer(main, (Player) commandSender));
                 }else{
                     return false;
                 }
             }else if(s.equalsIgnoreCase("startwanted") && main.wantedEvent.getState() == EventState.WAITING){
-                main.wantedEvent.startWanted();
+                main.wantedEvent.startEvent();
             }
         }
         return false;

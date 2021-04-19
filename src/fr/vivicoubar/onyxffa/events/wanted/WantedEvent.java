@@ -3,6 +3,7 @@ package fr.vivicoubar.onyxffa.events.wanted;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
+import fr.vivicoubar.onyxffa.events.OnyxEvent;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
@@ -14,28 +15,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class WantedEvent {
+public class WantedEvent extends OnyxEvent {
 
-    protected OnyxFFaMain main;
-    protected EventState state = EventState.WAITING;
-    protected ArrayList<FFaPlayer> eventPlayers = new ArrayList<>();
-    protected FFaPlayer target;
+    private FFaPlayer target;
     private int timer;
-    public WantedEvent(OnyxFFaMain onyxFFaMain) {
-        this.main = onyxFFaMain;
-    }
 
-    public void playerJoinWanted(FFaPlayer fFaPlayer) {
+    public void playerJoinOnyxEvent(FFaPlayer fFaPlayer) {
         eventPlayers.add(fFaPlayer);
     }
 
-    public void playerQuitWanted(FFaPlayer fFaPlayer) {
+    public void playerQuitOnyxEvent(FFaPlayer fFaPlayer) {
         eventPlayers.remove(fFaPlayer);
     }
 
-    public ArrayList<FFaPlayer> getEventPlayers() {
-        return eventPlayers;
-    }
+
 
     public boolean isTarget(FFaPlayer fFaPlayer) {
         if(target != null) {
@@ -43,10 +36,6 @@ public class WantedEvent {
         }else{
             return false;
         }
-    }
-
-    public EventState getState() {
-        return state;
     }
 
     public void setRandomTarget(){
@@ -58,25 +47,12 @@ public class WantedEvent {
            count ++;
         }
         if(count >= 5){
-            stopWanted();
+            stopEvent();
             return;
         }
         setTarget(newTarget);
     }
 
-    public String timeParser(int seconds) {
-        double d = Math.floor(seconds/(3600*24));
-        double h = Math.floor(seconds % (3600*24) / 3600);
-        double m = Math.floor(seconds % 3600 / 60);
-        double s = Math.floor(seconds % 60);
-
-        String dDisplay = d > 0 ? d + "d " : "";
-        String hDisplay = h > 0 ? h + "h " : "";
-        String mDisplay = m > 0 ? m + "m " : "";
-        String sDisplay = s > 0 ? s + "s" : "";
-
-        return dDisplay + hDisplay + mDisplay + sDisplay;
-    }
 
     public void setTarget(FFaPlayer newTarget) {
         if(newTarget.isInArena()) {
@@ -101,20 +77,19 @@ public class WantedEvent {
                     timer2--;
                 }
             }.runTaskTimer(main,100,20);
-
         }
     }
-    public void stopWanted(){
+    public void stopEvent(){
         state = EventState.WAITING;
         Bukkit.broadcastMessage("§b[§eOnyxFFa§b] Plus de joueurs en vie, L'event Wanted est annulé!");
     }
 
-    public void startWanted() {
+    public void startEvent() {
         state = EventState.STARTING;
         eventPlayers.clear();
         for (FFaPlayer fFaPlayer : main.getfFaPlayerManager().getfFaPlayerList()) {
             if (!eventPlayers.contains(fFaPlayer)) {
-                this.playerJoinWanted(fFaPlayer);
+                this.playerJoinOnyxEvent(fFaPlayer);
             }
         }
         Bukkit.broadcastMessage("§b[§eOnyxFFa§b] L'event Wanted va bientôt commencer!");
@@ -190,4 +165,5 @@ public class WantedEvent {
         }.runTaskTimer(main,0,20);
 
     }
+
 }

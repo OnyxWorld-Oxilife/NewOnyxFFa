@@ -25,7 +25,7 @@ public class PlayerJoinListener implements Listener {
             }
         }
         if(OnyxFFaMain.getInstance().wantedEvent.getState() != EventState.WAITING || OnyxFFaMain.getInstance().wantedEvent.getState() != EventState.STOPPING){
-            main.wantedEvent.playerJoinWanted(fFaPlayer);
+            main.wantedEvent.playerJoinOnyxEvent(fFaPlayer);
         }
         FileConfiguration messagesConfiguration = main.getMessagesConfiguration();
         if (!player.hasPermission("OnyxFfa.mod.hideJoinMessage")) {
