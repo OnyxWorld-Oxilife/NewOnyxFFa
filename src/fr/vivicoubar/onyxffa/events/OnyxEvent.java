@@ -10,7 +10,7 @@ public abstract class OnyxEvent {
     protected EventState state = EventState.WAITING;
     protected ArrayList<FFaPlayer> eventPlayers = new ArrayList<>();
 
-    protected EventState getState() {
+    public EventState getState() {
         return state;
     }
 

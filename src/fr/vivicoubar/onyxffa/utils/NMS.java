@@ -17,14 +17,14 @@ import java.util.Random;
 
 public class NMS {
 
-    public static NMS instance;
+    public static NMS instance = new NMS();
     public Map<Location, Integer> uniqueLocationId;
     public Map<Long, Block> placedBlocks;
     public Map<Block, Material> placedBlockTypes;
 
-    static {
+    /*static {
         NMS.instance = new NMS();
-    }
+    }*/
 
     public NMS() {
         this.uniqueLocationId = new HashMap<Location, Integer>();
