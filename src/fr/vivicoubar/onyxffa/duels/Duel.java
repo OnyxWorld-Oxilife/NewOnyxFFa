@@ -23,6 +23,8 @@ public class Duel {
         this.asker = asker;
         this.asked = asked;
         this.state = DuelState.PENDING;
+        this.asker.setState(FFaPlayerStates.DUEL);
+        this.asked.setState(FFaPlayerStates.DUEL);
     }
 
     public FFaPlayer getAsker() {
@@ -40,8 +42,6 @@ public class Duel {
     public void teleportDuel() {
         if(this.state == DuelState.PENDING){
             this.state = DuelState.LOADING;
-            this.asker.setState(FFaPlayerStates.DUEL);
-            this.asked.setState(FFaPlayerStates.DUEL);
             this.arena = arenaManager.nextArena();
             this.asker.getPlayer().getInventory().clear();
             this.asked.getPlayer().getInventory().clear();
@@ -104,11 +104,7 @@ public class Duel {
             public void run() {
                 if(timer <= 0) {
                     arena.setArenaState(ArenaState.AVAILABLE);
-                    winner.setState(FFaPlayerStates.WAITING);
-                    loser.setState(FFaPlayerStates.WAITING);
-                    loser.sendToSpawn();
                     loser.setFrozen(false);
-                    winner.sendToSpawn();
                     ending();
                     cancel();
                 }
@@ -121,12 +117,21 @@ public class Duel {
         }.runTaskTimer(main,0,20);
     }
     public void loseDuel(FFaPlayer loser){
-        winDuel(loser == asked ? asker : asked);
+        if (this.state == DuelState.PLAYING) {
+            winDuel(loser == asked ? asker : asked);
+        } else {
+            (loser == asked ? asker : asked).getPlayer().sendMessage(loser.getPlayer().getName() + " s'est déconnecté, le duel est annulé");
+            ending();
+        }
     }
 
     public void ending() {
-        asked = null;
+        asker.setState(FFaPlayerStates.WAITING);
+        asker.sendToSpawn();
         asker = null;
+        asked.setState(FFaPlayerStates.WAITING);
+        asked.sendToSpawn();
+        asked = null;
         state = DuelState.ENDING;
         main.getDuelManager().removeDuel(this);
     }
