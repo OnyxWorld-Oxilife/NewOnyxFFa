@@ -50,6 +50,7 @@ public class OnyxFFaMain extends JavaPlugin {
     private final List<Location> spawnsList = new ArrayList<>();
     private final List<String> blockEffectList = new ArrayList<>();
     private final List<String> jumpadsBlocks = new ArrayList<>();
+    private final List<Location> sumoSpawnList = new ArrayList<>();
 
 
 
@@ -224,6 +225,31 @@ public class OnyxFFaMain extends JavaPlugin {
                 arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Z", 801.5);
                 arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Yaw", 90);
                 arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Pitch", 0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.x",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.y",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.z",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.pitch",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.x",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.y",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.z",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.pitch",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.x",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.y",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.z",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.pitch",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.x",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.y",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.z",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.pitch",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.x",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.y",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.z",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.pitch",0);
                 arenaFileConfiguration.save(arenaFile);
             }
 
@@ -396,6 +422,9 @@ public class OnyxFFaMain extends JavaPlugin {
                 spawnsList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.Spawns." + spawnName));
             }
         }
+        for(String spawnName : arenaFileConfiguration.getConfigurationSection("NewOnyxFFa.SumoEvent.Spawns").getKeys(false)){
+            sumoSpawnList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.SumoEvent.Spawns."  + spawnName));
+        }
 
         for(String arena : arenaFileConfiguration.getConfigurationSection("NewOnyxFFa.Arena").getKeys(false)){
             String arenaName = arenaFileConfiguration.getString("NewOnyxFFa.Arena." + arena + ".Name");
@@ -542,6 +571,10 @@ public class OnyxFFaMain extends JavaPlugin {
      */
     public List<String> getJumpadsBlocks() {
         return jumpadsBlocks;
+    }
+
+    public List<Location> getSumoSpawnList() {
+        return sumoSpawnList;
     }
 /*
     public ProtocolManager getProtocolManager() {

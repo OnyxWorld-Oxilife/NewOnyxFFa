@@ -22,9 +22,6 @@ public class NMS {
     public Map<Long, Block> placedBlocks;
     public Map<Block, Material> placedBlockTypes;
 
-    /*static {
-        NMS.instance = new NMS();
-    }*/
 
     public NMS() {
         this.uniqueLocationId = new HashMap<Location, Integer>();
