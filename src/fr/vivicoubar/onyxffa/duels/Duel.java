@@ -109,8 +109,8 @@ public class Duel {
                     cancel();
                 }
                 if(timer > 0) {
-                    winner.getPlayer().sendTitle("§aVous avez gagné !", "Retour au spawn dans " + String.valueOf(timer), 4, 16, 0);
-                    loser.getPlayer().sendTitle("§cVous avez perdu !", "Retour au spawn dans " + String.valueOf(timer), 4, 16, 0);
+                    winner.getPlayer().sendTitle("§aVous avez gagné !", "Retour au spawn dans " + timer, 0, 20, 0);
+                    loser.getPlayer().sendTitle("§cVous avez perdu !", "Retour au spawn dans " + timer, 0, 20, 0);
                 }
                 timer--;
             }
@@ -119,7 +119,7 @@ public class Duel {
     public void loseDuel(FFaPlayer loser){
         if (this.state == DuelState.PLAYING) {
             winDuel(loser == asked ? asker : asked);
-        } else {
+        } else if (this.state == DuelState.PENDING || this.state == DuelState.LOADING) {
             (loser == asked ? asker : asked).getPlayer().sendMessage(loser.getPlayer().getName() + " s'est déconnecté, le duel est annulé");
             ending();
         }
@@ -127,10 +127,12 @@ public class Duel {
 
     public void ending() {
         asker.setState(FFaPlayerStates.WAITING);
-        asker.sendToSpawn();
-        asker = null;
         asked.setState(FFaPlayerStates.WAITING);
-        asked.sendToSpawn();
+        if (this.state != DuelState.PENDING) {
+            asker.sendToSpawn();
+            asked.sendToSpawn();
+        }
+        asker = null;
         asked = null;
         state = DuelState.ENDING;
         main.getDuelManager().removeDuel(this);

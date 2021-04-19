@@ -43,11 +43,11 @@ public class CommandAskDuel implements CommandExecutor {
                 } else if (args.length > 0 && args[0].equalsIgnoreCase("deny") && duel.getState() == DuelState.PENDING && duel.getAsked() == fFaPlayer) {
                     player.sendMessage(messagesConfig.getString(path + "Invitation.Denied.Sender").replaceAll("%player%", duel.getAsker().getPlayer().getName()));
                     duel.getAsker().getPlayer().sendMessage(messagesConfig.getString(path + "Invitation.Denied.Asked").replaceAll("%player%", player.getName()));
-                    main.duelManager.removeDuel(duel);
+                    duel.ending();
                 } else if (args.length > 0 && args[0].equalsIgnoreCase("cancel") && duel.getState() == DuelState.PENDING && duel.getAsker() == fFaPlayer) {
                     player.sendMessage(messagesConfig.getString(path + "Invitation.Cancel.Sender").replaceAll("%player%", duel.getAsked().getPlayer().getName()));
                     duel.getAsked().getPlayer().sendMessage(messagesConfig.getString(path + "Invitation.Cancel.Asked").replaceAll("%player%", player.getName()));
-                    main.duelManager.removeDuel(duel);
+                    duel.ending();
                 } else if (duel.getAsked() == fFaPlayer) {
                     player.sendMessage("§cUsage : /duel <accept/deny>");
                 } else if (duel.getAsker() == fFaPlayer) {

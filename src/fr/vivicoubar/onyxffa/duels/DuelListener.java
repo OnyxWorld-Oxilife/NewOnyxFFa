@@ -28,7 +28,6 @@ public class DuelListener implements Listener {
                     victim.setFrozen(true);
                     Duel duel = main.getDuelManager().getDuelByPlayer(damager);
                     duel.winDuel(damager);
-                    main.getDuelManager().removeDuel(duel);
                 }
             }
         }

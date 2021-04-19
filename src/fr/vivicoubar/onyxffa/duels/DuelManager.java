@@ -1,6 +1,5 @@
 package fr.vivicoubar.onyxffa.duels;
 
-import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 
