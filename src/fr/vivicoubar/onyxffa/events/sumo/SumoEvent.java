@@ -17,7 +17,6 @@ import java.util.List;
 
 public class SumoEvent extends OnyxEvent {
 
-    private final SumoSpawnManager sumoSpawnManager = new SumoSpawnManager();
     private final List<FFaPlayer> winners = new ArrayList<>();
 
     public SumoEvent(OnyxFFaMain onyxFFaMain){
@@ -39,7 +38,6 @@ public class SumoEvent extends OnyxEvent {
                     Bukkit.broadcastMessage("§e[§cSumo§e] Début dans " + timeParser(timer));
                 }else if(timer == 0){
                     if(eventPlayers.size() > 1) {
-                        cancel();
                         Bukkit.broadcastMessage("§e[§cSumo§e] L'Event Sumo commence!");
                         for (FFaPlayer fFaPlayer : eventPlayers) {
                             fFaPlayer.getPlayer().getInventory().clear();
@@ -47,7 +45,7 @@ public class SumoEvent extends OnyxEvent {
                             batonKb.addUnsafeEnchantment(Enchantment.KNOCKBACK, 5);
                             fFaPlayer.getInventory().setItem(4, batonKb);
                             fFaPlayer.getPlayer().getInventory().setHeldItemSlot(4);
-                            fFaPlayer.getPlayer().teleport(sumoSpawnManager.getSelectedSpawn());
+                            fFaPlayer.getPlayer().teleport(main.sumoSpawnManager.getSelectedSpawn());
                         }
                         winners.addAll(eventPlayers);
                     }else{
@@ -55,9 +53,9 @@ public class SumoEvent extends OnyxEvent {
                         Bukkit.broadcastMessage("§e[§cSumo§e] Pas assez de joueurs pour débuter! Event annulé!");
                         state = EventState.WAITING;
                     }
-                }else if(timer < 0){
+                }else if(timer < 0 && timer > -5){
                     for(FFaPlayer fFaPlayer: eventPlayers){
-                        fFaPlayer.getPlayer().sendMessage("§e[§cSumo§e] Début du PVP dans" + timeParser(timer + 5));
+                        fFaPlayer.getPlayer().sendMessage("§e[§cSumo§e] Début du PVP dans " + timeParser(timer + 6));
                     }
                 }
                 if(timer <= -5 ){
@@ -87,7 +85,7 @@ public class SumoEvent extends OnyxEvent {
                                         }
                                         winner.sendToSpawn();
                                     }
-                                    Bukkit.broadcastMessage("§e[§cSumo§e] Fin de l'event! Bravo à§c" + winnersname + "§e qui sont restés en vie!");
+                                    Bukkit.broadcastMessage("§e[§cSumo§e] Fin de l'event! Bravo à§c " + winnersname + "§e qui sont restés en vie!");
                                 }
                             }
                             timer --;
@@ -108,6 +106,7 @@ public class SumoEvent extends OnyxEvent {
         for(FFaPlayer fFaPlayer : eventPlayers){
             fFaPlayer.sendToSpawn();
         }
+        state = EventState.WAITING;
     }
 
     @Override
@@ -136,7 +135,7 @@ public class SumoEvent extends OnyxEvent {
         fFaPlayer.getPlayer().sendMessage("§e[§cSumo§e] Vous êtes éliminé!");
         if(winners.size() == 1){
             FFaPlayer winner = winners.get(0);
-            Bukkit.broadcastMessage("§e[§cSumo§e] Fin de l'event! Bravo à§c" + winner.getPlayer().getName() + "§e qui est resté en vie!");
+            Bukkit.broadcastMessage("§e[§cSumo§e] Fin de l'event! Bravo à §c" + winner.getPlayer().getName() + "§e qui est resté en vie!");
             winner.sendToSpawn();
             state = EventState.WAITING;
             eventPlayers.clear();

@@ -172,7 +172,7 @@ public class FFaPlayer {
         resetMaxHealth();
         this.player.setHealth(20);
         this.player.getInventory().clear();
-        this.player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby"));
+        this.player.teleport(main.getLocationBuilder().getLocation("NewOnyxFFa.Spawns.Lobby", main.getSpawnsConfiguration()));
         ItemStack joinItem = main.getItemBuilder().buildItem(configConfiguration, "NewOnyxFFa.Config.Menu.Item");
         this.player.getInventory().setItem(4, joinItem);
         this.player.getInventory().setHeldItemSlot(4);

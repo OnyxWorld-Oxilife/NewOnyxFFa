@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
+
 public class LocationBuilder {
 
     private final OnyxFFaMain main;
@@ -13,8 +15,7 @@ public class LocationBuilder {
         this.main = onyxFFaMain;
     }
 
-    public Location getLocation(String parameter) {
-        FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
+    public Location getLocation(String parameter, FileConfiguration spawnConfiguration) {
         double x;
         try {
             x = spawnConfiguration.getDouble(parameter + ".x");
@@ -50,6 +51,6 @@ public class LocationBuilder {
             e.printStackTrace();
             pitch = 0f;
         }
-        return new Location(Bukkit.getWorld(spawnConfiguration.getString("NewOnyxFFa.Spawns.Lobby.WorldName")), x, y, z, yaw, pitch);
+        return new Location(Bukkit.getWorld(main.getSpawnsConfiguration().getString("NewOnyxFFa.Spawns.Lobby.WorldName")), x, y, z, yaw, pitch);
     }
 }

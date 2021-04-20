@@ -44,7 +44,7 @@ public class CommandsSumo implements CommandExecutor {
                         }else{
                             return false;
                         }
-                    case "stoptevent":
+                    case "stopevent":
                         if(sender.getPlayer().hasPermission("NewOnyxFFa.sumo.admin")) {
                             if(main.sumoEvent.getState() != EventState.WAITING) {
                                 main.sumoEvent.stopEvent();

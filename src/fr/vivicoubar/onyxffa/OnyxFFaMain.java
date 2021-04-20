@@ -7,6 +7,7 @@ import fr.vivicoubar.onyxffa.duels.DuelManager;
 import fr.vivicoubar.onyxffa.events.sumo.CommandsSumo;
 import fr.vivicoubar.onyxffa.events.sumo.SumoEvent;
 import fr.vivicoubar.onyxffa.events.sumo.SumoListener;
+import fr.vivicoubar.onyxffa.events.sumo.SumoSpawnManager;
 import fr.vivicoubar.onyxffa.events.wanted.CommandsWanted;
 import fr.vivicoubar.onyxffa.events.wanted.WantedEvent;
 import fr.vivicoubar.onyxffa.listeners.*;
@@ -64,6 +65,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public PotionEffectManager potionEffectManager = new PotionEffectManager();
     public WantedEvent wantedEvent = new WantedEvent();
     public SumoEvent sumoEvent = new SumoEvent(this);
+    public SumoSpawnManager sumoSpawnManager = new SumoSpawnManager(this);
     public DuelManager duelManager = new DuelManager();
     public ArenaManager arenaManager = new ArenaManager();
 
@@ -440,11 +442,11 @@ public class OnyxFFaMain extends JavaPlugin {
 
         for (String spawnName : spawnsConfiguration.getConfigurationSection("NewOnyxFFa.Spawns").getKeys(false)) {
             if (!spawnName.equalsIgnoreCase("lobby")) {
-                spawnsList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.Spawns." + spawnName));
+                spawnsList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.Spawns." + spawnName, spawnsConfiguration));
             }
         }
         for(String spawnName : arenaFileConfiguration.getConfigurationSection("NewOnyxFFa.SumoEvent.Spawns").getKeys(false)){
-            sumoSpawnList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.SumoEvent.Spawns."  + spawnName));
+            sumoSpawnList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.SumoEvent.Spawns."  + spawnName, arenaFileConfiguration));
         }
 
         for(String arena : arenaFileConfiguration.getConfigurationSection("NewOnyxFFa.Arena").getKeys(false)){
@@ -596,6 +598,9 @@ public class OnyxFFaMain extends JavaPlugin {
 
     public List<Location> getSumoSpawnList() {
         return sumoSpawnList;
+    }
+    public SumoSpawnManager getSumoSpawnManager(){
+        return sumoSpawnManager;
     }
 /*
     public ProtocolManager getProtocolManager() {

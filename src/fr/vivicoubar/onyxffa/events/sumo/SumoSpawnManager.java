@@ -12,7 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 public class SumoSpawnManager {
-    private OnyxFFaMain main = OnyxFFaMain.getInstance();
+    private final OnyxFFaMain main;
+
+    public SumoSpawnManager(OnyxFFaMain onyxFFaMain){
+        this.main = onyxFFaMain;
+    }
 
     public Location getSelectedSpawn() {
         List<Location> spawns = main.getSumoSpawnList();

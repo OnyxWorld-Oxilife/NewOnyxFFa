@@ -48,7 +48,7 @@ public class DamageListener implements Listener {
                         Player damager = (Player) projectile.getShooter();
                         String damagerUuid = "" + damager.getUniqueId();
                         FFaPlayer victim =  main.getFFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
-                        if(victim.getState() == FFaPlayerStates.DUEL || main.getFFaPlayerManager().getFFaPlayer(main, damager).getState() == FFaPlayerStates.DUEL){
+                        if(victim.getState() == FFaPlayerStates.SUMO || main.getFFaPlayerManager().getFFaPlayer(main, damager).getState() == FFaPlayerStates.SUMO){
                             takeDamageEvent.setCancelled(true);
                             return;
                         }
@@ -62,13 +62,21 @@ public class DamageListener implements Listener {
                             takeDamageEvent.setCancelled(true);
                             return;
                         }
+                        if(victim.getState() == FFaPlayerStates.SUMO || main.getFFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()).getState() == FFaPlayerStates.SUMO){
+                            takeDamageEvent.setCancelled(true);
+                            return;
+                        }
                         takeDamageEvent.setCancelled(true);
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
                 } else {
                     if(!main.getFFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isInArenaOrDuel() || !main.getFFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isInArenaOrDuel()) {
-                        takeDamageEvent.setCancelled(true);
+                        if(main.getFFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).getState() != FFaPlayerStates.SUMO){
+                            takeDamageEvent.setCancelled(true);
+                        }else{
+                            return;
+                        }
                     }
                     if(main.getFFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getEntity()).getState() == FFaPlayerStates.DUEL || main.getFFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()).getState() == FFaPlayerStates.DUEL){
                         return;
