@@ -26,7 +26,7 @@ public class CommandSpec implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if(commandSender instanceof Player){
-            FFaPlayer modo = main.getfFaPlayerManager().getFFaPlayer(main, (Player) commandSender);
+            FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main, (Player) commandSender);
             if(args.length <1){
                 return false;
             }else{
@@ -73,6 +73,6 @@ public class CommandSpec implements CommandExecutor, Listener {
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuitVanishedModo(PlayerJoinEvent playerJoinEvent){
-        modosInSpec.remove(main.getfFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
+        modosInSpec.remove(main.getFFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
     }
 }

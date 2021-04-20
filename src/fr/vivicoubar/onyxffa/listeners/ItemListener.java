@@ -22,8 +22,8 @@ public class ItemListener implements Listener {
 
     @EventHandler
     private void onClickFFaItem(PlayerInteractEvent interactEvent) {
-        if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE && !main.getfFaPlayerManager().getFFaPlayer(main ,interactEvent.getPlayer()).isInArena()) {
-            FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(this.main, interactEvent.getPlayer());
+        if (interactEvent.getPlayer().getGameMode() == GameMode.ADVENTURE && !main.getFFaPlayerManager().getFFaPlayer(main ,interactEvent.getPlayer()).isInArena()) {
+            FFaPlayer fFaPlayer = main.getFFaPlayerManager().getFFaPlayer(this.main, interactEvent.getPlayer());
             if (interactEvent.getAction() != Action.RIGHT_CLICK_BLOCK && interactEvent.getAction() != Action.RIGHT_CLICK_AIR) {
                 return;
             }
@@ -33,6 +33,8 @@ public class ItemListener implements Listener {
             if (interactEvent.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(main.getConfigConfiguration().getString("NewOnyxFFa.Config.Menu.Item.Name")) && fFaPlayer.getState() == FFaPlayerStates.WAITING) {
                 fFaPlayer.getPlayer().closeInventory();
                 fFaPlayer.spawnInArena();
+            }else{
+                fFaPlayer.getPlayer().sendMessage("§c Désolé! Tu ne peux pas rejoindre l'arêne pour le moment!");
             }
         }
     }

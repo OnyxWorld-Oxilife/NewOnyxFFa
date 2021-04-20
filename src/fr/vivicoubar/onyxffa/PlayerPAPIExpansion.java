@@ -54,7 +54,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         if (player == null) {
             return "";
         }
-        FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, player);
+        FFaPlayer fFaPlayer = main.getFFaPlayerManager().getFFaPlayer(main, player);
 
         // %someplugin_placeholder1%
         if (identifier.equals("kills")) {
@@ -66,7 +66,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
             return "" + Math.round(fFaPlayer.getStats().getScore().get(1));
         }
         if(identifier.equals("glowcolor")){
-            if(main.wantedEvent.isTarget(main.getfFaPlayerManager().getFFaPlayer(main, player))){
+            if(main.wantedEvent.isTarget(main.getFFaPlayerManager().getFFaPlayer(main, player))){
                return "§4";
             }else{
                 for(PotionEffect potion : player.getActivePotionEffects()) {

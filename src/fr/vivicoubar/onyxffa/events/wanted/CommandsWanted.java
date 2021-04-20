@@ -20,7 +20,7 @@ public class CommandsWanted implements CommandExecutor {
         if(commandSender instanceof Player){
             if(s.equalsIgnoreCase("joinwanted")){
                 if(main.wantedEvent.getState() == EventState.STARTING && ((Player) commandSender).getGameMode() == GameMode.ADVENTURE){
-                    main.wantedEvent.playerJoinOnyxEvent(main.getfFaPlayerManager().getFFaPlayer(main, (Player) commandSender));
+                    main.wantedEvent.playerJoinOnyxEvent(main.getFFaPlayerManager().getFFaPlayer(main, (Player) commandSender));
                 }else{
                     return false;
                 }

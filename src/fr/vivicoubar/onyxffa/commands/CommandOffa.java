@@ -27,7 +27,7 @@ public class CommandOffa implements CommandExecutor {
             if (strings.length != 0){
                 if (strings[0].equalsIgnoreCase("setspawn")){
                     if(commandSender instanceof Player){
-                        FFaPlayer sender = main.getfFaPlayerManager().getFFaPlayer(main, (Player) commandSender);
+                        FFaPlayer sender = main.getFFaPlayerManager().getFFaPlayer(main, (Player) commandSender);
                         Location senderLocation = sender.getPlayer().getLocation();
                         FileConfiguration spawnConfiguration = main.getSpawnsConfiguration();
                         List<String> spawns = new ArrayList<>();

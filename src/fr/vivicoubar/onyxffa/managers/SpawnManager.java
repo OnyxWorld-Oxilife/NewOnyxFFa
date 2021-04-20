@@ -57,7 +57,7 @@ public class SpawnManager {
 
     public void restoreArenaPlayer(Player p) {
 
-        FFaPlayer ffaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, p);
+        FFaPlayer ffaPlayer = main.getFFaPlayerManager().getFFaPlayer(main, p);
         p.setGameMode(GameMode.SURVIVAL);
         ffaPlayer.setState(FFaPlayerStates.INVINCIBLE);
 

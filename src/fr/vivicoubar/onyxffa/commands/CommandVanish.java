@@ -3,7 +3,6 @@ package fr.vivicoubar.onyxffa.commands;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
-import org.apache.logging.log4j.core.net.Priority;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -30,7 +29,7 @@ public class CommandVanish implements Listener, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player){
-            FFaPlayer modo = main.getfFaPlayerManager().getFFaPlayer(main, ((Player) sender).getPlayer());
+            FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main, ((Player) sender).getPlayer());
             if(modo.getState() == FFaPlayerStates.WAITING){
                 for(Player player : Bukkit.getOnlinePlayers()){
                     if(modo.getUniqueID() != player.getUniqueId() && !player.hasPermission("NewOnyxFFa.spec.see")) {
@@ -65,7 +64,7 @@ public class CommandVanish implements Listener, CommandExecutor {
             }
         }
         if(playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.vanish.use")){
-            FFaPlayer modo = main.getfFaPlayerManager().getFFaPlayer(main ,playerJoinEvent.getPlayer());
+            FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main ,playerJoinEvent.getPlayer());
             modoInVanish.add(modo);
             for(Player player : Bukkit.getOnlinePlayers()){
                 if(!player.hasPermission("NewOnyxFFa.spec.see")) {
@@ -81,6 +80,6 @@ public class CommandVanish implements Listener, CommandExecutor {
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuitVanishedModo(PlayerJoinEvent playerJoinEvent){
-        modoInVanish.remove(main.getfFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
+        modoInVanish.remove(main.getFFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
     }
 }

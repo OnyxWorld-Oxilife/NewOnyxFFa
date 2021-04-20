@@ -29,7 +29,7 @@ public class CommandPoints implements CommandExecutor {
                         }else{
                             for (Player player : Bukkit.getOnlinePlayers()){
                                 if(player.getName().equalsIgnoreCase(args[1])) {
-                                    FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, player);
+                                    FFaPlayer fFaPlayer = main.getFFaPlayerManager().getFFaPlayer(main, player);
                                     double points = fFaPlayer.getStats().getScore().get(2);
                                     if(args[0].equalsIgnoreCase("add")){
                                         try {

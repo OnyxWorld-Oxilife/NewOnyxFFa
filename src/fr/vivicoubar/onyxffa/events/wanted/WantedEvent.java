@@ -1,7 +1,6 @@
 package fr.vivicoubar.onyxffa.events.wanted;
 
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
-import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
 import fr.vivicoubar.onyxffa.events.OnyxEvent;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
@@ -12,7 +11,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class WantedEvent extends OnyxEvent {
@@ -87,7 +85,7 @@ public class WantedEvent extends OnyxEvent {
     public void startEvent() {
         state = EventState.STARTING;
         eventPlayers.clear();
-        for (FFaPlayer fFaPlayer : main.getfFaPlayerManager().getfFaPlayerList()) {
+        for (FFaPlayer fFaPlayer : main.getFFaPlayerManager().getfFaPlayerList()) {
             if (!eventPlayers.contains(fFaPlayer)) {
                 this.playerJoinOnyxEvent(fFaPlayer);
             }

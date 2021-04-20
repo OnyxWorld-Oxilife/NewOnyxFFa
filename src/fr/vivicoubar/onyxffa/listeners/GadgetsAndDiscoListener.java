@@ -27,7 +27,7 @@ public class GadgetsAndDiscoListener implements Listener {
     @EventHandler
     public void onFishEvent(PlayerFishEvent playerFishEvent) {
         Player player = playerFishEvent.getPlayer();
-        FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, player);
+        FFaPlayer fFaPlayer = main.getFFaPlayerManager().getFFaPlayer(main, player);
         PlayerFishEvent.State state = playerFishEvent.getState();
         ItemStack air = new ItemStack(Material.AIR);
 

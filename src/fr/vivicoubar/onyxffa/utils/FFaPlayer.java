@@ -2,7 +2,6 @@ package fr.vivicoubar.onyxffa.utils;
 
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
-import fr.vivicoubar.onyxffa.duels.Duel;
 import fr.vivicoubar.onyxffa.managers.AutoRespawnManager;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -56,7 +55,7 @@ public class FFaPlayer {
         this.player = player;
         this.inventory = player.getInventory();
         this.stats = new Stats(this, main);
-        this.main.getfFaPlayerManager().getfFaPlayerList().add(this);
+        this.main.getFFaPlayerManager().getfFaPlayerList().add(this);
     }
 
     public Player getPlayer() {

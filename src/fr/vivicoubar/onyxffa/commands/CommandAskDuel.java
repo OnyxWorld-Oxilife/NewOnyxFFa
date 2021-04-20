@@ -25,7 +25,7 @@ public class CommandAskDuel implements CommandExecutor {
         FileConfiguration messagesConfig = main.getMessagesConfiguration();
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, player);
+            FFaPlayer fFaPlayer = main.getFFaPlayerManager().getFFaPlayer(main, player);
             Duel duel = main.duelManager.getDuelByPlayer(fFaPlayer);
 
             if (fFaPlayer.getState() != FFaPlayerStates.WAITING && fFaPlayer.getState() != FFaPlayerStates.DUEL) {
@@ -57,7 +57,7 @@ public class CommandAskDuel implements CommandExecutor {
             } else if (args.length > 0) {
                 for (Player potentialAsked : Bukkit.getOnlinePlayers()) {
                     if (potentialAsked.getName().equalsIgnoreCase(args[0]) && !potentialAsked.getName().equalsIgnoreCase(player.getName())) {
-                        FFaPlayer asked = main.getfFaPlayerManager().getFFaPlayer(main, potentialAsked);
+                        FFaPlayer asked = main.getFFaPlayerManager().getFFaPlayer(main, potentialAsked);
                         if (asked.getState() == FFaPlayerStates.WAITING) {
                             if (main.arenaManager.nextArena() == null) {
                                 player.sendMessage("§cErreur! Aucune arène n'est disponible!");

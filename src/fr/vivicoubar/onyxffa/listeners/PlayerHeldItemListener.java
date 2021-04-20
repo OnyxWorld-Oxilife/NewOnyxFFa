@@ -12,7 +12,7 @@ public class PlayerHeldItemListener implements Listener {
 
     @EventHandler
     public void onChangeHeldItemSlot(PlayerItemHeldEvent itemHeldEvent) {
-        FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, itemHeldEvent.getPlayer());
+        FFaPlayer fFaPlayer = main.getFFaPlayerManager().getFFaPlayer(main, itemHeldEvent.getPlayer());
         if (fFaPlayer.isFishing() && fFaPlayer.getFishHook().isValid()) {
             itemHeldEvent.setCancelled(true);
         } else {

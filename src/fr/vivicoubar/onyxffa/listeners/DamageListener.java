@@ -47,8 +47,8 @@ public class DamageListener implements Listener {
                         Projectile projectile = (Projectile) takeDamageEvent.getDamager();
                         Player damager = (Player) projectile.getShooter();
                         String damagerUuid = "" + damager.getUniqueId();
-                        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
-                        if(victim.getState() == FFaPlayerStates.DUEL || main.getfFaPlayerManager().getFFaPlayer(main, damager).getState() == FFaPlayerStates.DUEL){
+                        FFaPlayer victim =  main.getFFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
+                        if(victim.getState() == FFaPlayerStates.DUEL || main.getFFaPlayerManager().getFFaPlayer(main, damager).getState() == FFaPlayerStates.DUEL){
                             takeDamageEvent.setCancelled(true);
                             return;
                         }
@@ -57,8 +57,8 @@ public class DamageListener implements Listener {
                         takeDamageEvent.setCancelled(true);
                     } else {
                         String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
-                        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
-                        if(victim.getState() == FFaPlayerStates.DUEL || main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()).getState() == FFaPlayerStates.DUEL){
+                        FFaPlayer victim =  main.getFFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
+                        if(victim.getState() == FFaPlayerStates.DUEL || main.getFFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()).getState() == FFaPlayerStates.DUEL){
                             takeDamageEvent.setCancelled(true);
                             return;
                         }
@@ -67,15 +67,15 @@ public class DamageListener implements Listener {
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
                 } else {
-                    if(!main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isInArenaOrDuel() || !main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isInArenaOrDuel()) {
+                    if(!main.getFFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getDamager()).isInArenaOrDuel() || !main.getFFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getEntity()).isInArenaOrDuel()) {
                         takeDamageEvent.setCancelled(true);
                     }
-                    if(main.getfFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getEntity()).getState() == FFaPlayerStates.DUEL || main.getfFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()).getState() == FFaPlayerStates.DUEL){
+                    if(main.getFFaPlayerManager().getFFaPlayer(main , (Player) takeDamageEvent.getEntity()).getState() == FFaPlayerStates.DUEL || main.getFFaPlayerManager().getFFaPlayer(main, (Player) takeDamageEvent.getDamager()).getState() == FFaPlayerStates.DUEL){
                         return;
                     }
                     String damagerUuid = "" + takeDamageEvent.getDamager().getUniqueId();
                     if (((Player) takeDamageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
-                        FFaPlayer victim =  main.getfFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
+                        FFaPlayer victim =  main.getFFaPlayerManager().getFFaPlayer(main, ((Player) takeDamageEvent.getEntity()).getPlayer());
                         victim.setLasthitter(damagerUuid);
                         victim.setTimeWhenLastHitted(System.currentTimeMillis());
                     }
@@ -89,7 +89,7 @@ public class DamageListener implements Listener {
         playerDeathEvent.setDeathMessage(null);
         playerDeathEvent.getDrops().clear();
         playerDeathEvent.getEntity().spigot().respawn();
-        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, playerDeathEvent.getEntity());
+        FFaPlayer victim = main.getFFaPlayerManager().getFFaPlayer(main, playerDeathEvent.getEntity());
         try {
             initSuicide(victim);
         } catch (IOException e) {
@@ -99,12 +99,12 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onBeKilled(EntityDamageByEntityEvent beKilledEvent) {
-        if (beKilledEvent.getDamager() instanceof Player && main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getDamager()).getState() != FFaPlayerStates.DUEL) {
-            if (beKilledEvent.getEntity() instanceof Player && main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getEntity()).getState() != FFaPlayerStates.DUEL) {
+        if (beKilledEvent.getDamager() instanceof Player && main.getFFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getDamager()).getState() != FFaPlayerStates.DUEL) {
+            if (beKilledEvent.getEntity() instanceof Player && main.getFFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getEntity()).getState() != FFaPlayerStates.DUEL) {
                 if (((Player) beKilledEvent.getEntity()).getHealth() <= beKilledEvent.getFinalDamage()) {
                     beKilledEvent.setCancelled(true);
-                    FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getDamager());
-                    FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getEntity());
+                    FFaPlayer damager = main.getFFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getDamager());
+                    FFaPlayer victim = main.getFFaPlayerManager().getFFaPlayer(main, (Player) beKilledEvent.getEntity());
                     victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.Kill.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
                     damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.Kill.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                     initKill(damager, victim);
@@ -115,7 +115,7 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onQuitWhileFighting(PlayerQuitEvent quitWhileFightingEvent) {
-        FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, quitWhileFightingEvent.getPlayer());
+        FFaPlayer victim = main.getFFaPlayerManager().getFFaPlayer(main, quitWhileFightingEvent.getPlayer());
         if(victim.getState() == FFaPlayerStates.DUEL){
             return;
         }
@@ -125,7 +125,7 @@ public class DamageListener implements Listener {
                 if (("" + onlinePlayer.getUniqueId()).equalsIgnoreCase(damagerUUid)) {
                     victim.setTimeWhenLastHitted(0);
                     victim.setLasthitter("");
-                    FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlinePlayer);
+                    FFaPlayer damager = main.getFFaPlayerManager().getFFaPlayer(main, onlinePlayer);
                     damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.QuitWhileFighting.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                     initKill(damager, victim);
                     break;
@@ -145,14 +145,14 @@ public class DamageListener implements Listener {
                     if (((Player) damageEvent.getEntity()).getHealth() <= damageEvent.getFinalDamage()) {
                         damageEvent.setCancelled(true);
                         if (((Player) damageEvent.getEntity()).getGameMode() == GameMode.SURVIVAL) {
-                            FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, (Player) damageEvent.getEntity());
+                            FFaPlayer victim = main.getFFaPlayerManager().getFFaPlayer(main, (Player) damageEvent.getEntity());
                             if (!victim.getLasthitter().equals("") && System.currentTimeMillis() - victim.getTimeWhenLastHitted() > 10000 && victim.getTimeWhenLastHitted() > 0 ) {
                                 String damagerUUid = victim.getLasthitter();
                                 for (Player onlineplayer : Bukkit.getOnlinePlayers()) {
                                     if (damagerUUid.equalsIgnoreCase("" + onlineplayer.getUniqueId())) {
                                         victim.setTimeWhenLastHitted(0);
                                         victim.setLasthitter("");
-                                        FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlineplayer);
+                                        FFaPlayer damager = main.getFFaPlayerManager().getFFaPlayer(main, onlineplayer);
                                         victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
                                         damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.KilledByFalling.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                                         initKill(damager, victim);
@@ -181,14 +181,14 @@ public class DamageListener implements Listener {
             return;
         }
         if (fallIntoVoidEvent.getPlayer().getLocation().getBlockY() <= main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.MinY")) {
-            FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main, fallIntoVoidEvent.getPlayer());
+            FFaPlayer victim = main.getFFaPlayerManager().getFFaPlayer(main, fallIntoVoidEvent.getPlayer());
             if (!victim.getLasthitter().equals("") && System.currentTimeMillis() - victim.getTimeWhenLastHitted() < 10000 && victim.getTimeWhenLastHitted() > 0 ) {
                 String damagerUUid = victim.getLasthitter();
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (("" + onlinePlayer.getUniqueId()).equals(damagerUUid)) {
                         victim.setTimeWhenLastHitted(0);
                         victim.setLasthitter("");
-                        FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main, onlinePlayer);
+                        FFaPlayer damager = main.getFFaPlayerManager().getFFaPlayer(main, onlinePlayer);
                         victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.FallenIntoTheVoid.toVictim").replaceAll("%player%", damager.getPlayer().getName()));
                         damager.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.FallenIntoTheVoid.toKiller").replaceAll("%player%", victim.getPlayer().getName()));
                         initKill(damager, victim);
@@ -196,7 +196,7 @@ public class DamageListener implements Listener {
                     }
                 }
             } else {
-                victim = main.getfFaPlayerManager().getFFaPlayer(main, fallIntoVoidEvent.getPlayer());
+                victim = main.getFFaPlayerManager().getFFaPlayer(main, fallIntoVoidEvent.getPlayer());
                 victim.getPlayer().sendMessage(main.getMessagesConfiguration().getString("NewOnyxFFa.Messages.FallenIntoTheVoid.Suicide"));
                 initSuicide(victim);
 

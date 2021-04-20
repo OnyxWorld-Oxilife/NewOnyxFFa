@@ -19,8 +19,8 @@ public class DuelListener implements Listener {
     @EventHandler
     public void BeKilledInDuelEvent(EntityDamageByEntityEvent beKilledinDuelEvent){
         if(beKilledinDuelEvent.getDamager() instanceof Player && beKilledinDuelEvent.getEntity() instanceof Player ){
-            FFaPlayer victim = main.getfFaPlayerManager().getFFaPlayer(main,(Player) beKilledinDuelEvent.getEntity());
-            FFaPlayer damager = main.getfFaPlayerManager().getFFaPlayer(main,(Player) beKilledinDuelEvent.getDamager());
+            FFaPlayer victim = main.getFFaPlayerManager().getFFaPlayer(main,(Player) beKilledinDuelEvent.getEntity());
+            FFaPlayer damager = main.getFFaPlayerManager().getFFaPlayer(main,(Player) beKilledinDuelEvent.getDamager());
             if(victim.getState() == FFaPlayerStates.DUEL && damager.getState() == FFaPlayerStates.DUEL){
                 if(victim.getPlayer().getHealth() <= beKilledinDuelEvent.getFinalDamage()){
                     beKilledinDuelEvent.setCancelled(true);

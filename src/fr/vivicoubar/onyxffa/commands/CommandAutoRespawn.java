@@ -17,7 +17,7 @@ public class CommandAutoRespawn implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(commandSender instanceof Player){
             Player sender = (Player) commandSender;
-            for(FFaPlayer player : main.getfFaPlayerManager().getfFaPlayerList()){
+            for(FFaPlayer player : main.getFFaPlayerManager().getfFaPlayerList()){
                 if(player.getUniqueID() == sender.getUniqueId()){
                     FFaPlayer ffasender = player;
                     ffasender.setAutorespawnBoolean();
@@ -30,7 +30,7 @@ public class CommandAutoRespawn implements CommandExecutor {
 
                 }
             }
-            FFaPlayer ffasender = main.getfFaPlayerManager().getFFaPlayer(this.main, sender);
+            FFaPlayer ffasender = main.getFFaPlayerManager().getFFaPlayer(this.main, sender);
             ffasender.setAutorespawnBoolean();
             return true;
         }

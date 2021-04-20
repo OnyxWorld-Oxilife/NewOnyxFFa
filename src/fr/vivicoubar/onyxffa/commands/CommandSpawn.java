@@ -23,8 +23,8 @@ public class CommandSpawn implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String arg, String[] strings) {
         if(command.getName().equalsIgnoreCase("Spawn")){
             if(sender instanceof Player) {
-                FFaPlayer fFaPlayer = main.getfFaPlayerManager().getFFaPlayer(main, (Player) sender);
-                if((main.getfFaPlayerManager().getFFaPlayer(main, (Player)sender).isInArena())) {
+                FFaPlayer fFaPlayer = main.getFFaPlayerManager().getFFaPlayer(main, (Player) sender);
+                if((main.getFFaPlayerManager().getFFaPlayer(main, (Player)sender).isInArena())) {
                     Player player = fFaPlayer.getPlayer();
                     List<String> SpawnInWait = main.getSpawnsInWait();
                     SpawnInWait.add(player.getUniqueId().toString());

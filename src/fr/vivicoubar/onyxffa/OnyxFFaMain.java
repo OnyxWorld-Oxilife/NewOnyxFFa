@@ -4,6 +4,9 @@ import fr.vivicoubar.onyxffa.commands.*;
 import fr.vivicoubar.onyxffa.duels.ArenaManager;
 import fr.vivicoubar.onyxffa.duels.DuelListener;
 import fr.vivicoubar.onyxffa.duels.DuelManager;
+import fr.vivicoubar.onyxffa.events.sumo.CommandsSumo;
+import fr.vivicoubar.onyxffa.events.sumo.SumoEvent;
+import fr.vivicoubar.onyxffa.events.sumo.SumoListener;
 import fr.vivicoubar.onyxffa.events.wanted.CommandsWanted;
 import fr.vivicoubar.onyxffa.events.wanted.WantedEvent;
 import fr.vivicoubar.onyxffa.listeners.*;
@@ -60,6 +63,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public Messages messages = new Messages();
     public PotionEffectManager potionEffectManager = new PotionEffectManager();
     public WantedEvent wantedEvent = new WantedEvent();
+    public SumoEvent sumoEvent = new SumoEvent();
     public DuelManager duelManager = new DuelManager();
     public ArenaManager arenaManager = new ArenaManager();
 
@@ -94,6 +98,7 @@ public class OnyxFFaMain extends JavaPlugin {
         getCommand("vanish").setExecutor(new CommandVanish(this));
         getCommand("addeffect").setExecutor(new CommandAddEffect());
         getCommand("duel").setExecutor(new CommandAskDuel(this));
+        getCommand("sumo").setExecutor(new CommandsSumo());
         pluginManager.registerEvents(new FFaPlayerListener(this), this);
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);
@@ -106,6 +111,7 @@ public class OnyxFFaMain extends JavaPlugin {
         pluginManager.registerEvents(new DuelListener(this), this);
         pluginManager.registerEvents(new CommandSpec(this), this);
         pluginManager.registerEvents(new CommandVanish(this), this);
+        pluginManager.registerEvents(new SumoListener(), this);
 
         try {
             if (!getDataFolder().exists()) {
@@ -225,31 +231,46 @@ public class OnyxFFaMain extends JavaPlugin {
                 arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Z", 801.5);
                 arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Yaw", 90);
                 arenaFileConfiguration.set("NewOnyxFFa.Arena.Arena1.Spawn2.Pitch", 0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.x",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.y",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.z",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.x",654.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.y",151.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.z",902.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.yaw",90);
                 arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.1.pitch",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.x",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.y",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.z",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.x",645.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.y",151.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.z",924.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.yaw",135);
                 arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.2.pitch",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.x",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.y",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.z",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.x",623.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.y",151.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.z",933.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.yaw",180);
                 arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.3.pitch",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.x",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.y",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.z",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.x",602.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.y",151.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.z",924.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.yaw",-135);
                 arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.4.pitch",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.x",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.y",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.z",0);
-                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.x",592.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.y",151.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.z",902.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.yaw",-90);
                 arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.5.pitch",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.6.x",601.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.6.y",151.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.6.z",880.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.6.yaw",-45);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.6.pitch",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.7.x",623.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.7.y",151.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.7.z",871.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.7.yaw",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.7.pitch",0);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.8.x",645.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.8.y",151.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.8.z",880.5);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.8.yaw",45);
+                arenaFileConfiguration.set("NewOnyxFFa.SumoEvent.Spawns.8.pitch",0);
                 arenaFileConfiguration.save(arenaFile);
             }
 
@@ -543,7 +564,7 @@ public class OnyxFFaMain extends JavaPlugin {
         return ranksManager;
     }
 
-    public FFaPlayerManager getfFaPlayerManager() {
+    public FFaPlayerManager getFFaPlayerManager() {
         return fFaPlayerManager;
     }
 

@@ -53,3 +53,6 @@ commands:
     aliases:
       - "v"
     usage: "§cUsage: /vanish"
+  sumo:
+    permission: NewOnyxFFa.sumo.use
+    usage: "§cUsage: /sumo (join/quit)"

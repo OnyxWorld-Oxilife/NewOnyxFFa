@@ -67,6 +67,16 @@ public class Stats {
         }
     }
 
+    public void addPoints(double addpoints) throws IOException{
+        this.points += addpoints;
+        main.getStatsConfiguration().set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points", this.points);
+        main.getStatsConfiguration().save(main.getStatsFile());
+        if (this.points > this.highscore) {
+            main.getStatsConfiguration().set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore", this.points);
+            this.highscore = this.points;
+            main.getStatsConfiguration().save(main.getStatsFile());
+        }
+    }
     public void setHighestKillStreak(int ks) {
         main.getStatsConfiguration().set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestKillStreak", ks);
         this.highestKillStreak = ks;
