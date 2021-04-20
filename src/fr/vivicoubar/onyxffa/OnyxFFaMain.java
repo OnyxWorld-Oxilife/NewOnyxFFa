@@ -63,7 +63,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public Messages messages = new Messages();
     public PotionEffectManager potionEffectManager = new PotionEffectManager();
     public WantedEvent wantedEvent = new WantedEvent();
-    public SumoEvent sumoEvent = new SumoEvent();
+    public SumoEvent sumoEvent = new SumoEvent(this);
     public DuelManager duelManager = new DuelManager();
     public ArenaManager arenaManager = new ArenaManager();
 

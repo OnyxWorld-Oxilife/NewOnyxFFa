@@ -1,6 +1,7 @@
 package fr.vivicoubar.onyxffa.events.sumo;
 
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
+import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
 import fr.vivicoubar.onyxffa.events.OnyxEvent;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
@@ -18,6 +19,10 @@ public class SumoEvent extends OnyxEvent {
 
     private final SumoSpawnManager sumoSpawnManager = new SumoSpawnManager();
     private final List<FFaPlayer> winners = new ArrayList<>();
+
+    public SumoEvent(OnyxFFaMain onyxFFaMain){
+        this.main= onyxFFaMain;
+    }
 
     @Override
     protected void startEvent() {
@@ -39,7 +44,7 @@ public class SumoEvent extends OnyxEvent {
                         for (FFaPlayer fFaPlayer : eventPlayers) {
                             fFaPlayer.getPlayer().getInventory().clear();
                             ItemStack batonKb = new ItemStack(Material.STICK, 1);
-                            batonKb.addEnchantment(Enchantment.KNOCKBACK, 5);
+                            batonKb.addUnsafeEnchantment(Enchantment.KNOCKBACK, 5);
                             fFaPlayer.getInventory().setItem(4, batonKb);
                             fFaPlayer.getPlayer().getInventory().setHeldItemSlot(4);
                             fFaPlayer.getPlayer().teleport(sumoSpawnManager.getSelectedSpawn());
@@ -107,14 +112,13 @@ public class SumoEvent extends OnyxEvent {
 
     @Override
     protected void playerJoinOnyxEvent(FFaPlayer fFaPlayer) {
-        fFaPlayer.getPlayer().sendMessage("§eTu as rejoins le Sumo! L'event va bientôt commencer...");
+        fFaPlayer.getPlayer().sendMessage("§eTu as rejoint le Sumo! L'event va bientôt commencer...");
         eventPlayers.add(fFaPlayer);
         fFaPlayer.setState(FFaPlayerStates.SUMO);
     }
 
     @Override
     protected void playerQuitOnyxEvent(FFaPlayer fFaPlayer) {
-
         eventPlayers.remove(fFaPlayer);
         if(state == EventState.PLAYING){
             eliminatePlayer(fFaPlayer);

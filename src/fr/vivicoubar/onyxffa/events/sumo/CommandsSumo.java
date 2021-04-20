@@ -13,41 +13,58 @@ public class CommandsSumo implements CommandExecutor {
     private OnyxFFaMain main = OnyxFFaMain.getInstance();
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if(commandSender instanceof Player && main.sumoEvent.getState() == EventState.STARTING) {
-            if (strings.length > 0) {
-                if(strings[0].equalsIgnoreCase("join") || strings[0].equalsIgnoreCase("quit")) {
-                    FFaPlayer sender = main.getFFaPlayerManager().getFFaPlayer(main, (Player) commandSender);
-
-                    if (strings[0].equalsIgnoreCase("join")) {
-                        if(sender.getState() == FFaPlayerStates.WAITING ){
+        if(commandSender instanceof Player){
+            FFaPlayer sender = main.getFFaPlayerManager().getFFaPlayer(main, (Player) commandSender);
+            if(strings.length >0){
+                switch (strings[0]) {
+                    case "join":
+                        if(main.sumoEvent.getState() == EventState.STARTING && sender.getState() == FFaPlayerStates.WAITING){
                             main.sumoEvent.playerJoinOnyxEvent(sender);
-                            return true;
+                        }else if(main.sumoEvent.getState() == EventState.STARTING){
+                            sender.getPlayer().sendMessage("§cErreur, tu dois être au spawn pour rejoindre un Event!");
                         }else{
-                            sender.getPlayer().sendMessage("§c Tu dois être au spawn pour rejoindre l'Event!");
-                            return true;
+                            sender.getPlayer().sendMessage("§cErreur, tu ne peux pas rejoindre l'Event pour le moment!");
                         }
-                    } else if (strings[0].equalsIgnoreCase("quit")) {
-                        if(sender.getState() == FFaPlayerStates.SUMO ) {
+                        return true;
+                    case "quit":
+                        if(sender.getState() == FFaPlayerStates.SUMO){
                             main.sumoEvent.playerQuitOnyxEvent(sender);
+                        }else{
+                            sender.getPlayer().sendMessage("§cErreur, tu ne peux pas quitter l'Event Sumo si tu ne participes pas!");
+                        }
+                        return true;
+                    case "startevent":
+                        if(sender.getPlayer().hasPermission("NewOnyxFFa.sumo.admin")){
+                           if(main.sumoEvent.getState() == EventState.WAITING) {
+                               main.sumoEvent.startEvent();
+                           }else {
+                               sender.getPlayer().sendMessage("§cErreur, un Event a déjà commencé!");
+                           }
                             return true;
                         }else{
-                            sender.getPlayer().sendMessage("§cTu dois participer à un Event Sumo pour pouvoir le quitter!");
+                            return false;
                         }
-                    }
+                    case "stoptevent":
+                        if(sender.getPlayer().hasPermission("NewOnyxFFa.sumo.admin")) {
+                            if(main.sumoEvent.getState() != EventState.WAITING) {
+                                main.sumoEvent.stopEvent();
+                            }else {
+                                sender.getPlayer().sendMessage("§cErreur, il n'y a pas d'Event en cours");
+                            }
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    default:
+                        return false;
+                }
                 }else{
                     return false;
                 }
-            }else{
-                return false;
-            }
-        }else if(commandSender instanceof Player){
-            if(main.sumoEvent.getState() == EventState.WAITING){
-                commandSender.sendMessage("§cIl n'y a pas d'Event en cours!");
-            }else if(main.sumoEvent.getState() == EventState.PLAYING || main.sumoEvent.getState() == EventState.STOPPING){
-                commandSender.sendMessage("§cL'Event a déjà commencé!");
-            }
-            return true;
+        }else{
+            return false;
         }
-        return false;
     }
 }
+
+
