@@ -6,6 +6,7 @@ import fr.vivicoubar.onyxffa.events.OnyxEvent;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -39,6 +40,8 @@ public class WantedEvent extends OnyxEvent {
     public void setRandomTarget(){
 
         FFaPlayer newTarget = eventPlayers.get(new Random().nextInt(eventPlayers.size()));
+        eventPlayers.removeIf(player -> !Bukkit.getOnlinePlayers().contains(player.getPlayer()));
+
         int count =0;
         while(!newTarget.isInArena() && count <= 5){
            newTarget= eventPlayers.get(new Random().nextInt(eventPlayers.size()));
