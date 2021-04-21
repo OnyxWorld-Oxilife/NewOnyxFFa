@@ -55,6 +55,7 @@ public class OnyxFFaMain extends JavaPlugin {
     private final List<String> blockEffectList = new ArrayList<>();
     private final List<String> jumpadsBlocks = new ArrayList<>();
     private final List<Location> sumoSpawnList = new ArrayList<>();
+    private FFAAnimatedBlocksManager ffaAnimatedBlocksManager;
 
 
 
@@ -439,6 +440,8 @@ public class OnyxFFaMain extends JavaPlugin {
         fFaPlayerManager = new FFaPlayerManager(this);
         locationBuilder = new LocationBuilder(this);
         itemBuilder = new ItemBuilder(this);
+        ffaAnimatedBlocksManager = new FFAAnimatedBlocksManager();
+
 
         for (String spawnName : spawnsConfiguration.getConfigurationSection("NewOnyxFFa.Spawns").getKeys(false)) {
             if (!spawnName.equalsIgnoreCase("lobby")) {
@@ -602,6 +605,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public SumoSpawnManager getSumoSpawnManager(){
         return sumoSpawnManager;
     }
+    public FFAAnimatedBlocksManager getFfaAnimatedBlocksManager() {return ffaAnimatedBlocksManager;};
 /*
     public ProtocolManager getProtocolManager() {
         return protocolManager;
