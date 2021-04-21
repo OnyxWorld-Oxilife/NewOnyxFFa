@@ -30,10 +30,10 @@ public abstract class OnyxEvent {
         double m = Math.floor(seconds % 3600 / 60);
         double s = Math.floor(seconds % 60);
 
-        String dDisplay = d > 0 ? d + "d " : "";
-        String hDisplay = h > 0 ? h + "h " : "";
-        String mDisplay = m > 0 ? m + "m " : "";
-        String sDisplay = s > 0 ? s + "s" : "";
+        String dDisplay = d > 0 ? (int) d + "d " : "";
+        String hDisplay = h > 0 ? (int) h + "h " : "";
+        String mDisplay = m > 0 ? (int) m + "m " : "";
+        String sDisplay = s > 0 ? (int) s + "s" : "";
 
         return dDisplay + hDisplay + mDisplay + sDisplay;
     }
