@@ -28,6 +28,7 @@ public class FFAAnimatedBlocksManager {
         this.id = 0;
         this.main = OnyxFFaMain.getInstance();
         this.animatedBlocks = new HashMap<Location, Long>();
+        this.uniqueLocationId = new HashMap<Location, Integer>();
 
         new BukkitRunnable() {
             @Override
@@ -68,7 +69,7 @@ public class FFAAnimatedBlocksManager {
         // id = id < 1000000 ? id + 1 : 0;
 
         if (this.uniqueLocationId.containsKey(location)) {
-            id = id < 1000000 ? id + 1 : 0;
+            id = this.uniqueLocationId.get(location);
         } else {
             id = id < 1000000 ? id + 1 : 0;
             this.uniqueLocationId.put(location, id);
