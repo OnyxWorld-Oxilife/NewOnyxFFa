@@ -14,11 +14,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 public class FFAAnimatedBlocksManager {
 
     private int id;
     public Map<Location, Long> animatedBlocks;
+    public Map<Location, Integer> uniqueLocationId;
     public OnyxFFaMain main;
 
     public FFAAnimatedBlocksManager() {
@@ -38,8 +40,9 @@ public class FFAAnimatedBlocksManager {
                     final int time = (int) ((System.currentTimeMillis() - entry.getValue())/1000);
                     Bukkit.broadcastMessage(String.valueOf(time));
                     if (time >= 20 || entry.getKey().getBlock().getType() == Material.AIR) {
-                        entry.getKey().getBlock().setType(Material.AIR);
                         sendBreakPacket(entry.getKey(), -1, entry.getKey().getBlock());
+                        Bukkit.broadcastMessage("Block destroyed");
+                        entry.getKey().getBlock().setType(Material.AIR);
                         iterator.remove();
                     } else if (time >= 10) {
                         sendBreakPacket(entry.getKey(), time - 10 , entry.getKey().getBlock());
@@ -57,13 +60,25 @@ public class FFAAnimatedBlocksManager {
         animatedBlocks.remove(location);
     }
 
-    void sendBreakPacket(final Location location, int breakState, final Block block) {
+    public void sendBreakPacket(final Location location, int breakState, final Block block) {
 
         final int dimension = ((CraftWorld) block.getWorld()).getHandle().dimension;
         final BlockPosition blockPosition = new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
-        id = id < 1000000 ? id + 1  : 0;
+        // id = id < 1000000 ? id + 1 : 0;
+
+        if (this.uniqueLocationId.containsKey(location)) {
+            id = id < 1000000 ? id + 1 : 0;
+        } else {
+            id = id < 1000000 ? id + 1 : 0;
+            this.uniqueLocationId.put(location, id);
+        }
+        this.uniqueLocationId.put(location, id);
+        if (location.getBlock().getType() == Material.AIR) {
+            breakState = -1;
+        }
         final PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(id, blockPosition, breakState);
         ((CraftServer) Bukkit.getServer()).getHandle().sendPacketNearby(null, block.getX(), block.getY(), block.getZ(), 120.0, dimension, packet);
+        Bukkit.broadcastMessage("Packet Sent : " + breakState);
     }
 }
