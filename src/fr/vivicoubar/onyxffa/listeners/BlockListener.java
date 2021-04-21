@@ -67,13 +67,13 @@ public class BlockListener implements Listener {
         }
     }
 
-    @EventHandler
+/*    @EventHandler
     public void testBreakBlock(BlockBreakEvent e) {
         if (e.getBlock().getType() == Material.SEA_LANTERN) {
             Bukkit.broadcastMessage("Sea Lantern broken");
             main.getFfaAnimatedBlocksManager().sendBreakPacket(e.getBlock().getLocation(), -1, e.getBlock());
         }
-    }
+    }*/
 
 
     public void sendListMessage(List<String> messages, Player p) {

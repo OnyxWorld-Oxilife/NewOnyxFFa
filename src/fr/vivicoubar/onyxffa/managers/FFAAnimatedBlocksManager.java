@@ -36,13 +36,11 @@ public class FFAAnimatedBlocksManager {
                 Iterator<Map.Entry<Location, Long>> iterator = animatedBlocks.entrySet().iterator();
 
                 while (iterator.hasNext()) {
-                    Bukkit.broadcastMessage("hasNext");
                     Map.Entry<Location, Long> entry = iterator.next();
                     final int time = (int) ((System.currentTimeMillis() - entry.getValue())/1000);
                     Bukkit.broadcastMessage(String.valueOf(time));
                     if (time >= 20 || entry.getKey().getBlock().getType() == Material.AIR) {
                         sendBreakPacket(entry.getKey(), -1, entry.getKey().getBlock());
-                        Bukkit.broadcastMessage("Block destroyed");
                         entry.getKey().getBlock().setType(Material.AIR);
                         iterator.remove();
                     } else if (time >= 10) {
@@ -68,18 +66,15 @@ public class FFAAnimatedBlocksManager {
 
         // id = id < 1000000 ? id + 1 : 0;
 
+        Bukkit.broadcastMessage(String.valueOf(this.uniqueLocationId.containsKey(location)));
         if (this.uniqueLocationId.containsKey(location)) {
             id = this.uniqueLocationId.get(location);
         } else {
             id = id < 1000000 ? id + 1 : 0;
             this.uniqueLocationId.put(location, id);
         }
-        this.uniqueLocationId.put(location, id);
-        if (location.getBlock().getType() == Material.AIR) {
-            breakState = -1;
-        }
+        Bukkit.broadcastMessage(String.valueOf(id));
         final PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(id, blockPosition, breakState);
         ((CraftServer) Bukkit.getServer()).getHandle().sendPacketNearby(null, block.getX(), block.getY(), block.getZ(), 120.0, dimension, packet);
-        Bukkit.broadcastMessage("Packet Sent : " + breakState);
     }
 }
