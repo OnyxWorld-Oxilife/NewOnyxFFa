@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.listeners;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.events.EventState;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
@@ -19,8 +20,8 @@ public class PlayerJoinListener implements Listener {
         Player player = joinEvent.getPlayer();
         FFaPlayer fFaPlayer = main.getFFaPlayerManager().getFFaPlayer(main, player);
         joinEvent.setJoinMessage(null);
-        for(Player online : Bukkit.getOnlinePlayers()){
-            if(!player.hasPermission("NewOnyxFFa.vanish.use")){
+        for(Player online : Bukkit.getOnlinePlayers()) {
+            if(!player.hasPermission("NewOnyxFFa.vanish.use")) {
                 online.showPlayer(main,player);
             }
         }

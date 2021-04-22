@@ -45,11 +45,7 @@ public class FFAAnimatedBlocksManager {
                         entry.getKey().getBlock().setType(Material.AIR);
                         iterator.remove();
                     } else if (time >= 10 && time != locationTime.get(entry.getKey())) {
-                        if (!locationTime.containsKey(entry.getKey())) {
-                            locationTime.put(entry.getKey(), time);
-                        } else {
-                            locationTime.replace(entry.getKey(), time);
-                        }
+                        locationTime.replace(entry.getKey(), time);
                         sendBreakPacket(entry.getKey(), time - 10 , entry.getKey().getBlock());
                     }
                 }
@@ -59,6 +55,7 @@ public class FFAAnimatedBlocksManager {
 
     public void addBlock(final Location location) {
         animatedBlocks.put(location, System.currentTimeMillis());
+        locationTime.put(location, 0);
     }
 
     public void removeBlock(final Location location) {

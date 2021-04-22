@@ -1,5 +1,6 @@
 package fr.vivicoubar.onyxffa.commands;
 
+import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import org.bukkit.command.Command;
@@ -40,8 +41,10 @@ public class CommandSpawn implements CommandExecutor {
 
                     }.runTaskLater(this.main, (long) (20 *main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.SpawnCommand.TimerUntilTeleportation")));
                     return true;
-                } else {
+                } else if (fFaPlayer.getState() != FFaPlayerStates.DUEL) {
                     fFaPlayer.sendToSpawn();
+                } else {
+                    sender.sendMessage("§cTu dois finir ton duel avant d'aller au spawn !");
                 }
             }
     }
