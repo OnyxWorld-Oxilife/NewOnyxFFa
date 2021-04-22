@@ -1,4 +1,4 @@
-package fr.vivicoubar.onyxffa.utils;
+package fr.vivicoubar.onyxffa.unused;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;;
 import net.minecraft.server.v1_12_R1.BlockPosition;

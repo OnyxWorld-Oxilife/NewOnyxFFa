@@ -3,7 +3,6 @@ package fr.vivicoubar.onyxffa.listeners;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.utils.FFaEffectBlock;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
-import fr.vivicoubar.onyxffa.utils.NMS;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -22,7 +21,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
-import java.util.Random;
 
 public class BlockListener implements Listener {
     private OnyxFFaMain main;
@@ -40,7 +38,7 @@ public class BlockListener implements Listener {
         }
     }*/
 
-    @EventHandler
+    /*@EventHandler
     public void OnPlaceBlock(BlockPlaceEvent onPlaceBlockEvent) {
         if (main.getBlockFileConfiguration().getList("NewOnyxFFa.Config.Block.BlockPlacedByPlayers").contains(onPlaceBlockEvent.getBlock().getType().toString())) {
             if (onPlaceBlockEvent.getPlayer().getGameMode() != GameMode.CREATIVE) {
@@ -56,14 +54,14 @@ public class BlockListener implements Listener {
             }
         }
 
-    }
+    }*/
 
     @EventHandler
-    public void testPlaceBlock(BlockPlaceEvent e) {
-        Bukkit.broadcastMessage("Placed");
-        if (e.getBlock().getType() == Material.SEA_LANTERN) {
-            Bukkit.broadcastMessage("Sea Lantern placed");
-            main.getFfaAnimatedBlocksManager().addBlock(e.getBlock().getLocation());
+    public void testPlaceBlock(BlockPlaceEvent onPlaceBlockEvent) {
+        if (main.getBlockFileConfiguration().getList("NewOnyxFFa.Config.Block.BlockPlacedByPlayers").contains(onPlaceBlockEvent.getBlock().getType().toString())) {
+            if (onPlaceBlockEvent.getPlayer().getGameMode() != GameMode.CREATIVE) {
+                main.getFfaAnimatedBlocksManager().addBlock(onPlaceBlockEvent.getBlock().getLocation());
+            }
         }
     }
 
