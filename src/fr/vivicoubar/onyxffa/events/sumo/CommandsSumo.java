@@ -9,6 +9,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
+
 public class CommandsSumo implements CommandExecutor {
     private OnyxFFaMain main = OnyxFFaMain.getInstance();
     @Override
@@ -50,6 +52,40 @@ public class CommandsSumo implements CommandExecutor {
                                 main.sumoEvent.stopEvent();
                             }else {
                                 sender.getPlayer().sendMessage("§cErreur, il n'y a pas d'Event en cours");
+                            }
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    case "setspawn":
+                        if(sender.getPlayer().hasPermission("NewOnyxFFa.sumo.admin")) {
+                            int spawncounter = 1;
+                            if (main.getArenaFileConfiguration().get("NewOnyxFFa.SumoEvent.Spawns") != null){
+                                for (String spawn : main.getArenaFileConfiguration().getConfigurationSection("NewOnyxFFa.SumoEvent.Spawns").getKeys(false)) {
+                                    spawncounter++;
+                                }
+                            }
+                            main.getArenaFileConfiguration().set("NewOnyxFFa.SumoEvent.Spawns." +spawncounter + ".x", sender.getPlayer().getLocation().getBlockX());
+                            main.getArenaFileConfiguration().set("NewOnyxFFa.SumoEvent.Spawns." +spawncounter + ".y", sender.getPlayer().getLocation().getBlockY());
+                            main.getArenaFileConfiguration().set("NewOnyxFFa.SumoEvent.Spawns." +spawncounter + ".z", sender.getPlayer().getLocation().getBlockZ());
+                            main.getArenaFileConfiguration().set("NewOnyxFFa.SumoEvent.Spawns." +spawncounter + ".pitch", sender.getPlayer().getLocation().getPitch());
+                            main.getArenaFileConfiguration().set("NewOnyxFFa.SumoEvent.Spawns." +spawncounter + ".yaw", sender.getPlayer().getLocation().getYaw());
+                            try {
+                                main.getArenaFileConfiguration().save(main.getArenaFile());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    case "clearspawn":
+                        if(sender.getPlayer().hasPermission("NewOnyxFFa.sumo.admin")) {
+                            main.getArenaFileConfiguration().set("NewOnyxFFa.SumoEvent.Spawns", null);
+                            try {
+                                main.getArenaFileConfiguration().save(main.getArenaFile());
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                             return true;
                         }else{

@@ -24,7 +24,6 @@ public class FFAAnimatedBlocksManager {
     public OnyxFFaMain main;
 
     public FFAAnimatedBlocksManager() {
-        Bukkit.broadcastMessage("Initialized");
         this.id = 0;
         this.main = OnyxFFaMain.getInstance();
         this.animatedBlocks = new HashMap<Location, Long>();
@@ -38,7 +37,6 @@ public class FFAAnimatedBlocksManager {
                 while (iterator.hasNext()) {
                     Map.Entry<Location, Long> entry = iterator.next();
                     final int time = (int) ((System.currentTimeMillis() - entry.getValue())/1000);
-                    Bukkit.broadcastMessage(String.valueOf(time));
                     if (time >= 20 || entry.getKey().getBlock().getType() == Material.AIR) {
                         sendBreakPacket(entry.getKey(), -1, entry.getKey().getBlock());
                         entry.getKey().getBlock().setType(Material.AIR);
@@ -66,14 +64,12 @@ public class FFAAnimatedBlocksManager {
 
         // id = id < 1000000 ? id + 1 : 0;
 
-        Bukkit.broadcastMessage(String.valueOf(this.uniqueLocationId.containsKey(location)));
         if (this.uniqueLocationId.containsKey(location)) {
             id = this.uniqueLocationId.get(location);
         } else {
             id = id < 1000000 ? id + 1 : 0;
             this.uniqueLocationId.put(location, id);
         }
-        Bukkit.broadcastMessage(String.valueOf(id));
         final PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(id, blockPosition, breakState);
         ((CraftServer) Bukkit.getServer()).getHandle().sendPacketNearby(null, block.getX(), block.getY(), block.getZ(), 120.0, dimension, packet);
     }

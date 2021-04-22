@@ -60,7 +60,6 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void testPlaceBlock(BlockPlaceEvent e) {
-        Bukkit.broadcastMessage("Placed");
         if (e.getBlock().getType() == Material.SEA_LANTERN) {
             Bukkit.broadcastMessage("Sea Lantern placed");
             main.getFfaAnimatedBlocksManager().addBlock(e.getBlock().getLocation());
