@@ -50,8 +50,8 @@ public class SumoEvent extends OnyxEvent {
                         winners.addAll(eventPlayers);
                     }else{
                         cancel();
-                        Bukkit.broadcastMessage("§e[§cSumo§e] Pas assez de joueurs pour débuter! Event annulé!");
-                        state = EventState.WAITING;
+                        Bukkit.broadcastMessage("§e[§cSumo§e] Pas assez de joueurs pour débuter!");
+                        stopEvent();
                     }
                 }else if(timer < 0 && timer > -5){
                     for(FFaPlayer fFaPlayer: eventPlayers){

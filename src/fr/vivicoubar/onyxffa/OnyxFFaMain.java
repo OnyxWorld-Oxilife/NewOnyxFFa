@@ -448,10 +448,11 @@ public class OnyxFFaMain extends JavaPlugin {
                 spawnsList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.Spawns." + spawnName, spawnsConfiguration));
             }
         }
-        for(String spawnName : arenaFileConfiguration.getConfigurationSection("NewOnyxFFa.SumoEvent.Spawns").getKeys(false)){
-            sumoSpawnList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.SumoEvent.Spawns."  + spawnName, arenaFileConfiguration));
+        if(arenaFileConfiguration.get("NewOnyxFFa.SumoEvent.Spawns") != null) {
+            for (String spawnName : arenaFileConfiguration.getConfigurationSection("NewOnyxFFa.SumoEvent.Spawns").getKeys(false)) {
+                sumoSpawnList.add(this.getLocationBuilder().getLocation("NewOnyxFFa.SumoEvent.Spawns." + spawnName, arenaFileConfiguration));
+            }
         }
-
         for(String arena : arenaFileConfiguration.getConfigurationSection("NewOnyxFFa.Arena").getKeys(false)){
             String arenaName = arenaFileConfiguration.getString("NewOnyxFFa.Arena." + arena + ".Name");
             String world = spawnsConfiguration.getString("NewOnyxFFa.Spawns.Lobby.WorldName");
@@ -540,6 +541,9 @@ public class OnyxFFaMain extends JavaPlugin {
     public FileConfiguration getBlockFileConfiguration() {
         return blockFileConfiguration;
     }
+    public FileConfiguration getArenaFileConfiguration() {
+        return arenaFileConfiguration;
+    }
 
     public List<String> getSpawnsInWait() {
         return SpawnInWait;
@@ -551,6 +555,9 @@ public class OnyxFFaMain extends JavaPlugin {
 
     public File getSpawnsFile() {
         return spawnsFile;
+    }
+    public File getArenaFile() {
+        return arenaFile;
     }
 
     public List<String> getBlockEffectList() {
@@ -605,6 +612,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public SumoSpawnManager getSumoSpawnManager(){
         return sumoSpawnManager;
     }
+
     public FFAAnimatedBlocksManager getFfaAnimatedBlocksManager() {return ffaAnimatedBlocksManager;};
 /*
     public ProtocolManager getProtocolManager() {
