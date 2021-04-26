@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,6 @@ import java.util.List;
 public class CommandVanish implements Listener, CommandExecutor {
     private final OnyxFFaMain main;
     private final Location middle = new Location(Bukkit.getWorld("world"), 738, 48, 625);
-    private final List<FFaPlayer> modoInVanish = new ArrayList<>();
     public CommandVanish(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
     }
@@ -59,7 +59,7 @@ public class CommandVanish implements Listener, CommandExecutor {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onHideVanishedModo(PlayerJoinEvent playerJoinEvent){
         for(FFaPlayer modo : modoInVanish){
-            if(!playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.spec.see")) {
+            if(!playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.vanish.see")) {
                 playerJoinEvent.getPlayer().hidePlayer(main, modo.getPlayer());
             }
         }
@@ -67,7 +67,7 @@ public class CommandVanish implements Listener, CommandExecutor {
             FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main ,playerJoinEvent.getPlayer());
             modoInVanish.add(modo);
             for(Player player : Bukkit.getOnlinePlayers()){
-                if(!player.hasPermission("NewOnyxFFa.spec.see")) {
+                if(!player.hasPermission("NewOnyxFFa.vanish.see")) {
                     player.hidePlayer(main, modo.getPlayer());
                 }
             }
@@ -79,7 +79,8 @@ public class CommandVanish implements Listener, CommandExecutor {
         }
     }
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onQuitVanishedModo(PlayerJoinEvent playerJoinEvent){
-        modoInVanish.remove(main.getFFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
+    public void onQuitVanishedModo(PlayerQuitEvent playerJoinEvent){
+        FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer());;
+
     }
 }
