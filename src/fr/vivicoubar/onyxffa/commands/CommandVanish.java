@@ -29,58 +29,70 @@ public class CommandVanish implements Listener, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player){
-            FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main, ((Player) sender).getPlayer());
-            if(modo.getState() == FFaPlayerStates.WAITING){
-                for(Player player : Bukkit.getOnlinePlayers()){
-                    if(modo.getUniqueID() != player.getUniqueId() && !player.hasPermission("NewOnyxFFa.spec.see")) {
-                        player.hidePlayer(main, modo.getPlayer());
+            // Command = vanish
+            if(label.equalsIgnoreCase("vanish")){
+                FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main, (Player) sender);
+                if(modo.isVisible()){
+                    modo.getPlayer().setGameMode(GameMode.SPECTATOR);
+                    modo.getPlayer().sendMessage("§cVous êtes invisible!");
+                    modo.getPlayer().teleport(middle);
+                }else{
+                    modo.getPlayer().sendMessage("§cVous êtes de nouveau visible...");
+                }
+                modo.setVanished(modo.isVisible());
+                return true;
+                // Command = spec
+
+            }if(label.equalsIgnoreCase("spec")){
+                FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main, (Player) sender);
+                if(args.length > 0 ){
+                    if(Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
+                        if(modo.isVisible()){
+                            modo.getPlayer().setGameMode(GameMode.SPECTATOR);
+                            modo.getPlayer().sendMessage("§cVous êtes invisible!");
+                            modo.getPlayer().teleport(Bukkit.getPlayer(args[0]));
+                        }else{
+                            modo.getPlayer().sendMessage("§cVous êtes de nouveau visible...");
+                        }
+                        modo.setVanished(modo.isVisible());
+                        return true;
+                    }else{
+                        if(modo.isVisible()){
+                            return false;
+                        }else{
+                            modo.getPlayer().sendMessage("§cVous êtes de nouveau visible...");
+                            modo.setVanished(modo.isVisible());
+                            return true;
+                        }
                     }
+                }else {
+                    return false;
                 }
-                modo.setState(FFaPlayerStates.MODO);
-                modoInVanish.add(modo);
-                modo.getPlayer().teleport(middle);
-                modo.getPlayer().setGameMode(GameMode.SPECTATOR);
-                modo.getPlayer().sendMessage("§cVous êtes invisible!");
-                return true;
-            }else{
-                modo.setState(FFaPlayerStates.WAITING);
-                modo.sendToSpawn();
-                modoInVanish.remove(modo);
-                for(Player player : Bukkit.getOnlinePlayers()){
-                    player.showPlayer(main, modo.getPlayer());
-                }
-                modo.getPlayer().sendMessage("§cVous êtes de nouveau visible!");
-                return true;
             }
+
+
         }
         return false;
     }
 
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onHideVanishedModo(PlayerJoinEvent playerJoinEvent){
-        for(FFaPlayer modo : modoInVanish){
-            if(!playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.vanish.see")) {
-                playerJoinEvent.getPlayer().hidePlayer(main, modo.getPlayer());
+        for(Player modo : Bukkit.getOnlinePlayers()){
+            if(!playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.vanish.see") && !main.getFFaPlayerManager().getFFaPlayer(main, modo).isVisible()) {
+                playerJoinEvent.getPlayer().hidePlayer(main, modo);
             }
         }
         if(playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.vanish.use")){
             FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main ,playerJoinEvent.getPlayer());
-            modoInVanish.add(modo);
-            for(Player player : Bukkit.getOnlinePlayers()){
-                if(!player.hasPermission("NewOnyxFFa.vanish.see")) {
-                    player.hidePlayer(main, modo.getPlayer());
-                }
-            }
-            modo.setState(FFaPlayerStates.MODO);
+            modo.setVanished(true);
             modo.getPlayer().setGameMode(GameMode.SPECTATOR);
             modo.getPlayer().sendMessage("§cVous êtes invisible!");
-            modo.getPlayer().teleport(middle);
-
         }
     }
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onQuitVanishedModo(PlayerQuitEvent playerJoinEvent){
-        FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer());;
-
+    public void onQuitVanishedModo(PlayerQuitEvent playerQuitEvent){
+        FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main,playerQuitEvent.getPlayer());;
+        modo.setVanished(false);
     }
 }
