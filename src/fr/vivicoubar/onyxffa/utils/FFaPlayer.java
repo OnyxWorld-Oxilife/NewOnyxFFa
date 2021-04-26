@@ -3,6 +3,7 @@ package fr.vivicoubar.onyxffa.utils;
 import fr.vivicoubar.onyxffa.FFaPlayerStates;
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
 import fr.vivicoubar.onyxffa.managers.AutoRespawnManager;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
@@ -33,6 +34,7 @@ public class FFaPlayer {
     private Boolean fishing = false;
     private FishHook fishHook;
     private Boolean frozen = false;
+    private Boolean visible = false;
 
     public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player) {
         this.main = onyxFFaMain;
@@ -189,6 +191,29 @@ public class FFaPlayer {
 
     public Boolean isFrozen() {
         return this.frozen;
+    }
+
+    public Boolean isVisible() {
+        return this.visible;
+    }
+
+    public void setVanished(Boolean vanished) {
+
+        this.visible = !vanished;
+
+        if (vanished) {
+            this.setState(FFaPlayerStates.MODO);
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player != this.getPlayer())
+                    player.hidePlayer(main, this.getPlayer());
+            }
+        } else {
+            this.setState(FFaPlayerStates.WAITING);
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player != this.getPlayer())
+                    player.showPlayer(main, this.getPlayer());
+            }
+        }
     }
 
 }

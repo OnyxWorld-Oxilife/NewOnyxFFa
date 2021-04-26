@@ -6,7 +6,6 @@ import fr.vivicoubar.onyxffa.events.OnyxEvent;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Rank;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
