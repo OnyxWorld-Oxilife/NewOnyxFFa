@@ -22,7 +22,6 @@ import java.util.List;
 public class CommandVanish implements Listener, CommandExecutor {
     private final OnyxFFaMain main;
     private final Location middle = new Location(Bukkit.getWorld("world"), 738, 48, 625);
-    private final List<FFaPlayer> modoInVanish = new ArrayList<>();
     public CommandVanish(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;
     }
@@ -60,7 +59,7 @@ public class CommandVanish implements Listener, CommandExecutor {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onHideVanishedModo(PlayerJoinEvent playerJoinEvent){
         for(FFaPlayer modo : modoInVanish){
-            if(!playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.spec.see")) {
+            if(!playerJoinEvent.getPlayer().hasPermission("NewOnyxFFa.vanish.see")) {
                 playerJoinEvent.getPlayer().hidePlayer(main, modo.getPlayer());
             }
         }
@@ -68,7 +67,7 @@ public class CommandVanish implements Listener, CommandExecutor {
             FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main ,playerJoinEvent.getPlayer());
             modoInVanish.add(modo);
             for(Player player : Bukkit.getOnlinePlayers()){
-                if(!player.hasPermission("NewOnyxFFa.spec.see")) {
+                if(!player.hasPermission("NewOnyxFFa.vanish.see")) {
                     player.hidePlayer(main, modo.getPlayer());
                 }
             }
@@ -81,12 +80,7 @@ public class CommandVanish implements Listener, CommandExecutor {
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuitVanishedModo(PlayerQuitEvent playerJoinEvent){
-        modoInVanish.remove(main.getFFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
-        Player modo = playerJoinEvent.getPlayer();
-        for(Player player : Bukkit.getOnlinePlayers()){
-            if(!player.hasPermission("NewOnyxFFa.spec.see")) {
-                player.showPlayer(main, modo.getPlayer());
-            }
-        }
+        FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer());;
+
     }
 }

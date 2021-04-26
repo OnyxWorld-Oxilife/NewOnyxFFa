@@ -101,11 +101,13 @@ public class Stats {
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Deaths", 0);
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points", 0);
         statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore", 0);
+        statsConfiguration.set("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestKillStreak",0);
         statsConfiguration.save(main.getStatsFile());
         this.kills = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Kills");
         this.deaths = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Deaths");
         this.points = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".Points");
         this.highscore = statsConfiguration.getDouble("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestScore");
+        this.highestKillStreak = statsConfiguration.getInt("NewOnyxFFa." + this.player.getPlayer().getUniqueId() + ".HighestKillStreak");
         for (Rank setRank : main.getRanksManager().getRanks()) {
             if (points >= setRank.lowerBound && points < setRank.upperBound) {
                 this.rank = setRank;
