@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class CommandVanish implements Listener, CommandExecutor {
         }
     }
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onQuitVanishedModo(PlayerJoinEvent playerJoinEvent){
-        modoInVanish.remove(main.getFFaPlayerManager().getFFaPlayer(main,playerJoinEvent.getPlayer()));
+    public void onQuitVanishedModo(PlayerQuitEvent playerQuitEvent){
+        modoInVanish.remove(main.getFFaPlayerManager().getFFaPlayer(main,playerQuitEvent.getPlayer()));
     }
 }

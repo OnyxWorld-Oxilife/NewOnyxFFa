@@ -41,10 +41,12 @@ public class CommandSpawn implements CommandExecutor {
 
                     }.runTaskLater(this.main, (long) (20 *main.getConfigConfiguration().getDouble("NewOnyxFFa.Config.SpawnCommand.TimerUntilTeleportation")));
                     return true;
-                } else if (fFaPlayer.getState() != FFaPlayerStates.DUEL) {
-                    fFaPlayer.sendToSpawn();
-                } else {
+                } else if (fFaPlayer.getState() == FFaPlayerStates.DUEL) {
                     sender.sendMessage("§cTu dois finir ton duel avant d'aller au spawn !");
+                } else if(fFaPlayer.getState() != FFaPlayerStates.MODO) {
+                    sender.sendMessage("§cTu dois retirer ton vanish pour retourner au spawn");
+                } else {
+                    fFaPlayer.sendToSpawn();
                 }
             }
     }
