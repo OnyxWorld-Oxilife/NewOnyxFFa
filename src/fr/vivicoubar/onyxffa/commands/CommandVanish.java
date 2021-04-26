@@ -30,7 +30,7 @@ public class CommandVanish implements Listener, CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player){
             // Command = vanish
-            if(label.equalsIgnoreCase("vanish")){
+            if(label.equalsIgnoreCase("vanish") || label.equalsIgnoreCase("v")){
                 FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main, (Player) sender);
                 if(modo.isVisible()){
                     modo.getPlayer().setGameMode(GameMode.SPECTATOR);
@@ -42,7 +42,6 @@ public class CommandVanish implements Listener, CommandExecutor {
                 modo.setVanished(modo.isVisible());
                 return true;
                 // Command = spec
-
             }if(label.equalsIgnoreCase("spec")){
                 FFaPlayer modo = main.getFFaPlayerManager().getFFaPlayer(main, (Player) sender);
                 if(args.length > 0 ){

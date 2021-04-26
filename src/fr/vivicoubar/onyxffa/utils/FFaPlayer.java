@@ -34,7 +34,7 @@ public class FFaPlayer {
     private Boolean fishing = false;
     private FishHook fishHook;
     private Boolean frozen = false;
-    private Boolean visible = false;
+    private Boolean visible = true;
 
     public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player) {
         this.main = onyxFFaMain;
