@@ -103,6 +103,11 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
                 return "" + fFaPlayer.getStats().getScore().get(0);
             }
         }
+        if (identifier.equals("vanish")) {
+            if (!fFaPlayer.isVisible())
+                return "§7[V]";
+            return "";
+        }
 
         return null;
     }
