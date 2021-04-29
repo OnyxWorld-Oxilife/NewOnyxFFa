@@ -8,12 +8,16 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -35,6 +39,7 @@ public class FFaPlayer {
     private FishHook fishHook;
     private Boolean frozen = false;
     private Boolean visible = true;
+    private BossBar bossBar;
 
     public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player) {
         this.main = onyxFFaMain;
@@ -58,6 +63,7 @@ public class FFaPlayer {
         this.inventory = player.getInventory();
         this.stats = new Stats(this, main);
         this.main.getFFaPlayerManager().getfFaPlayerList().add(this);
+        this.bossBar = Bukkit.createBossBar("", BarColor.RED, BarStyle.SOLID);
     }
 
     public Player getPlayer() {
@@ -205,15 +211,41 @@ public class FFaPlayer {
             this.setState(FFaPlayerStates.MODO);
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player != this.getPlayer())
-                    player.hidePlayer(main, this.getPlayer());
+                    this.player.hidePlayer(main, this.player);
             }
         } else {
-            this.setState(FFaPlayerStates.WAITING);
+            this.sendToSpawn();
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player != this.getPlayer())
-                    player.showPlayer(main, this.getPlayer());
+                    this.player.showPlayer(main, this.player);
             }
         }
+    }
+
+    public BossBar getBossBar() {
+        return this.bossBar;
+    }
+
+    public void sendBossBar() {
+        this.bossBar.setVisible(true);
+        new BukkitRunnable() {
+
+            long time = timeWhenLastHitted;
+            double timer = (int) timeWhenLastHitted/50;
+            double totalTimer = (int) timeWhenLastHitted/50;
+
+            public void run() {
+                if (timer == 0) {
+                    cancel();
+                    bossBar.setVisible(false);
+                } else if (time != timeWhenLastHitted) {
+                    cancel();
+                } else {
+                    bossBar.setProgress(timer/totalTimer);
+                    timer--;
+                }
+            }
+        }.runTaskTimer(main, 0, 1);
     }
 
 }

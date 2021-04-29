@@ -12,6 +12,7 @@ import fr.vivicoubar.onyxffa.events.wanted.CommandsWanted;
 import fr.vivicoubar.onyxffa.events.wanted.WantedEvent;
 import fr.vivicoubar.onyxffa.listeners.*;
 import fr.vivicoubar.onyxffa.managers.*;
+import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -485,6 +486,13 @@ public class OnyxFFaMain extends JavaPlugin {
             jumpadsBlocks.add(blockFileConfiguration.getString("NewOnyxFFa.Config.Block.JumpadBlock." + jumpadBlocks + ".Material"));
         }
 
+    }
+
+    @Override
+    public void onDisable() {
+        for (FFaPlayer fFaPlayer : fFaPlayerManager.getfFaPlayerList()) {
+            fFaPlayer.getBossBar().setVisible(false);
+        }
     }
 
     /*@Override
