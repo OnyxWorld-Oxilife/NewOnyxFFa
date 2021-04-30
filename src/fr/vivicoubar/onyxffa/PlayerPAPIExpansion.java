@@ -105,7 +105,7 @@ public class PlayerPAPIExpansion extends PlaceholderExpansion {
         }
         if (identifier.equals("vanish")) {
             if (!fFaPlayer.isVisible())
-                return "§7[V]";
+                return "§7[V] ";
             return "";
         }
 

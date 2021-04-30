@@ -197,26 +197,21 @@ public class FFaPlayer {
         return this.visible;
     }
 
-    public void setVanished(Boolean isVisible) {
+    public void setVanished(Boolean vanished) {
 
+        this.visible = !vanished;
 
-
-        if (isVisible) {
+        if (vanished) {
             this.setState(FFaPlayerStates.MODO);
-            this.visible = false;
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player != this.getPlayer()) {
+                if (player != this.getPlayer())
                     player.hidePlayer(main, this.getPlayer());
-                }
             }
         } else {
             this.setState(FFaPlayerStates.WAITING);
-            this.visible = true;
-            this.sendToSpawn();
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player != this.getPlayer()) {
+                if (player != this.getPlayer())
                     player.showPlayer(main, this.getPlayer());
-                }
             }
         }
     }

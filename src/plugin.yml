@@ -56,3 +56,6 @@ commands:
   sumo:
     permission: NewOnyxFFa.sumo.use
     usage: "§cUsage: /sumo (join/quit)"
+  kiteditor:
+    permission: newonyxffa.kiteditor
+    usage: "§cUsage: /kiteditor"
