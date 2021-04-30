@@ -13,6 +13,7 @@ import fr.vivicoubar.onyxffa.events.wanted.WantedEvent;
 import fr.vivicoubar.onyxffa.listeners.*;
 import fr.vivicoubar.onyxffa.managers.*;
 import fr.vivicoubar.onyxffa.utils.FFaPlayer;
+import fr.vivicoubar.onyxffa.utils.KitsManager;
 import fr.vivicoubar.onyxffa.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -44,6 +45,8 @@ public class OnyxFFaMain extends JavaPlugin {
     private FileConfiguration blockFileConfiguration;
     private File arenaFile;
     private FileConfiguration arenaFileConfiguration;
+    private File kitsPlayerDataFile;
+    private FileConfiguration kitsPlayerDataConfiguration;
     private RanksManager ranksManager;
     private SpawnManager spawnManager;
     private FFaPlayerManager fFaPlayerManager;
@@ -57,6 +60,7 @@ public class OnyxFFaMain extends JavaPlugin {
     private final List<String> jumpadsBlocks = new ArrayList<>();
     private final List<Location> sumoSpawnList = new ArrayList<>();
     private FFAAnimatedBlocksManager ffaAnimatedBlocksManager;
+    private KitsManager kitsManager;
 
 
 
@@ -103,6 +107,7 @@ public class OnyxFFaMain extends JavaPlugin {
         getCommand("addeffect").setExecutor(new CommandAddEffect());
         getCommand("duel").setExecutor(new CommandAskDuel(this));
         getCommand("sumo").setExecutor(new CommandsSumo());
+        getCommand("kiteditor").setExecutor(new CommandKitEditor(this));
         pluginManager.registerEvents(new FFaPlayerListener(this), this);
         pluginManager.registerEvents(new BlockListener(this), this);
         pluginManager.registerEvents(new ItemListener(this), this);
@@ -128,6 +133,7 @@ public class OnyxFFaMain extends JavaPlugin {
             spawnsFile = new File(this.getDataFolder(), "spawns.yml");
             blockFile = new File(this.getDataFolder(), "blocks.yml");
             arenaFile = new File(this.getDataFolder(), "arenas.yml");
+            kitsPlayerDataFile = new File(this.getDataFolder(), "kitsplayerdata.yml");
 
             if (!configFile.exists()) {
                 configFile.createNewFile();
@@ -154,7 +160,11 @@ public class OnyxFFaMain extends JavaPlugin {
                 lore.clear();
                 configConfiguration.save(configFile);
             }
-
+            if (!kitsPlayerDataFile.exists()) {
+                kitsPlayerDataFile.createNewFile();
+                kitsPlayerDataConfiguration = YamlConfiguration.loadConfiguration(kitsPlayerDataFile);
+                kitsPlayerDataConfiguration.save(kitsPlayerDataFile);
+            }
             if (!blockFile.exists()) {
                 blockFile.createNewFile();
                 blockFileConfiguration = YamlConfiguration.loadConfiguration(blockFile);
@@ -434,6 +444,7 @@ public class OnyxFFaMain extends JavaPlugin {
         kitsConfiguration = YamlConfiguration.loadConfiguration(kitsFile);
         blockFileConfiguration = YamlConfiguration.loadConfiguration(blockFile);
         arenaFileConfiguration = YamlConfiguration.loadConfiguration(arenaFile);
+        kitsPlayerDataConfiguration = YamlConfiguration.loadConfiguration(kitsPlayerDataFile);
 
         ranksManager = new RanksManager(this);
         spawnManager = new SpawnManager();
@@ -441,6 +452,7 @@ public class OnyxFFaMain extends JavaPlugin {
         locationBuilder = new LocationBuilder(this);
         itemBuilder = new ItemBuilder(this);
         ffaAnimatedBlocksManager = new FFAAnimatedBlocksManager();
+        kitsManager = new KitsManager(this);
 
 
         for (String spawnName : spawnsConfiguration.getConfigurationSection("NewOnyxFFa.Spawns").getKeys(false)) {
@@ -551,6 +563,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public FileConfiguration getArenaFileConfiguration() {
         return arenaFileConfiguration;
     }
+    public FileConfiguration getKitsPlayerDataConfiguration() {return kitsPlayerDataConfiguration;}
 
     public List<String> getSpawnsInWait() {
         return SpawnInWait;
@@ -566,6 +579,7 @@ public class OnyxFFaMain extends JavaPlugin {
     public File getArenaFile() {
         return arenaFile;
     }
+    public File getKitsPlayerDataFile() {return kitsPlayerDataFile;}
 
     public List<String> getBlockEffectList() {
         return blockEffectList;
@@ -621,7 +635,11 @@ public class OnyxFFaMain extends JavaPlugin {
     }
 
     public FFAAnimatedBlocksManager getFfaAnimatedBlocksManager() {return ffaAnimatedBlocksManager;};
-/*
+
+    public KitsManager getKitsManager() {
+        return kitsManager;
+    }
+    /*
     public ProtocolManager getProtocolManager() {
         return protocolManager;
     }

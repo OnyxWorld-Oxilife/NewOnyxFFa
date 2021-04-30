@@ -20,6 +20,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 // Player Object for the whole plugin
@@ -40,6 +41,7 @@ public class FFaPlayer {
     private Boolean frozen = false;
     private Boolean visible = true;
     private BossBar bossBar;
+    private List<String> kitList;
 
     public FFaPlayer(OnyxFFaMain onyxFFaMain, Player player) {
         this.main = onyxFFaMain;
@@ -64,6 +66,8 @@ public class FFaPlayer {
         this.stats = new Stats(this, main);
         this.main.getFFaPlayerManager().getfFaPlayerList().add(this);
         this.bossBar = Bukkit.createBossBar("", BarColor.RED, BarStyle.SOLID);
+        List<String> tempKitList = main.getKitsPlayerDataConfiguration().getStringList(this.getUniqueID().toString());
+        this.kitList = tempKitList.size() > 0 ? tempKitList : main.getKitsPlayerDataConfiguration().getStringList("default");
     }
 
     public Player getPlayer() {
@@ -84,6 +88,18 @@ public class FFaPlayer {
 
     public void updateStats() {
         this.stats = new Stats(this, main);
+    }
+    public List<String> getKitList() {
+        return this.kitList;
+    }
+    public void setKitList(List<String> list) {
+        this.kitList = list;
+        main.getKitsPlayerDataConfiguration().set(this.getUniqueID().toString(), list);
+        try {
+            main.getKitsPlayerDataConfiguration().save(main.getKitsPlayerDataFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setState(FFaPlayerStates state) {
