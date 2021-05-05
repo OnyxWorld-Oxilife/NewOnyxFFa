@@ -63,7 +63,7 @@ public class OnyxFFaMain extends JavaPlugin {
     private KitsManager kitsManager;
 
 
-
+    private String testFFa;
 
     public static OnyxFFaMain instance;
 

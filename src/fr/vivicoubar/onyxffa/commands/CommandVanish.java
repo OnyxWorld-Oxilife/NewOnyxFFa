@@ -50,10 +50,12 @@ public class CommandVanish implements Listener, CommandExecutor {
                             modo.getPlayer().setGameMode(GameMode.SPECTATOR);
                             modo.getPlayer().sendMessage("§cVous êtes invisible!");
                             modo.getPlayer().teleport(Bukkit.getPlayer(args[0]));
+                            modo.setVanished(modo.isVisible());
                         }else{
-                            modo.getPlayer().sendMessage("§cVous êtes de nouveau visible...");
+                            Player player = Bukkit.getPlayer(args[0]);
+                            modo.getPlayer().teleport(player);
+                            modo.getPlayer().sendMessage("§cVous vous téléportez à " + player.getName() + "...");
                         }
-                        modo.setVanished(modo.isVisible());
                         return true;
                     }else{
                         if(modo.isVisible()){
