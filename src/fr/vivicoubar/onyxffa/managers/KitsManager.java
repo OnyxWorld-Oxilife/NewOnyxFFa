@@ -1,6 +1,7 @@
-package fr.vivicoubar.onyxffa.utils;
+package fr.vivicoubar.onyxffa.managers;
 
 import fr.vivicoubar.onyxffa.OnyxFFaMain;
+import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import net.minecraft.server.v1_12_R1.NBTTagInt;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,6 +34,7 @@ public class KitsManager {
                         net.minecraft.server.v1_12_R1.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(itemStack);
                         NBTTagCompound itemStackCompound = nmsItemStack.hasTag() ? nmsItemStack.getTag() : new NBTTagCompound();
                         itemStackCompound.set("kitIndex", new NBTTagInt(Integer.parseInt(kitIndex)));
+                        itemStackCompound.set("antiStackValue", new NBTTagInt(inventorySlot));
                         nmsItemStack.setTag(itemStackCompound);
                         itemStack = CraftItemStack.asBukkitCopy(nmsItemStack);
                         itemStack.setAmount(1);
