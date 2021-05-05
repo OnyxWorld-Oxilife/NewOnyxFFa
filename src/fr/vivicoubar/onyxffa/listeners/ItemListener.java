@@ -9,12 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemListener implements Listener {
     private OnyxFFaMain main;
-    private List<String> description = new ArrayList<>();
 
     public ItemListener(OnyxFFaMain onyxFFaMain) {
         this.main = onyxFFaMain;

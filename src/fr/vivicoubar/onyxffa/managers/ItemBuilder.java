@@ -20,7 +20,7 @@ public class ItemBuilder {
 
     public ItemStack buildItem(FileConfiguration configuration, String configPath) {
         ItemStack itemStack;
-        if (configuration.get(configPath + ".Color") == null) {
+        if (!configuration.getBoolean(configPath + ".RankColor", false)) {
 
             ItemMeta itemMeta;
             //DATA

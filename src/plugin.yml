@@ -58,4 +58,4 @@ commands:
     usage: "§cUsage: /sumo (join/quit)"
   kiteditor:
     permission: newonyxffa.kiteditor
-    usage: "§cUsage: /kiteditor"
+    usage: "§cUsage: /kiteditor edit"
