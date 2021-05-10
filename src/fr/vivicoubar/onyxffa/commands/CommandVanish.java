@@ -37,6 +37,8 @@ public class CommandVanish implements Listener, CommandExecutor {
                     modo.getPlayer().sendMessage("§cVous êtes invisible!");
                     modo.getPlayer().teleport(middle);
                 }else{
+                    modo.sendToSpawn();
+                    modo.getPlayer().setGameMode(GameMode.ADVENTURE);
                     modo.getPlayer().sendMessage("§cVous êtes de nouveau visible...");
                 }
                 modo.setVanished(modo.isVisible());
@@ -61,6 +63,8 @@ public class CommandVanish implements Listener, CommandExecutor {
                         if(modo.isVisible()){
                             return false;
                         }else{
+                            modo.sendToSpawn();
+                            modo.getPlayer().setGameMode(GameMode.ADVENTURE);
                             modo.getPlayer().sendMessage("§cVous êtes de nouveau visible...");
                             modo.setVanished(modo.isVisible());
                             return true;
