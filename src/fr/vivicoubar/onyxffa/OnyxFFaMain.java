@@ -12,7 +12,6 @@ import fr.vivicoubar.onyxffa.events.wanted.CommandsWanted;
 import fr.vivicoubar.onyxffa.events.wanted.WantedEvent;
 import fr.vivicoubar.onyxffa.listeners.*;
 import fr.vivicoubar.onyxffa.managers.*;
-import fr.vivicoubar.onyxffa.utils.FFaPlayer;
 import fr.vivicoubar.onyxffa.managers.KitsManager;
 import fr.vivicoubar.onyxffa.utils.Messages;
 import org.bukkit.Bukkit;
@@ -498,14 +497,6 @@ public class OnyxFFaMain extends JavaPlugin {
         }
 
     }
-
-    @Override
-    public void onDisable() {
-        for (FFaPlayer fFaPlayer : fFaPlayerManager.getfFaPlayerList()) {
-            fFaPlayer.getBossBar().setVisible(false);
-        }
-    }
-
     /*@Override
     public void onDisable(){
         try {
